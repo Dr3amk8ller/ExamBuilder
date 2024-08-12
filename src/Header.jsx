@@ -28,28 +28,28 @@ const Header = () => {
       <nav className="nav-bar">
         <ul className="nav-list">
           <li>
-          <Link to="/about">
-  <button className="header-about">About Us</button>
+          <Link to="/Homepage">
+  <button className="header-about">Home</button>
 </Link>
           </li>
           <li>
-            <Link to="/Components/features">
+            <Link to="/Aboutpage">
+              <button className="nav-button">About Us</button>
+            </Link>
+          </li>
+          <li>
+            <Link to="/Features">
               <button className="nav-button">Features</button>
             </Link>
           </li>
-          <li>
-            <Link to="/Components/Plans & Pricing">
-              <button className="nav-button">Plans & Pricing</button>
-            </Link>
-          </li>
-          <li>
+          {/* <li>
             <Link to="/Components/Demo">
-              <button className="nav-button">Demo</button>
+              <button className="nav-button"></button>
             </Link>
-          </li>
+          </li> */}
           <li>
-            <Link to="/Components/Help">
-              <button className="nav-button">Help</button>
+            <Link to="/HelpPage">
+              <button className="nav-button" >Help</button>
             </Link>
           </li>
         </ul>

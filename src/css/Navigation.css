@@ -95,6 +95,38 @@
 .main-content.sidebar-open {
   margin-left: 200px; /* Adjust according to sidebar open width */
 }
+.user-initials {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: #0a4570;  /* or any other color you prefer */
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+/* Navigation.css */
+
+.custom-navbar {
+  display: flex;
+  align-items: center;
+  /* Add other styles */
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+}
+
+.profile-image-navbar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 
 /* Responsive Design */
 @media (max-width: 992px) {

@@ -7,8 +7,8 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../css/ExamForm.css";
 import instructionFile from '../Assets/instruction.pdf';
-import sampleFileMCQ from '../Assets/newtest.xlsx';
-import sampleFile from '../Assets/descriptiveExcel.xlsx';
+import sampleFileMCQ from '../Assets/ExcelMCQ.xlsx';
+import sampleFile from '../Assets/ExcelDESCRIPTIVE.xlsx';
 
 
 const ExamForm = () => {
@@ -21,7 +21,8 @@ const ExamForm = () => {
     question: "",
     options: ["", ""],
     correctAnswer: "",
-    answerDescription: "",
+    correctAnswerIndex: "",
+    description: "",
     questionImage: null,
     // optionImages: [],
     optionImages: ["", ""],
@@ -93,6 +94,19 @@ const ExamForm = () => {
     }
   };
 
+  const handleCorrectAnswerChange = (e) => {
+    const selectedOptionIndex = parseInt(e.target.value, 10);
+    console.log("Selected Option Index:", selectedOptionIndex);
+
+    setCurrentQuestion((prevState) => ({
+      ...prevState,
+      correctAnswerIndex: selectedOptionIndex,
+      correctAnswer: prevState.options[selectedOptionIndex - 1], // Adjusted this line
+    }));
+  };
+
+
+
   const handleAddOption = () => {
     setCurrentQuestion({
       ...currentQuestion,
@@ -116,6 +130,7 @@ const ExamForm = () => {
       excelFile: base64Data,
       quizTitle: title,
     };
+
 
     const token = localStorage.getItem('token');
     console.log('JWT', token);
@@ -157,104 +172,106 @@ const ExamForm = () => {
   };
 
 
-  const handleImageUpload = (file, type, index) => {
+  // const handleImageUpload = (file, type, index) => {
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64Data = reader.result.split(',')[1];
-      // Check file size
-      // const fileSizeInKB = (file.size / 1024);
-      // if (fileSizeInKB < 200) {
-      //   alert("Image size is smaller than the required minimum (200 KB). Please select a larger image.");
-      //   return;
-      // }
-      setSelectedImage(base64Data); // Set selected image for preview in modal
-      setImagePreviewModal(true); // Open image preview modal
-      setImageUploadType(type);
-      setOptionIndex(index); // Set the index for the option being uploaded
-    };
-    reader.onerror = (error) => {
-      console.error('Error reading file:', error);
-      // Handle error if needed
-    };
-
-    // Check file size before reading
-
-    reader.readAsDataURL(file);
-  };
-
-  const handleConfirmImage = () => {
-    if (selectedImage) {
-      try {
-        let imageType = imageUploadType; // "question" or "option"
-
-        // Get existing images from local storage
-        const existingImages = JSON.parse(localStorage.getItem('images')) || [];
-
-        // Determine image type for options
-        if (imageType === "option" && optionIndex !== null) {
-          imageType = `option${optionIndex + 1}`;
-        }
-
-        // Create new image object
-        const newImage = {
-          type: imageType,
-          base64encodedurl: selectedImage
-        };
-
-        // Check if an image for the same option already exists
-        const updatedImages = existingImages.filter(img => img.type !== imageType);
-        updatedImages.push(newImage);
-
-        // Save the updated array back to local storage
-        localStorage.setItem('images', JSON.stringify(updatedImages));
-
-        // Update state or perform other actions with imageUrl
-        if (imageType === "question") {
-          setCurrentQuestion((prevQuestion) => ({
-            ...prevQuestion,
-            questionImage: selectedImage
-          }));
-        } else if (imageType.startsWith("option")) {
-          setCurrentQuestion((prevQuestion) => {
-            const updatedOptionImages = [...prevQuestion.optionImages];
-            updatedOptionImages[optionIndex] = selectedImage;
-            return {
-              ...prevQuestion,
-              optionImages: updatedOptionImages
-            };
-          });
-        }
-
-        // Log image type to console
-        console.log('Image stored successfully:', imageType);
-
-      } catch (error) {
-        console.error('Error storing image:', error.message);
-        // Handle error state or display error message
-      } finally {
-        setSelectedImage(null);
-        setImagePreviewModal(false);
-      }
-    }
-  };
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     const base64Data = reader.result.split(',')[1];
 
 
-  const handleCancelImage = () => {
-    // Clear selected image state and close modal
-    setSelectedImage(null);
-    setImagePreviewModal(false);
-    // Further processing logic if needed
-    // ...
-  };
-  const getDropdownOptions = () => {
-    const existingImages = JSON.parse(localStorage.getItem('images')) || [];
-    return currentQuestion.options.map((option, index) => {
-      const imageType = `option${index + 1}image`;
-      const image = existingImages.find(img => img.type === imageType);
-      return image ? imageType : option;
-    });
-  };
+  //     // Check file size
+  //     // const fileSizeInKB = (file.size / 1024);
+  //     // if (fileSizeInKB < 200) {
+  //     //   alert("Image size is smaller than the required minimum (200 KB). Please select a larger image.");
+  //     //   return;
+  //     // }
+  //     setSelectedImage(base64Data); // Set selected image for preview in modal
+  //     setImagePreviewModal(true); // Open image preview modal
+  //     setImageUploadType(type);
+  //     setOptionIndex(index); // Set the index for the option being uploaded
+  //   };
+  //   reader.onerror = (error) => {
+  //     console.error('Error reading file:', error);
+  //     // Handle error if needed
+  //   };
+
+  //   // Check file size before reading
+
+  //   reader.readAsDataURL(file);
+  // };
+
+  // const handleConfirmImage = () => {
+  //   if (selectedImage) {
+  //     try {
+  //       let imageType = imageUploadType; // "question" or "option"
+
+  //       // Get existing images from local storage
+  //       const existingImages = JSON.parse(localStorage.getItem('images')) || [];
+
+  //       // Determine image type for options
+  //       if (imageType === "option" && optionIndex !== null) {
+  //         imageType = `option${optionIndex + 1}`;
+  //       }
+
+  //       // Create new image object
+  //       const newImage = {
+  //         type: imageType,
+  //         base64encodedurl: selectedImage
+  //       };
+
+  //       // Check if an image for the same option already exists
+  //       const updatedImages = existingImages.filter(img => img.type !== imageType);
+  //       updatedImages.push(newImage);
+
+  //       // Save the updated array back to local storage
+  //       localStorage.setItem('images', JSON.stringify(updatedImages));
+
+  //       // Update state or perform other actions with imageUrl
+  //       if (imageType === "question") {
+  //         setCurrentQuestion((prevQuestion) => ({
+  //           ...prevQuestion,
+  //           questionImage: selectedImage
+  //         }));
+  //       } else if (imageType.startsWith("option")) {
+  //         setCurrentQuestion((prevQuestion) => {
+  //           const updatedOptionImages = [...prevQuestion.optionImages];
+  //           updatedOptionImages[optionIndex] = selectedImage;
+  //           return {
+  //             ...prevQuestion,
+  //             optionImages: updatedOptionImages
+  //           };
+  //         });
+  //       }
+
+  //       // Log image type to console
+  //       console.log('Image stored successfully:', imageType);
+
+  //     } catch (error) {
+  //       console.error('Error storing image:', error.message);
+  //       // Handle error state or display error message
+  //     } finally {
+  //       setSelectedImage(null);
+  //       setImagePreviewModal(false);
+  //     }
+  //   }
+  // };
+
+
+  // const handleCancelImage = () => {
+  //   // Clear selected image state and close modal
+  //   setSelectedImage(null);
+  //   setImagePreviewModal(false);
+  //   // Further processing logic if needed
+  //   // ...
+  // };
+  // const getDropdownOptions = () => {
+  //   const existingImages = JSON.parse(localStorage.getItem('images')) || [];
+  //   return currentQuestion.options.map((option, index) => {
+  //     const imageType = `option${index + 1}image`;
+  //     const image = existingImages.find(img => img.type === imageType);
+  //     return image ? imageType : option;
+  //   });
+  // };
 
   const handleAddQuestion = async () => {
     setLoading(true);
@@ -262,138 +279,154 @@ const ExamForm = () => {
 
     try {
       // Iterate through all images in local storage
-      const existingImages = JSON.parse(localStorage.getItem('images')) || [];
-      const updatedImages = [];
+      // const existingImages = JSON.parse(localStorage.getItem('images')) || [];
+      // const updatedImages = [];
 
-      // Upload images to S3 and replace base64encodedurl with imageUrl
-      for (let i = 0; i < existingImages.length; i++) {
-        const img = existingImages[i];
-        if (!img.base64encodedurl) continue; // Skip if no base64encodedurl
+      // // Upload images to S3 and replace base64encodedurl with imageUrl
+      // for (let i = 0; i < existingImages.length; i++) {
+      //   const img = existingImages[i];
+      //   if (!img.base64encodedurl) continue; // Skip if no base64encodedurl
 
-        // Construct the API payload
-        const apiPayload = {
-          body: JSON.stringify({
-            imageType: img.type, // Use existing type from local storage
-            image: img.base64encodedurl, // Use base64encodedurl from local storage
-          }),
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        };
+      //   // Construct the API payload
+      //   const apiPayload = {
+      //     body: JSON.stringify({
+      //       imageType: img.type, // Use existing type from local storage
+      //       image: img.base64encodedurl, // Use base64encodedurl from local storage
+      //     }),
+      //     headers: {
+      //       Authorization: token,
+      //       "Content-Type": "application/json",
+      //     },
+      //   };
 
-        // Make the API call to upload image to S3
-        try {
-          const response = await axios.post(
-            "https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/upload/imageS3Bucket",
-            apiPayload
-          );
+      // Make the API call to upload image to S3
+      //   try {
+      //     const response = await axios.post(
+      //       "https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/upload/imageS3Bucket",
+      //       apiPayload
+      //     );
 
-          // Handle the API response
-          const { imageUrl } = JSON.parse(response.data.body); // Parse the JSON body to extract imageUrl
-          console.log(`Image uploaded successfully: ${imageUrl}`);
+      //     // Handle the API response
+      //     const { imageUrl } = JSON.parse(response.data.body); // Parse the JSON body to extract imageUrl
+      //     console.log(`Image uploaded successfully: ${imageUrl}`);
 
-          // Update local storage with imageUrl replacing base64encodedurl
-          updatedImages.push({
-            ...img,
-            base64encodedurl: imageUrl, // Update base64encodedurl with imageUrl
-          });
-        } catch (error) {
-          console.error('Error uploading image to S3:', error.message);
-          // Handle error if needed
-        }
-      }
+      //     // Update local storage with imageUrl replacing base64encodedurl
+      //     updatedImages.push({
+      //       ...img,
+      //       base64encodedurl: imageUrl, // Update base64encodedurl with imageUrl
+      //     });
+      //   } catch (error) {
+      //     console.error('Error uploading image to S3:', error.message);
+      //     // Handle error if needed
+      //   }
+      // }
 
       // Save updated images array back to local storage
-      localStorage.setItem('images', JSON.stringify(updatedImages));
+      // localStorage.setItem('images', JSON.stringify(updatedImages));
 
-      // Map updated images to their respective fields
-      const mapImagesToFields = (field, updatedImages) => {
-        const image = updatedImages.find(img => img.type === field);
-        return image ? image.base64encodedurl : "";
-      };
+      // Function to map updated images to their respective fields
+      // const mapImagesToFields = (field, updatedImages) => {
+      //   const image = updatedImages.find(img => img.type === field);
+      //   return image ? image.base64encodedurl : "";
+      // };
 
-      // Map updated images to their respective options
-      const mapImagesToOptions = (options, updatedImages) => {
-        return options.map((option, index) => {
-          const imageUrl = mapImagesToFields(`option${index + 1}`, updatedImages);
+      // Function to map updated images to their respective options
+      // const mapImagesToOptions = (options, updatedImages) => {
+      //   return options.map((option, index) => {
+      //     const imageUrl = mapImagesToFields(`option${index + 1}`, updatedImages);
+      //     return {
+      //       answer: option,
+      //       answerImageLink: imageUrl, // Use imageUrl for answerImageLink
+      //     };
+      //   });
+      // };
+
+      const mapOptions = (options) => {
+        return options.map((option) => {
+          // const image = images.find(img => img.type === `option${index + 1}`);
           return {
             answer: option,
-            answerImageLink: imageUrl
+            // answerImageLink: image ? image.base64encodedurl : "",
           };
         });
       };
 
-      let payload;
+      // const questionImage = updatedImages.find(img => img.type === 'question');
+      // const optionImages = updatedImages.filter(img => img.type.startsWith('option'));
 
+      let payload;
       if (questionType === "MCQ") {
-        // Ensure correct answer is in options or answerImages
-        const validAnswer = currentQuestion.options.includes(currentQuestion.correctAnswer) || currentQuestion.optionImages.includes(currentQuestion.correctAnswer);
-        if (!validAnswer) {
-          toast.warn("Please ensure that the correct answer is one of the options or images.");
-          setLoading(false);
-          return;
-        }
+        // Validate if a valid correct answer is selected
+        console.log("Current Question:", currentQuestion);
+        console.log("Selected Answer:", currentQuestion.correctAnswer);
+        console.log("Options:", currentQuestion.options);
+
+
+
+        // if (!currentQuestion.correctAnswer || !currentQuestion.options.some(option => option === currentQuestion.correctAnswer)) {
+        //   console.log("Invalid Correct Answer:", currentQuestion.correctAnswer);
+        //   console.log("Options:", currentQuestion.options);
+        //   toast.warn("Please choose a valid option as correct answer.");
+        //   setLoading(false);
+        //   return;
+        // }
+
+
 
         const questionData = {
-          question: currentQuestion.question || "",
-          questionImageLink: mapImagesToFields("question", updatedImages),
-          options: mapImagesToOptions(currentQuestion.options, updatedImages),
-          correctAnswer: currentQuestion.options.indexOf(currentQuestion.correctAnswer) + 1, // Assuming correctAnswer is the actual answer text
-          description: currentQuestion.answerDescription || ""
+          question: currentQuestion.question,
+          options: mapOptions(currentQuestion.options),
+          correctAnswer: currentQuestion.options.indexOf(currentQuestion.correctAnswer) + 1,
+          description: currentQuestion.answerDescription || "",
+          // questionImageLink: questionImage ? questionImage.base64encodedurl : "",
         };
 
         payload = {
-          quizTitle: title,
-          mcqQuizz: [questionData]
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            quizTitle: title,
+            mcqQuizz: [questionData],
+          }),
         };
-
         // Post the payload to add question API after all images are processed
         const addQuestionResponse = await axios.post(
           "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/add/Question",
-          {
-            headers: {
-              Authorization: token,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-          }
+          payload
         );
 
-        console.log(payload);
         console.log("Question API response:", addQuestionResponse.data);
         toast.success("Question saved successfully!");
-
       } else if (questionType === "Subjective") {
-        console.log("insidesubjective");
-
         const questionData = {
           question: currentQuestion.question || "",
-          questionImageLink: mapImagesToFields("question", updatedImages), // Assuming this function correctly maps the image link for the question
+          // questionImageLink: mapImagesToFields("question", updatedImages),
           answer: currentQuestion.answerDescription || "",
-          answerImageLink: updatedImages.find(img => img.type === "answer")?.base64encodedurl || "" // Using find to get the first answer image link
+          // answerImageLink: updatedImages.find(img => img.type === "answer")?.base64encodedurl || ""
+
         };
 
-        const payload = {
-          quizTitle: title,
-          descriptiveQuizz: [questionData]
+        payload = {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            quizTitle: title,
+            descriptiveQuizz: [questionData],
+          }),
         };
 
         // Post the payload to add question API after all images are processed
-        console.log("here is the descriptive payload", payload);
         const addQuestionResponse = await axios.post(
           "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/questionstyle/descriptiveQuestion",
-          {
-            headers: {
-              Authorization: token,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-          }
+          payload
+
         );
 
-
-        console.log("Descriptive quesiton API response:", addQuestionResponse.data);
+        console.log("Descriptive question API response:", addQuestionResponse.data);
         toast.success("Descriptive question saved successfully!");
       }
 
@@ -401,7 +434,7 @@ const ExamForm = () => {
       setCurrentQuestion({
         question: "",
         options: ["", ""],
-        correctAnswer: "",
+        correctAnswer: "", // Reset correctAnswer
         answerDescription: "",
         questionImage: null,
         optionImages: [],
@@ -416,27 +449,28 @@ const ExamForm = () => {
       localStorage.removeItem('images');
       setLoading(false);
     }
-
   };
+
 
 
   const handleSubmitAllQuestions = async () => {
     setLoading(true);
     const token = localStorage.getItem('token');
     const payload = {
-      quizTitle: title,
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        quizTitle: title,
+      }),
     };
     console.log("Payload being sent to PaperSubmit API:", payload);
     try {
       const response = await axios.post(
         "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/check/PaperSubmit",
-        JSON.stringify(payload),
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
+        payload,
+
       );
       console.log("PaperSubmit API response:", response.data);
       toast.success("Question paper submitted successfully!");
@@ -451,11 +485,7 @@ const ExamForm = () => {
 
   return (
     <div className="container-examform">
-      {loading && (
-        <div className="loader-overlay">
-          <div className="loader"></div>
-        </div>
-      )}
+
       <ToastContainer />
       <div className="exam-form">
         <h2 className="Examtitle">Exam Form</h2>
@@ -499,27 +529,28 @@ const ExamForm = () => {
                       })
                     }
                   />
-                  <button
+                  {/* <button
                     type="button"
                     className="upload-button"
                     onClick={() => document.getElementById("questionImageUpload").click()}
                   >
                     Upload Question Image
-                  </button>
+                  </button> */}
                   <input
                     type="file"
                     id="questionImageUpload"
+                    className="add-question-button"
                     style={{ display: "none" }}
                     accept="image/*"
-                    onChange={(e) => handleImageUpload(e.target.files[0], "question")}
+                  // onChange={(e) => handleImageUpload(e.target.files[0], "question")}
                   />
                 </div>
 
                 {currentQuestion.options.map((option, index) => (
-                  <div key={index} className="forme-group">
+                  <div key={index} className="form-group">
                     <input
                       type="text"
-                      className="forme-control"
+                      className="form-control"
                       placeholder={`Option ${index + 1}`}
                       aria-label={`Option ${index + 1}`}
                       id={`option${index + 1}`}
@@ -527,20 +558,14 @@ const ExamForm = () => {
                       value={option}
                       onChange={(e) => handleOptionChange(index, e)}
                     />
-                    <button
-                      type="button"
-                      className="upload-button"
-                      onClick={() => document.getElementById(`optionImageUpload${index}`).click()}
-                    >
-                      Upload Option Image
-                    </button>
-                    <input
-                      type="file"
-                      id={`optionImageUpload${index}`}
-                      style={{ display: "none" }}
-                      accept="image/*"
-                      onChange={(e) => handleImageUpload(e.target.files[0], "option", index)}
-                    />
+                    {/* <input
+                     type="file"
+                     id={`optionImageUpload${index}`}
+                     className="add-option-button"
+                     style={{ display: "none" }}
+                     accept="image/*"
+                     onChange={(e) => handleImageUpload(e.target.files[0], "option", index)}
+                   /> */}
                     {index >= 2 && (
                       <button
                         type="button"
@@ -555,8 +580,24 @@ const ExamForm = () => {
 
                 {questionType === "MCQ" && (
                   <div className="form-group">
-                    <label htmlFor="correctAnswer">Correct Answer :</label>
                     <select
+                      id="correctAnswer"
+                      className="form-control"
+                      value={currentQuestion.correctAnswerIndex}
+                      onChange={handleCorrectAnswerChange}
+                    >
+                      <option value="" disabled={!currentQuestion.correctAnswer}>
+                        Select correct answer
+                      </option>
+                      {currentQuestion.options.map((option, index) => (
+                        <option key={index} value={index + 1}>
+                          {`Option ${index + 1}: ${option}`}
+                        </option>
+                      ))}
+                    </select>
+
+
+                    {/* <select
                       className="form-control custom-dropdown"
                       id="correctAnswer"
                       value={currentQuestion.correctAnswer}
@@ -566,22 +607,30 @@ const ExamForm = () => {
                           correctAnswer: e.target.value,
                         })
                       }
+                      
                       onFocus={() => setIsDropdownFocused(true)}
                       onBlur={() => setIsDropdownFocused(false)}
-                    >
-                      {!isDropdownFocused && <option value="" disabled={!currentQuestion.correctAnswer}>Select correct answer</option>}
-                      {isDropdownFocused && currentQuestion.options.map((option, index) => {
-                        const optionText = `Option ${index + 1}`;
-                        const hasText = !!option.trim(); // Check if there is text for this option
-                        const hasImage = !!currentQuestion.optionImages[index]; // Check if image exists for this option index
-                        const optionValue = hasText ? option : `option${index + 1}image`;
-                        return (
-                          <option key={index} value={optionValue} disabled={!(hasText || hasImage)}>
-                            {hasText ? optionText : (hasImage ? `Option ${index + 1} Image` : '')}
-                          </option>
-                        );
-                      })}
-                    </select>
+                    > */}
+                    {/* {!isDropdownFocused && (
+                        <option value="" disabled={!currentQuestion.correctAnswer}>
+                          Select correct answer
+                        </option>
+                      )}
+                      {isDropdownFocused &&
+                        currentQuestion.options.map((option, index) => {
+                          const optionText = `Option ${index + 1}`;
+                          const hasText = !!option.trim(); // Check if there is text for this option
+                          return (
+                            <option
+                              key={index}
+                              value={hasText ? option : `option${index + 1}`}
+                              disabled={!hasText}
+                            >
+                              {optionText}
+                            </option>
+                          );
+                        })}
+                    </select> */}
 
 
 
@@ -669,7 +718,7 @@ const ExamForm = () => {
                       })
                     }
                   />
-                  <button
+                  {/* <button
                     type="button"
                     className="upload-button"
                     onClick={() => document.getElementById("questionImageUpload").click()}
@@ -679,10 +728,11 @@ const ExamForm = () => {
                   <input
                     type="file"
                     id="questionImageUpload"
+                    className="add-question-button"
                     style={{ display: "none" }}
                     accept="image/*"
                     onChange={(e) => handleImageUpload(e.target.files[0], "question")}
-                  />
+                  /> */}
                 </div>
 
                 <div className="forme-group">
@@ -702,20 +752,20 @@ const ExamForm = () => {
                   />
                 </div>
                 <div className="button-group">
-                  <button
+                  {/* <button
                     type="button"
                     className="upload-button"
                     onClick={() => document.getElementById("answerImageUpload").click()}
                   >
                     Upload Answer Image(s)
-                  </button>
+                  </button> */}
                   <input
                     type="file"
                     id="answerImageUpload"
                     style={{ display: "none" }}
                     multiple
                     accept="image/*"
-                    onChange={(e) => handleImageUpload(e.target.files[0], "answer")}
+                  // onChange={(e) => handleImageUpload(e.target.files[0], "answer")}
                   />
                   <button
                     type="button"
@@ -758,7 +808,7 @@ const ExamForm = () => {
           </button>
         </div>
       </div>
-      <div class="modal" style={{ display: imagePreviewModal ? 'block' : 'none' }}>
+      {/* <div class="modal" style={{ display: imagePreviewModal ? 'block' : 'none' }}>
         <div class="modal-content">
           <div class="modal-header">
             <h2>Image Preview</h2>
@@ -772,7 +822,7 @@ const ExamForm = () => {
             <button onClick={handleCancelImage}>Cancel</button>
           </div>
         </div>
-      </div>
+      </div> */}
 
     </div>
 

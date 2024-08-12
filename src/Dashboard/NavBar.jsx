@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaBars, FaEllipsisV } from 'react-icons/fa';
 import '../css/Navigation.css';
 
-const Navbar = ({ isSidebarOpen, toggleSidebar }) => {
+const Navbar = ({ isSidebarOpen, toggleSidebar, userInitials }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -32,6 +32,7 @@ const Navbar = ({ isSidebarOpen, toggleSidebar }) => {
             id="dropdownMenuButton"
             onClick={toggleDropdown}
           >
+            <div className="user-initials">{userInitials}</div>
             <FaEllipsisV />
           </button>
           <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`} aria-labelledby="dropdownMenuButton">

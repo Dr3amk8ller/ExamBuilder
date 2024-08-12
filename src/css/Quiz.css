@@ -1,4 +1,4 @@
-.container-quiz {
+.container-quizz {
   padding: 20px;
   margin-left: 5%;
   margin-right: 2%;
@@ -7,14 +7,14 @@
   
 }
 
-.card {
+.cardd {
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
 }
 
-.card-header {
+.cardd-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,7 +30,7 @@
   cursor: pointer;
 }
 
-.card-body {
+.card-bodyy {
   padding: 20px;
   margin-top: 0px;
 }
@@ -71,8 +71,8 @@
   justify-content: space-between;
 }
 
-.card .card-header .edit-btn,
-.card .card-header .delete-btn {
+.card .cardd-header .edit-btn,
+.card .cardd-header .delete-btn {
   background: none;
   border: none;
   font-size: 1rem;
@@ -88,8 +88,8 @@
   color: red;
 }
 
-.card-body .question-mcq,
-.card-body .question-des {
+.card-bodyy .question-mcq,
+.card-bodyy .question-des {
   font-size: 1.25rem;
   margin-bottom: 10px;
 }
@@ -116,8 +116,8 @@
     font-size: 1rem;
   }
 
-  .card-body .question-mcq,
-  .card-body .question-des {
+  .card-bodyy .question-mcq,
+  .card-bodyy .question-des {
     font-size: 1rem;
   }
   
@@ -128,7 +128,7 @@
     margin-left:10%;
     padding: 10px;
   }
-  .card-header {
+  .cardd-header {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -138,8 +138,8 @@
     margin-bottom: 10px;
   }
 
-  .card-header .edit-btn,
-  .card-header .delete-btn {
+  .cardd-header .edit-btn,
+  .cardd-header .delete-btn {
     font-size: 0.875rem;
     margin-left: 0;
     margin-right: 10px;
@@ -149,11 +149,11 @@
     font-size: 0.875rem;
   }
 
-  .card-body .question-mcq,
-  .card-body .question-des {
+  .card-bodyy .question-mcq,
+  .card-bodyy .question-des {
     font-size: 0.875rem;
   }
-  .card .card-header.Quizicon{
+  .card .cardd-header.Quizicon{
     flex-direction: row;
   }
 }
@@ -171,12 +171,12 @@
     font-size: 0.75rem;
   }
 
-  .card-body .question-mcq,
-  .card-body .question-des {
+  .card-bodyy .question-mcq,
+  .card-bodyy .question-des {
     font-size: 0.75rem;
   }
 }
-.card-body {
+.card-bodyy {
   padding: 20px;
 }
 
@@ -211,14 +211,43 @@
 }
 
 .options-container {
-  margin-top: 20px;
+  margin-top: 30px;
+  font-size: 20px;
+
+}
+
+
+.options-container ol {
+
+  padding-left: 20px; /* Adjust padding as needed */
+  list-style: disc;
+  margin-top: 30px;
+
 }
 
 .option-row {
+  margin-bottom: 10px; /* Adjust spacing between options */
+}
+
+
+.option-list {
+ /* Ensures ordered list numbers are visible */
+  padding-left: 20px; /* Adds some padding to the left for visibility */
+}
+
+.option-item {
+  margin-bottom: 10px; /* Adds some space between list items */
+}
+
+.option-item span {
+  font-size: 16px; /* Adjust font size if necessary */
+}
+
+.li .option-row {
   display: left;
   align-items: center;
   margin-bottom: 10px;
-  font-size: 20px;
+  font-size: 15px;
 }
 .correct-answer-image{
     max-width: 200px;

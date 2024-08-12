@@ -85,6 +85,7 @@ const Login = () => {// eslint-disable-next-line
       
   
       if (response.status === 200 && response.data && response.data.body) {
+        console.log('response',response);
         const responseData = JSON.parse(response.data.body);
         const token = responseData.token;
   
@@ -104,7 +105,7 @@ const Login = () => {// eslint-disable-next-line
           setEmailError("Email not found. Please register first.");
         } else if (response.status === 400) {
           setPasswordError("Bad Request. Please check your input.");
-        } else if (response.status === 401) {
+        } else if (response.data.statusCode === 401) {
           setPasswordError("Unauthorized. Please check your credentials.");
         } else if (response.status === 500) {
           setPasswordError("Internal Server Error. Please try again later.");
@@ -182,7 +183,9 @@ const Login = () => {// eslint-disable-next-line
           />
         ) : (
           <form onSubmit={handleLogin}>
+       
             <h2 className="login-title">LogIn</h2>
+            
             <div className="input-field">
             <FaEnvelope className="input-icon" />
               <input

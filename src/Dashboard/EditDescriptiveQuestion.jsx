@@ -34,7 +34,10 @@ const EditDescriptiveQuestion = () => {
             return;
         }
         // Fetch existing question details here if needed
-    }, [questionId, navigate]);
+    }, [questionId, navigate]); 
+
+
+    
 
     const handleOptionChange = (index, event) => {
         const { value } = event.target;
@@ -252,7 +255,7 @@ const EditDescriptiveQuestion = () => {
                                         })
                                     }
                                 />
-                                <div className="upload-questionimage">
+                                {/* <div className="upload-questionimage">
                                     <label htmlFor="questionImageUpload" className="upload-button">
                                         Upload Question Image
                                     </label>
@@ -268,7 +271,7 @@ const EditDescriptiveQuestion = () => {
                                             }
                                         }}
                                     />
-                                </div>
+                                </div> */}
                             </div>
 
                 

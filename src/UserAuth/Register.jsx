@@ -155,7 +155,7 @@ function RegisterForm() {
 
   return (
     <div>
-      <Header />
+      <Header/>
       <div className="register-form-container">
         {notifications.map((notification, index) => (
           <Notification

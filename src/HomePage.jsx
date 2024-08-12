@@ -1,10 +1,11 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './HomePage.css';
+import './Home.css';
 import Header from './Header';
 import Footer from './Footer';
 
-const HomePage = () => {
+const Homepage = () => {
   return (
     <div>
       <Header /> {/* Header is rendered only on the homepage */}
@@ -18,9 +19,9 @@ const HomePage = () => {
           <Link to="/register" className="register-button">Sign Up</Link>
         </div>
       </main>
-      <Footer /> {/* Footer is rendered only on the homepage */}
+      {/* Footer is rendered only on the homepage */}
     </div>
   );
 };
 
-export default HomePage;
+export default Homepage;
