@@ -53,20 +53,24 @@ const Footer = () => {
         </div>
         <div className="footer-section footer-links">
           <h3 className="footer-heading">Quick Links</h3>
-          <ul>
-            <li><FontAwesomeIcon icon={faHome} /> <a href="/">Home</a></li>
-            <li><FontAwesomeIcon icon={faInfoCircle} /> <a href="/about">About Us</a></li>
-            <li><FontAwesomeIcon icon={faBox} /> <a href="/product">Product</a></li>
-            <li><FontAwesomeIcon icon={faTags} /> <a href="/pricing">Pricing</a></li>
-            <li><FontAwesomeIcon icon={faEnvelope} /> <a href="/contact">Contact Us</a></li>
-            <li><FontAwesomeIcon icon={faNewspaper} /> <a href="/newsletter">Newsletter</a></li>
-            <li><FontAwesomeIcon icon={faShieldAlt} /> <a href="/privacy-policy">Privacy Policy</a></li>
-            <li><FontAwesomeIcon icon={faGavel} /> <a href="/terms">Terms</a></li>
-            <li><FontAwesomeIcon icon={faCookie} /> <a href="/cookies">Cookies</a></li>
-            <li><FontAwesomeIcon icon={faBlog} /> <a href="/blog">Blog</a></li>
-            <li><FontAwesomeIcon icon={faQuestionCircle} /> <a href="/help">Help</a></li>
-            <li><FontAwesomeIcon icon={faPlayCircle} /> <a href="/demo">Demo</a></li>
-          </ul>
+          <div className="footer-links-columns">
+        <ul className="column">
+          <li><FontAwesomeIcon icon={faHome} /> <a href="/">Home</a></li>
+          <li><FontAwesomeIcon icon={faInfoCircle} /> <a href="/about">About Us</a></li>
+          <li><FontAwesomeIcon icon={faBox} /> <a href="/product">Product</a></li>
+          <li><FontAwesomeIcon icon={faTags} /> <a href="/pricing">Pricing</a></li>
+          <li><FontAwesomeIcon icon={faEnvelope} /> <a href="/contact">Contact Us</a></li>
+          <li><FontAwesomeIcon icon={faNewspaper} /> <a href="/newsletter">Newsletter</a></li>
+        </ul>
+        <ul className="column">
+          <li><FontAwesomeIcon icon={faShieldAlt} /> <a href="/privacy-policy">Privacy Policy</a></li>
+          <li><FontAwesomeIcon icon={faGavel} /> <a href="/terms">Terms</a></li>
+          <li><FontAwesomeIcon icon={faCookie} /> <a href="/cookies">Cookies</a></li>
+          <li><FontAwesomeIcon icon={faBlog} /> <a href="/blog">Blog</a></li>
+          <li><FontAwesomeIcon icon={faQuestionCircle} /> <a href="/help">Help</a></li>
+          <li><FontAwesomeIcon icon={faPlayCircle} /> <a href="/demo">Demo</a></li>
+        </ul>
+      </div>
         </div>
         <div className="footer-section footer-newsletter">
           <h3 className="footer-heading">Newsletter</h3>

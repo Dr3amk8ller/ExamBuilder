@@ -5,7 +5,7 @@ import './Home.css';
 import Header from './Header';
 import Footer from './Footer';
 
-const Homepage = () => {
+const HomePrev = () => {
   return (
     <div>
       <Header /> {/* Header is rendered only on the homepage */}
@@ -24,4 +24,4 @@ const Homepage = () => {
   );
 };
 
-export default Homepage;
+export default HomePrev;

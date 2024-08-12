@@ -7,7 +7,7 @@ import Navigation from './Navigation';
 import NavigationBar from './Dashboard/NavigationBar'; 
 import HomePage from './Dashboard/HomePage';
 import Header from './Header';
-import Homepage from './Homepage';
+import Homepage from './HomePrev';
 import AboutUsPage from './AboutUsPage';
 import FeaturesPage from './FeaturesPage';
 import HelpPage from './HelpPage';
@@ -22,7 +22,6 @@ const App = () => {
    
         <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/Home" element={<Homepage/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register/>} />
           {/* <Route path="/about" element={<AboutUs />} /> */}
