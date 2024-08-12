@@ -138,17 +138,25 @@ const ExamForm = () => {
     try {
       let response;
       if (questionType === "MCQ") {
-        response = await axios.post(
-          "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/Many/addExcelQuestion",
-          JSON.stringify({
-            body: payload,
-            headers: {
-              "Authorization": token,
-              "Content-Type": "application/json",
-            },
-          })
-        );
-      } else if (questionType === "Subjective") {
+        try {
+          response = await axios.post(
+            "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/Many/quizzQuestionServiceExcel_R",
+            payload, // Send payload as a JavaScript object, not JSON string
+            {
+              headers: {
+                "Authorization": token,
+                "Content-Type": "application/json",
+              }
+            }
+          );
+          // Handle the response here
+        } catch (error) {
+          // Handle errors here
+          console.error('Error posting data:', error);
+        }
+      }
+
+       else if (questionType === "Subjective") {
         response = await axios.post(
           "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/questiontype/descriptiveexcelquestion",
           JSON.stringify({
@@ -160,7 +168,9 @@ const ExamForm = () => {
           })
         );
       }
+      console.log("Excel API response:", response);
       console.log("Excel API response:", response.data);
+      // console.log("Excel API response:", response.body);
       toast.success("Excel file uploaded successfully!");
       fetchTotalQuestions();
     } catch (error) {
