@@ -15,37 +15,28 @@ const Quiz = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        
         const fetchQuizDetails = async () => {
             setLoading(true);
             const token = localStorage.getItem('token');
-
             if (!token) {
                 console.error('Token not found in local storage');
                 setLoading(false);
                 return;
             }
-
             const apiUrl = 'https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/singleview/dashbordQuizzinfo';
             const payload = {
                 headers: {
                     Authorization: token,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    _id: id
-                })
+                body: JSON.stringify({ _id: id })
             };
-
             try {
                 const response = await axios.post(apiUrl, payload);
-
                 if (response.data && response.data.body) {
                     const quizData = response.data.body;
-
-                    // Ensure descriptiveQuizz is initialized as an empty array if undefined or null
                     quizData.descriptiveQuizz = quizData.descriptiveQuizz || [];
-
+                    quizData.mcqQuizz = quizData.mcqQuizz || [];
                     setQuizDetails(quizData);
                     toast.success('Quiz details fetched successfully');
                 } else {
@@ -60,13 +51,13 @@ const Quiz = () => {
                 setLoading(false);
             }
         };
-
         fetchQuizDetails();
     }, [id]);
 
     const handleEditMcqQuestion = (question) => {
-     
+
         navigate(`/navigation/mcq/${question.mcqQuestion_id}`, { state: { question } });
+        console.log("Answerdescription", question.answerDescription);
     };
 
     const handleEditDescriptiveQuestion = (question) => {
@@ -143,18 +134,18 @@ const Quiz = () => {
         return <div>No quiz details available</div>;
     }
 
-    
+
 
     return (
-        <div className="container-quiz">
+        <div className="container-quizz">
             <ToastContainer />
-            <div className="card mt-3">
-                <div className="card-header">
+            <div className="cardd mt-3">
+                <div className="cardd-header">
                     <button className="back-button" onClick={() => window.history.back()}>
                         <FontAwesomeIcon icon={faArrowLeft} />
                     </button>
                 </div>
-                <div className="card-body">
+                <div className="card-bodyy">
                     <h2 className="quizdetailheading">{quizDetails.quizTitle}</h2>
                     <p>Created by: {quizDetails.creatorName}</p>
                     <p className={`statusheading ${quizDetails.status ? 'active' : 'inactive'}`}>
@@ -166,8 +157,8 @@ const Quiz = () => {
                             <div>
                                 <h3 className="QuizMcq">MCQ Questions</h3>
                                 {quizDetails.mcqQuizz.map((question, index) => (
-                                    <div key={question.mcqQuestion_id} className="card mb-3">
-                                        <div className="card-header Quizicon">
+                                    <div key={question.mcqQuestion_id} className="cardd mb-3">
+                                        <div className="cardd-header Quizicon">
                                             <button
                                                 className="edit-btn"
                                                 onClick={() => handleEditMcqQuestion(question)}
@@ -181,7 +172,7 @@ const Quiz = () => {
                                                 <FontAwesomeIcon icon={faTrash} />
                                             </button>
                                         </div>
-                                        <div className="card-body">
+                                        <div className="card-boydy">
                                             <h5 className="question-mcq">Question {index + 1}</h5>
                                             <p><strong>Question:</strong> {question.question}</p>
                                             {/* {question.questionImageLink && (
@@ -189,27 +180,47 @@ const Quiz = () => {
                                                     <img src={question.questionImageLink} alt={`Question ${index + 1}`} className="question-image" />
                                                 </div>
                                             )} */}
-                                            <div className="options-container">
+                                            {/* <div className="options-container">
                                                 <h5>Options:</h5>
                                                 <ol>
                                                     {question.options.map((option, optionIndex) => (
                                                         <li key={option._id} className="option-row">
                                                             <span>
                                                                 {option.answer}
-                                           {/* {option.answerImageLink && (
+                                           {option.answerImageLink && (
                                                <div className="image-container">
                                                 <img src={option.answerImageLink} alt={`Option ${optionIndex + 1}`} className="option-image" />
                                               </div>
-                                            )} */}
+                                            )}
                                                     </span>
                                                     </li>
                                                     ))}
                                                 </ol>
-                                            </div>
+                                            </div> */}
+<div className="options-container">
+    <h5>Options:</h5>
+    <ol style={{ paddingLeft: '20px', listStyleType: 'decimal', fontSize: '16px', marginBottom: '20px'}}>
+        {question.options.map((option, optionIndex) => (
+            <li 
+                key={option._id}
+                style={{
+                    marginBottom: '10px',
+                    marginLeft: '10px',
+                    padding: '3px',
+                    borderRadius: '4px',
+                    width: '90%',
+                
+                }}
+            >
+                <span>{option.answer}</span>
+                {/* Optionally include images or other content */}
+            </li>
+        ))}
+    </ol>
+</div>
 
-                                            {/* <p><strong>Description:</strong> {question.description}</p> */}
 
-                                            <p><strong>Description:</strong> {question.answerDescription}</p>
+                                            <p><strong>Description:</strong> {question.description}</p>
                                             <p>
                                                 <strong>Correct Answer:</strong>{' '}
                                                 {question.options.find(option => option._id === question.correctAnswer)?.answer}
@@ -228,8 +239,8 @@ const Quiz = () => {
                             <h3 className="QuizDes">Subjective Questions</h3>
                             {quizDetails.descriptiveQuizz && quizDetails.descriptiveQuizz.length > 0 ? (
                                 quizDetails.descriptiveQuizz.map((question, index) => (
-                                    <div key={question.descriptiveQuestion_id} className="card mb-3">
-                                        <div className="card-header Quizicon">
+                                    <div key={question.descriptiveQuestion_id} className="cardd mb-3">
+                                        <div className="cardd-header Quizicon">
                                             <button
                                                 className="edit-btn"
                                                 onClick={() => handleEditDescriptiveQuestion(question)}
@@ -243,7 +254,7 @@ const Quiz = () => {
                                                 <FontAwesomeIcon icon={faTrash} />
                                             </button>
                                         </div>
-                                        <div className="card-body">
+                                        <div className="card-bodyy">
                                             <h5 className="question-des">Question {index + 1}</h5>
 
                                             <p><strong>Question:</strong> {question.question}</p>

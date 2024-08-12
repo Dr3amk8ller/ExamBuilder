@@ -21,7 +21,8 @@ const ExamForm = () => {
     question: "",
     options: ["", ""],
     correctAnswer: "",
-    answerDescription: "",
+    correctAnswerIndex: "",
+    description: "",
     questionImage: null,
     // optionImages: [],
     optionImages: ["", ""],
@@ -93,6 +94,19 @@ const ExamForm = () => {
     }
   };
 
+  const handleCorrectAnswerChange = (e) => {
+    const selectedOptionIndex = parseInt(e.target.value, 10);
+    console.log("Selected Option Index:", selectedOptionIndex);
+
+    setCurrentQuestion((prevState) => ({
+      ...prevState,
+      correctAnswerIndex: selectedOptionIndex,
+      correctAnswer: prevState.options[selectedOptionIndex - 1], // Adjusted this line
+    }));
+  };
+
+
+
   const handleAddOption = () => {
     setCurrentQuestion({
       ...currentQuestion,
@@ -116,7 +130,7 @@ const ExamForm = () => {
       excelFile: base64Data,
       quizTitle: title,
     };
-    
+
 
     const token = localStorage.getItem('token');
     console.log('JWT', token);
@@ -265,57 +279,57 @@ const ExamForm = () => {
 
     try {
       // Iterate through all images in local storage
-      const existingImages = JSON.parse(localStorage.getItem('images')) || [];
-      const updatedImages = [];
+      // const existingImages = JSON.parse(localStorage.getItem('images')) || [];
+      // const updatedImages = [];
 
-      // Upload images to S3 and replace base64encodedurl with imageUrl
-      for (let i = 0; i < existingImages.length; i++) {
-        const img = existingImages[i];
-        if (!img.base64encodedurl) continue; // Skip if no base64encodedurl
+      // // Upload images to S3 and replace base64encodedurl with imageUrl
+      // for (let i = 0; i < existingImages.length; i++) {
+      //   const img = existingImages[i];
+      //   if (!img.base64encodedurl) continue; // Skip if no base64encodedurl
 
-        // Construct the API payload
-        const apiPayload = {
-          body: JSON.stringify({
-            imageType: img.type, // Use existing type from local storage
-            image: img.base64encodedurl, // Use base64encodedurl from local storage
-          }),
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        };
+      //   // Construct the API payload
+      //   const apiPayload = {
+      //     body: JSON.stringify({
+      //       imageType: img.type, // Use existing type from local storage
+      //       image: img.base64encodedurl, // Use base64encodedurl from local storage
+      //     }),
+      //     headers: {
+      //       Authorization: token,
+      //       "Content-Type": "application/json",
+      //     },
+      //   };
 
-        // Make the API call to upload image to S3
-        try {
-          const response = await axios.post(
-            "https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/upload/imageS3Bucket",
-            apiPayload
-          );
+      // Make the API call to upload image to S3
+      //   try {
+      //     const response = await axios.post(
+      //       "https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/upload/imageS3Bucket",
+      //       apiPayload
+      //     );
 
-          // Handle the API response
-          const { imageUrl } = JSON.parse(response.data.body); // Parse the JSON body to extract imageUrl
-          console.log(`Image uploaded successfully: ${imageUrl}`);
+      //     // Handle the API response
+      //     const { imageUrl } = JSON.parse(response.data.body); // Parse the JSON body to extract imageUrl
+      //     console.log(`Image uploaded successfully: ${imageUrl}`);
 
-          // Update local storage with imageUrl replacing base64encodedurl
-          updatedImages.push({
-            ...img,
-            base64encodedurl: imageUrl, // Update base64encodedurl with imageUrl
-          });
-        } catch (error) {
-          console.error('Error uploading image to S3:', error.message);
-          // Handle error if needed
-        }
-      }
+      //     // Update local storage with imageUrl replacing base64encodedurl
+      //     updatedImages.push({
+      //       ...img,
+      //       base64encodedurl: imageUrl, // Update base64encodedurl with imageUrl
+      //     });
+      //   } catch (error) {
+      //     console.error('Error uploading image to S3:', error.message);
+      //     // Handle error if needed
+      //   }
+      // }
 
       // Save updated images array back to local storage
-      localStorage.setItem('images', JSON.stringify(updatedImages));
+      // localStorage.setItem('images', JSON.stringify(updatedImages));
 
       // Function to map updated images to their respective fields
-      const mapImagesToFields = (field, updatedImages) => {
-        const image = updatedImages.find(img => img.type === field);
-        return image ? image.base64encodedurl : "";
-      };
- 
+      // const mapImagesToFields = (field, updatedImages) => {
+      //   const image = updatedImages.find(img => img.type === field);
+      //   return image ? image.base64encodedurl : "";
+      // };
+
       // Function to map updated images to their respective options
       // const mapImagesToOptions = (options, updatedImages) => {
       //   return options.map((option, index) => {
@@ -327,18 +341,18 @@ const ExamForm = () => {
       //   });
       // };
 
-      const mapOptions = (options, images) => {
-        return options.map((option, index) => {
-            const image = images.find(img => img.type === `option${index + 1}`);
-            return {
-                answer: option,
-                answerImageLink: image ? image.base64encodedurl : "",
-            };
+      const mapOptions = (options) => {
+        return options.map((option) => {
+          // const image = images.find(img => img.type === `option${index + 1}`);
+          return {
+            answer: option,
+            // answerImageLink: image ? image.base64encodedurl : "",
+          };
         });
-    };
+      };
 
-    const questionImage = updatedImages.find(img => img.type === 'question');
-    const optionImages = updatedImages.filter(img => img.type.startsWith('option'));
+      // const questionImage = updatedImages.find(img => img.type === 'question');
+      // const optionImages = updatedImages.filter(img => img.type.startsWith('option'));
 
       let payload;
       if (questionType === "MCQ") {
@@ -347,7 +361,7 @@ const ExamForm = () => {
         console.log("Selected Answer:", currentQuestion.correctAnswer);
         console.log("Options:", currentQuestion.options);
 
- 
+
 
         // if (!currentQuestion.correctAnswer || !currentQuestion.options.some(option => option === currentQuestion.correctAnswer)) {
         //   console.log("Invalid Correct Answer:", currentQuestion.correctAnswer);
@@ -356,15 +370,15 @@ const ExamForm = () => {
         //   setLoading(false);
         //   return;
         // }
-        
+
 
 
         const questionData = {
           question: currentQuestion.question,
-          options: mapOptions(currentQuestion.options, optionImages),
+          options: mapOptions(currentQuestion.options),
           correctAnswer: currentQuestion.options.indexOf(currentQuestion.correctAnswer) + 1,
           description: currentQuestion.answerDescription || "",
-          questionImageLink: questionImage ? questionImage.base64encodedurl : "",
+          // questionImageLink: questionImage ? questionImage.base64encodedurl : "",
         };
 
         payload = {
@@ -388,10 +402,10 @@ const ExamForm = () => {
       } else if (questionType === "Subjective") {
         const questionData = {
           question: currentQuestion.question || "",
-          questionImageLink: mapImagesToFields("question", updatedImages),
+          // questionImageLink: mapImagesToFields("question", updatedImages),
           answer: currentQuestion.answerDescription || "",
-          answerImageLink: updatedImages.find(img => img.type === "answer")?.base64encodedurl || ""
-          
+          // answerImageLink: updatedImages.find(img => img.type === "answer")?.base64encodedurl || ""
+
         };
 
         payload = {
@@ -409,7 +423,7 @@ const ExamForm = () => {
         const addQuestionResponse = await axios.post(
           "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/questionstyle/descriptiveQuestion",
           payload
-          
+
         );
 
         console.log("Descriptive question API response:", addQuestionResponse.data);
@@ -455,8 +469,8 @@ const ExamForm = () => {
     try {
       const response = await axios.post(
         "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/check/PaperSubmit",
-       payload,
-      
+        payload,
+
       );
       console.log("PaperSubmit API response:", response.data);
       toast.success("Question paper submitted successfully!");
@@ -533,10 +547,10 @@ const ExamForm = () => {
                 </div>
 
                 {currentQuestion.options.map((option, index) => (
-                  <div key={index} className="forme-group">
+                  <div key={index} className="form-group">
                     <input
                       type="text"
-                      className="forme-control"
+                      className="form-control"
                       placeholder={`Option ${index + 1}`}
                       aria-label={`Option ${index + 1}`}
                       id={`option${index + 1}`}
@@ -544,21 +558,14 @@ const ExamForm = () => {
                       value={option}
                       onChange={(e) => handleOptionChange(index, e)}
                     />
-                    {/* <button
-                      type="button"
-                      className="upload-button"
-                      onClick={() => document.getElementById(`optionImageUpload${index}`).click()}
-                    >
-                      Upload Option Image
-                    </button> */}
-                    <input
-                      type="file"
-                      id={`optionImageUpload${index}`}
-                      className="add-option-button"
-                      style={{ display: "none" }}
-                      accept="image/*"
-                    // onChange={(e) => handleImageUpload(e.target.files[0], "option", index)}
-                    />
+                    {/* <input
+                     type="file"
+                     id={`optionImageUpload${index}`}
+                     className="add-option-button"
+                     style={{ display: "none" }}
+                     accept="image/*"
+                     onChange={(e) => handleImageUpload(e.target.files[0], "option", index)}
+                   /> */}
                     {index >= 2 && (
                       <button
                         type="button"
@@ -573,35 +580,23 @@ const ExamForm = () => {
 
                 {questionType === "MCQ" && (
                   <div className="form-group">
-                     <select
-                                    id="correctAnswer"
-                                    className="forme-control"
-                                    value={currentQuestion.correctAnswer}
-                                    onChange={(e) =>
-                                        setCurrentQuestion({
-                                            ...currentQuestion,
-                                            correctAnswer: e.target.value,
-                                        })
-                                    }
+                    <select
+                      id="correctAnswer"
+                      className="form-control"
+                      value={currentQuestion.correctAnswerIndex}
+                      onChange={handleCorrectAnswerChange}
+                    >
+                      <option value="" disabled={!currentQuestion.correctAnswer}>
+                        Select correct answer
+                      </option>
+                      {currentQuestion.options.map((option, index) => (
+                        <option key={index} value={index + 1}>
+                          {`Option ${index + 1}: ${option}`}
+                        </option>
+                      ))}
+                    </select>
 
-                                    onFocus={() => setIsDropdownFocused(true)}
-                                    onBlur={() => setIsDropdownFocused(false)}
-                                >
-                                      {!isDropdownFocused && <option value="" disabled={!currentQuestion.correctAnswer}>Select correct answer</option>}
-                                    {isDropdownFocused && currentQuestion.options.map((option, index) => {
-                                        const optionText = `Option ${index + 1}`;
-                                        const hasText = !!option.trim(); // Check if there is text for this option
-                                        const hasImage = !!currentQuestion.optionImages[index]; // Check if image exists for this option index
-                                        const optionValue = hasText ? option : `option${index + 1}image`;
-                                        return (
-                                            <option key={index} value={optionValue} disabled={!(hasText || hasImage)}>
-                                                {hasText ? optionText : (hasImage ? `Option ${index + 1} Image` : '')}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
 
-          
                     {/* <select
                       className="form-control custom-dropdown"
                       id="correctAnswer"
@@ -616,7 +611,7 @@ const ExamForm = () => {
                       onFocus={() => setIsDropdownFocused(true)}
                       onBlur={() => setIsDropdownFocused(false)}
                     > */}
-                      {/* {!isDropdownFocused && (
+                    {/* {!isDropdownFocused && (
                         <option value="" disabled={!currentQuestion.correctAnswer}>
                           Select correct answer
                         </option>

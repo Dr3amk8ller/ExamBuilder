@@ -412,6 +412,7 @@ const EditMcqQuestion = () => {
         question: "",
         options: ["", ""],
         correctAnswer: "",
+        correctAnswerIndex: "",
         answerDescription: "",
         questionImage: null,
         optionImages: [],
@@ -455,6 +456,20 @@ const EditMcqQuestion = () => {
             });
         }
     };
+
+    
+  const handleCorrectAnswerChange = (e) => {
+    const selectedOptionIndex = parseInt(e.target.value, 10);
+    console.log("Selected Option Index:", selectedOptionIndex);
+
+    setCurrentQuestion((prevState) => ({
+      ...prevState,
+      correctAnswerIndex: selectedOptionIndex,
+      correctAnswer: prevState.options[selectedOptionIndex - 1], // Adjusted this line
+    }));
+  };
+
+
 
     const handleAddOption = () => {
         setCurrentQuestion({
@@ -726,34 +741,21 @@ const EditMcqQuestion = () => {
                                 </button>
                             </div>
                             <div className="forme-group">
-                                <select
-                                    id="correctAnswer"
-                                    className="forme-control"
-                                    value={currentQuestion.correctAnswer}
-                                    onChange={(e) =>
-                                        setCurrentQuestion({
-                                            ...currentQuestion,
-                                            correctAnswer: e.target.value,
-                                        })
-                                    }
-
-                                    onFocus={() => setIsDropdownFocused(true)}
-                                    onBlur={() => setIsDropdownFocused(false)}
-                                >
-
-                                    {!isDropdownFocused && <option value="" disabled={!currentQuestion.correctAnswer}>Select correct answer</option>}
-                                    {isDropdownFocused && currentQuestion.options.map((option, index) => {
-                                        const optionText = `Option ${index + 1}`;
-                                        const hasText = !!option.trim(); // Check if there is text for this option
-                                        const hasImage = !!currentQuestion.optionImages[index]; // Check if image exists for this option index
-                                        const optionValue = hasText ? option : `option${index + 1}image`;
-                                        return (
-                                            <option key={index} value={optionValue} disabled={!(hasText || hasImage)}>
-                                                {hasText ? optionText : (hasImage ? `Option ${index + 1} Image` : '')}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
+                            <select
+                      id="correctAnswer"
+                      className="form-control"
+                      value={currentQuestion.correctAnswerIndex}
+                      onChange={handleCorrectAnswerChange}
+                    >
+                      <option value="" disabled={!currentQuestion.correctAnswer}>
+                        Select correct answer
+                      </option>
+                      {currentQuestion.options.map((option, index) => (
+                        <option key={index} value={index + 1}>
+                          {`Option ${index + 1}: ${option}`}
+                        </option>
+                      ))}
+                    </select>   
 
 
 

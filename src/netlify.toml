@@ -1,0 +1,13 @@
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/:splat"
+  status = 200
+  force = true
+  conditions = { "hostname": "admin.exambuilder.online" }
+
+[[redirects]]
+  from = "/*"
+  to = "/:splat"
+  status = 200
+  force = true
+  conditions = { "hostname": "exambuilder.online" }
