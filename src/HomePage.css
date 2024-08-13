@@ -8,7 +8,7 @@ body {
 
 .home-container {
     min-height: 100vh; /* Full viewport height */
-    background-image: url('./Assets/study\ \(1\).webp');
+    background-image: url('Assets/study\ \(1\).webp');
     background-size: cover; /* Cover the entire container */
     background-position: top center; /* Start the image from the top and center it horizontally */
     background-repeat: no-repeat; /* Prevent tiling */
@@ -17,7 +17,6 @@ body {
     justify-content: center;
     align-items: center;
     color: white;
-    animation: fadeIn 1s ease-in;
     text-align: center;
   /* Ensure the navbar is positioned relative to this container */
 }
@@ -142,7 +141,7 @@ h3 {
 }
 
 /* Button styles */
-.btn {
+.registerbutton{
     display: inline-block;
     padding: 6px 70px;
     font-size: 1.9em;
@@ -156,7 +155,7 @@ h3 {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* White glow effect */
 }
 
-.btn:hover {
+.registerbutton:hover {
     color: #f3f3f3; /* Black text color on hover */
      background-color: #0a4570;
     /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); */
@@ -290,7 +289,7 @@ h3 {
     color: #666;
 }
 
-.btn-about {
+.homebtn-about {
     display: inline-block;
     margin-top: 20px;
     padding: 10px 20px;
@@ -302,7 +301,7 @@ h3 {
     transition: background-color 0.3s ease;
 }
 
-.btn-about:hover {
+.homebtn-about:hover {
     background-color: #0a4570;
 }
 

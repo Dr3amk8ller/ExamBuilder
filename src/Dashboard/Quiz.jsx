@@ -6,6 +6,8 @@ import { faArrowLeft, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import '../css/Quiz.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Addmorequestion from './Addmorequestion';
+
 
 const Quiz = () => {
     const { id } = useParams();
@@ -13,44 +15,51 @@ const Quiz = () => {
     const [quizDetails, setQuizDetails] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [isAddMoreQuestionOpen, setIsAddMoreQuestionOpen] = useState(false);
+
+    const fetchQuizDetails = async () => {
+        setLoading(true);
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            console.error('Token not found in local storage');
+            setLoading(false);
+            return;
+        }
+
+        const apiUrl = 'https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/singleview/dashbordQuizzinfo';
+        const payload = {
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                _id: id
+            })
+        };
+
+        try {
+            const response = await axios.post(apiUrl, payload);
+
+            if (response.data && response.data.body) {
+                const quizData = response.data.body;
+                quizData.descriptiveQuizz = quizData.descriptiveQuizz || [];
+                setQuizDetails(quizData);
+                toast.success('Quiz details fetched successfully');
+            } else {
+                console.warn('No data received:', response);
+                toast.warn('No data received');
+            }
+        } catch (error) {
+            console.error('Failed to fetch quiz details:', error);
+            setError(error.message);
+            toast.error('Failed to fetch quiz details');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchQuizDetails = async () => {
-            setLoading(true);
-            const token = localStorage.getItem('token');
-            if (!token) {
-                console.error('Token not found in local storage');
-                setLoading(false);
-                return;
-            }
-            const apiUrl = 'https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/singleview/dashbordQuizzinfo';
-            const payload = {
-                headers: {
-                    Authorization: token,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ _id: id })
-            };
-            try {
-                const response = await axios.post(apiUrl, payload);
-                if (response.data && response.data.body) {
-                    const quizData = response.data.body;
-                    quizData.descriptiveQuizz = quizData.descriptiveQuizz || [];
-                    quizData.mcqQuizz = quizData.mcqQuizz || [];
-                    setQuizDetails(quizData);
-                    toast.success('Quiz details fetched successfully');
-                } else {
-                    console.warn('No data received:', response);
-                    toast.warn('No data received');
-                }
-            } catch (error) {
-                console.error('Failed to fetch quiz details:', error);
-                setError(error.message);
-                toast.error('Failed to fetch quiz details');
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchQuizDetails();
     }, [id]);
 
@@ -118,6 +127,19 @@ const Quiz = () => {
         toast.error(message);
     };
 
+    const handleOpenAddMoreQuestion = () => {
+        setIsAddMoreQuestionOpen(true);
+    };
+
+    const handleCloseAddMoreQuestion = () => {
+        setIsAddMoreQuestionOpen(false);
+        fetchQuizDetails(); // Fetch quiz details again after closing the Addmorequestion component
+    };
+
+    const handleQuestionAdded = () => {
+        fetchQuizDetails(); // Fetch questions again after a new question is added
+    };
+
     if (loading) {
         return (
             <div className="loader-overlay">
@@ -135,7 +157,6 @@ const Quiz = () => {
     }
 
 
-
     return (
         <div className="container-quizz">
             <ToastContainer />
@@ -145,6 +166,10 @@ const Quiz = () => {
                         <FontAwesomeIcon icon={faArrowLeft} />
                     </button>
                 </div>
+                  <button className='add-question' onClick={handleOpenAddMoreQuestion}>Add Question</button>
+                {isAddMoreQuestionOpen && (
+                    <Addmorequestion title={quizDetails.quizTitle} onClose={handleCloseAddMoreQuestion} onQuestionAdded={handleQuestionAdded} />
+                )}
                 <div className="card-bodyy">
                     <h2 className="quizdetailheading">{quizDetails.quizTitle}</h2>
                     <p>Created by: {quizDetails.creatorName}</p>

@@ -157,16 +157,22 @@ const ExamForm = () => {
       }
 
        else if (questionType === "Subjective") {
-        response = await axios.post(
-          "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/questiontype/descriptiveexcelquestion",
-          JSON.stringify({
-            body: payload,
-            headers: {
-              "Authorization": token,
-              "Content-Type": "application/json",
-            },
-          })
-        );
+        try {
+          response = await axios.post(
+            "https://j0mmgihtaj.execute-api.us-east-1.amazonaws.com/v1/quizzdescriptiveQuestionServiceExcel_R",
+            payload, // Send payload as a JavaScript object, not JSON string
+            {
+              headers: {
+                "Authorization": token,
+                "Content-Type": "application/json",
+              }
+            }
+          );
+          // Handle the response here
+        } catch (error) {
+          // Handle errors here
+          console.error('Error posting data:', error);
+        }
       }
       console.log("Excel API response:", response);
       console.log("Excel API response:", response.data);

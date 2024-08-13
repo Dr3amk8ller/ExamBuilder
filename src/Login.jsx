@@ -3,15 +3,17 @@ import './Login.css';
 import md5 from 'md5';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import Header from './Header'; 
-import OTPForm from './OTPForm'; 
-import { FaEye, FaEyeSlash,FaEnvelope  } from 'react-icons/fa';
+import Header from './Header';
+import OTPForm from './OTPForm';
+import { FaEye, FaEyeSlash, FaEnvelope } from 'react-icons/fa';
 import { RiLockPasswordLine } from 'react-icons/ri';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const PASSWORD_REGEX = /^(?=.[a-z])(?=.[A-Z])(?=.\d)[A-Za-z\d@$!%?&]{8,}$/;
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
 
-const Login = () => {// eslint-disable-next-line 
+const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -20,14 +22,16 @@ const Login = () => {// eslint-disable-next-line
   const [showPassword, setShowPassword] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);// eslint-disable-next-line
+  const [rememberMe, setRememberMe] = useState(false);
   const [isRegisteredEmail, setIsRegisteredEmail] = useState(false);
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setEmail(''); 
-    setPassword(''); 
-  }, []); 
+    setEmail('');
+    setPassword('');
+  }, []);
 
   const handleShowPasswordToggle = () => {
     setShowPassword(!showPassword);
@@ -36,7 +40,7 @@ const Login = () => {// eslint-disable-next-line
   const handleForgotPasswordClick = () => {
     setShowForgotPassword(!showForgotPassword);
   };
-  // eslint-disable-next-line
+
   const validateEmail = async (email) => {
     const VALIDATE_EMAIL_API_URL = 'https://ejy88n4hr6.execute-api.us-east-1.amazonaws.com/users/validate-email';
     try {
@@ -44,26 +48,26 @@ const Login = () => {// eslint-disable-next-line
       setIsRegisteredEmail(response.data.isRegistered);
     } catch (error) {
       if (error.response) {
-      console.error('Email validation failed:', error.response.data);
-    }else if (error.request) {
-      console.error('Email validation request made but no response received:', error.request);
-    } else {
-      console.error('Error setting up the email validation request:', error.message);
+        console.error('Email validation failed:', error.response.data);
+      } else if (error.request) {
+        console.error('Email validation request made but no response received:', error.request);
+      } else {
+        console.error('Error setting up the email validation request:', error.message);
+      }
     }
-  }
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  
+
     if (!email || !password || emailError || passwordError) {
       setEmailError(email ? "" : "Email is required");
       setPasswordError(password ? "" : "Password is required");
       return;
     }
-  
+
     setIsLoading(true);
-  
+
     try {
       const LOGIN_API_URL = 'https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/authcheck/login';
       const loginData = {
@@ -71,59 +75,61 @@ const Login = () => {// eslint-disable-next-line
         password: md5(password),
       };
       console.log(loginData);
-  
+
       const requestBody = JSON.stringify({ body: JSON.stringify(loginData) });
-  
+
       const response = await axios.post(LOGIN_API_URL, requestBody, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      
-  
+
       console.log('Login response:', response);
-      
-  
+
       if (response.status === 200 && response.data && response.data.body) {
-        console.log('response',response);
+        console.log('response', response);
         const responseData = JSON.parse(response.data.body);
         const token = responseData.token;
-  
+
         if (token) {
           setIsLoggedIn(true);
-          
+          localStorage.setItem('pimage',responseData.UserProfileLink);
           localStorage.setItem('token', token);
-          localStorage.setItem('email',email);
+          localStorage.setItem('email', email);
           navigate('/NavigationBar');
         } else {
+          if(response.data.statusCode===401||response.data.statusCode===404 || response.data.statusCode===403 || response.data.statusCode===400){
+            toast.error("Invalid UserName or Password");
+          }
           console.error('Token not found in response:', response);
         }
       } else {
         console.error('Unexpected response:', response);
-        
+       
         if (response.status === 404) {
           setEmailError("Email not found. Please register first.");
-        } else if (response.status === 400) {
+        }
+         else if (response.status === 400) {
           setPasswordError("Bad Request. Please check your input.");
-        } else if (response.data.statusCode === 401) {
+        } else if (response.data.status === 401) {
           setPasswordError("Unauthorized. Please check your credentials.");
         } else if (response.status === 500) {
           setPasswordError("Internal Server Error. Please try again later.");
         } else {
-          
           console.error('Unexpected response:', response);
         }
       }
-  
+
     } catch (error) {
       console.error('Login failed:', error);
     }
     setIsLoading(false);
   };
-  
+
   const handleEmailChange = (e) => {
     const inputEmail = e.target.value;
     setEmail(inputEmail);
+    setEmailTouched(true);
 
     if (!EMAIL_REGEX.test(inputEmail)) {
       setEmailError("Invalid email format");
@@ -132,16 +138,40 @@ const Login = () => {// eslint-disable-next-line
     }
   };
 
+  // const handlePasswordChange = (e) => {
+  //   const inputPassword = e.target.value;
+  //   setPassword(inputPassword);
+  //   setPasswordTouched(true);
+
+  //   if (PASSWORD_REGEX.test(inputPassword)) {
+  //     setPasswordError(""); // Clear the error if the password is valid
+  //   } else {
+  //     setPasswordError("Must be 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character: @$!%*?&");
+  //   }
+  // };
+
   const handlePasswordChange = (e) => {
     const inputPassword = e.target.value;
     setPassword(inputPassword);
 
+    // Regular expression for password validation
+    const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    // Validate password against the regex
     if (!PASSWORD_REGEX.test(inputPassword)) {
       setPasswordError("Must be 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character: @$!%*?&");
-    } else {
+    }
+    
+     else {
       setPasswordError("");
     }
   };
+
+  // Use `onBlur` to mark the field as touched
+  const handleBlur = () => {
+    setPasswordTouched(true);
+  };
+
 
   const handleRememberMeChange = (e) => {
     setRememberMe(e.target.checked);
@@ -158,13 +188,13 @@ const Login = () => {// eslint-disable-next-line
     try {
       const FORGOT_PASSWORD_API_URL = 'https://ejy88n4hr6.execute-api.us-east-1.amazonaws.com/users/userforgetpassword';
       const requestBody = JSON.stringify({ body: JSON.stringify({ email, action: 'generate' }) });
-      
+
       const response = await axios.post(FORGOT_PASSWORD_API_URL, requestBody, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-  
+
       console.log('Forgot Password response:', response.data);
     } catch (error) {
       console.error('Forgot Password failed:', error);
@@ -174,6 +204,7 @@ const Login = () => {// eslint-disable-next-line
   return (
     <div>
       <Header />
+      <ToastContainer/>
       <div className='wrapper-login'>
         {showForgotPassword ? (
           <ForgotPasswordForm
@@ -183,36 +214,37 @@ const Login = () => {// eslint-disable-next-line
           />
         ) : (
           <form onSubmit={handleLogin}>
-       
             <h2 className="login-title">LogIn</h2>
-            
+
             <div className="input-field">
-            <FaEnvelope className="input-icon" />
+              <FaEnvelope className="input-icon" />
               <input
                 type="email"
                 id="email"
                 placeholder="User Id"
                 value={email}
                 onChange={handleEmailChange}
+                onBlur={() => setEmailTouched(true)} // Mark email as touched on blur
                 autoComplete="off"
               />
             </div>
-            {emailError && <p className="error-login">{emailError}</p>}
+            {emailTouched && emailError && <p className="error-login">{emailError}</p>}
             <div className="input-field">
-            <RiLockPasswordLine className="input-icon" />
+              <RiLockPasswordLine className="input-icon" />
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
                 placeholder="Password"
                 value={password}
                 onChange={handlePasswordChange}
+                onBlur={handleBlur}
                 autoComplete="off"
               />
               <span className="show-password-login" onClick={handleShowPasswordToggle}>
-                 {showPassword ? <FaEyeSlash /> : <FaEye />}
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
-            {passwordError && <p className="error-login">{passwordError}</p>}
+            {passwordTouched && passwordError && <p className="error-login">{passwordError}</p>}
             <div className="remember-forgot-login">
               <label>
                 <input type="checkbox" checked={rememberMe} onChange={handleRememberMeChange} />
@@ -235,67 +267,30 @@ const Login = () => {// eslint-disable-next-line
 };
 
 const ForgotPasswordForm = ({ handleForgotPasswordSubmit, userEmail }) => {
-  const [email, setEmail] = useState('');
-  const [alertMessage, setAlertMessage] = useState('');
-  const [showOTPForm, setShowOTPForm] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState(userEmail);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true);
-
-    console.log('Sending password reset email to:', email);
-
-    try {
-      await handleForgotPasswordSubmit(email);
-      setAlertMessage('An email has been sent to reset your password. Please check your inbox.');
-      setShowOTPForm(true);
-    } catch (error) {
-      console.error('Forgot Password failed:', error);
-      setAlertMessage('Failed to send password reset email. Please try again later.');
-    }
-
-    setIsLoading(false);
-    setTimeout(() => {
-      setAlertMessage('');
-    }, 4000);
+    setIsSubmitting(true);
+    handleForgotPasswordSubmit(email);
   };
 
-  const isEmailValid = () => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
-  };
-  
   return (
-    <div>
-      {showOTPForm ? (
-        <OTPForm userEmail={email} />
-      ) : (
-        <form className="forgot-password-form" onSubmit={handleSubmit}>
-          <h2 className="forget-title">Forgot Password</h2>
-          <div className="forget-email">
-          <FaEnvelope className="input-icon" />
-          <input
-            type="email"
-            id="email"
-            placeholder="Email Id"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          </div>
-          <br />
-          <button type="submit" className="submit-forget-button" disabled={isLoading || !isEmailValid()}>
-            {isLoading ? (
-              <div className="loader"></div>
-            ) : (
-              "Verify Email"
-            )}
-          </button>
-
-          {alertMessage && <p className="alert-message-login">{alertMessage}</p>}
-        </form>
-      )}
-    </div>
+    <form onSubmit={handleSubmit}>
+      <h2>Forgot Password</h2>
+      <p>Enter your email to reset your password:</p>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Enter your email"
+        required
+      />
+      <button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? "Submitting..." : "Submit"}
+      </button>
+    </form>
   );
 };
 

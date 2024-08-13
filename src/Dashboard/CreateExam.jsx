@@ -177,9 +177,9 @@ const CreateExam = ({ onStartExam }) => {
                 body: JSON.stringify(payload)
             });
 
-            const responseBody = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
-
-            if (response.status === 200 && responseBody.message === 'Quiz status updated to false successfully') {
+            const responseBody =  response.data === 'string' ? JSON.parse(response.data) : response.data;
+                 console.log("Myresponse", response);
+            if (response.data.statusCode === 200 ) {
                 fetchExamDetails();
                 toast.success('Quiz deleted successfully');
             } else {
@@ -288,11 +288,12 @@ const ExamDetailsTable = ({ examDetails, onView, onEdit, onDelete , onSetting, o
                                     <button className="action-button" onClick={() => onView(exam)}>
                                         <FontAwesomeIcon icon={faEye} />
                                     </button>
-                                    {exam.status !== 'Inactive' && (
-                                        <>
-                                            <button className="action-button" onClick={() => onEdit(exam)}>
+                                    <button className="action-button" onClick={() => onEdit(exam)}>
                                                 <FontAwesomeIcon icon={faPencilAlt} />
                                             </button>
+                                    {exam.status !== 'Inactive' && (
+                                        <>
+                                           
                                             <button className="action-button" onClick={() => onDelete(exam)}>
                                                 <FontAwesomeIcon icon={faTrashAlt} />
                                             </button>

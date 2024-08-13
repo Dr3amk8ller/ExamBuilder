@@ -53,7 +53,7 @@ const HomePage = () => {
                         <p className="para">Your gateway to manage and take exams efficiently</p>
                         <div className="login-options">
                            <Link to="/register">
-                            <a className="btn">Register Here</a>
+                            <a className="registerbutton">Register Here</a>
                             </Link>
                             {/* <a
                                 href="/student-login" // Optional, for SEO and fallback
@@ -94,7 +94,7 @@ const HomePage = () => {
                             <p>
                                 This is the last online exam system you'll ever need!
                             </p>
-                            <a href="#why-choose-us" className="btn-about" onClick={handleWhyChooseUsClick}>Why Choose Us ?</a>
+                            <a href="#why-choose-us" className="homebtn-about" onClick={handleWhyChooseUsClick}>Why Choose Us ?</a>
                             {/* <div className="think">
                         <img src={think} />
                     </div> */}
@@ -149,7 +149,7 @@ const HomePage = () => {
                             <p className="chooseus">
                                 Discover how our tool can be the perfect solution for you. Our demo will provide you with all the insights you need. Don't wait—it's completely free! Visit our demo page now.
                             </p>
-                            <a href="/demo" className="btn-about">Visit Demo Page</a>
+                            <a href="/demo" className="homebtn-about">Visit Demo Page</a>
                         </div>
                     </section>
                 )}

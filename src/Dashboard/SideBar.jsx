@@ -7,10 +7,10 @@ import { Link } from 'react-router-dom';
 const SideBar = ({ onToggleSidebar, isOpen }) => {
   return (
     <div className={`siDebar ${isOpen ? 'open' : ''}`}>
-      {/* <div className="logo-container">
+      <div className="logo-container">
         <img src={companyLogo} alt="Company Logo" className={`logoc ${isOpen ? 'logoc-expanded' : ''}`} />
-        <FaBars className="toggle-sidebar-btn" onClick={onToggleSidebar} />
-      </div> */}
+        {/* <FaBars className="toggle-sidebar-btn" onClick={onToggleSidebar} /> */}
+      </div>
       <div className="menu-items">
         <div className="menu-item">
           <FaHome />
