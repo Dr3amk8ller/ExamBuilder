@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom'; // Import from react-router-dom and rename it as RouterLink
-import { Link as ScrollLink } from 'react-scroll'; // Import from react-scroll and rename it as ScrollLink
+import { Link as RouterLink, useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { Link as ScrollLink } from 'react-scroll';
 
 const Navbar = () => {
-    const [isHidden, setIsHidden] = useState(false); // State to manage navbar visibility
-    let lastScrollTop = 0; // Keeps track of the last scroll position
+    const [isHidden, setIsHidden] = useState(false);
+    let lastScrollTop = 0;
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -18,16 +19,26 @@ const Navbar = () => {
                 setIsHidden(false);
             }
 
-            lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // For Mobile or negative scrolling
+            lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
         };
 
         window.addEventListener('scroll', handleScroll);
 
-        // Cleanup event listener on component unmount
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, [lastScrollTop]);
+
+    const handleLoginClick = () => {
+        const hostname = window.location.hostname;
+
+        if (hostname === 'exambuilder.online') {
+            // Change hostname to admin.exambuilder.online and navigate to /login
+            window.location.href = 'https://admin.exambuilder.online/login';
+        } else {
+            navigate('/login');
+        }
+    };
 
     return (
         <nav className={`navbar ${isHidden ? 'hidden' : ''}`}>
@@ -37,7 +48,7 @@ const Navbar = () => {
                 <li><ScrollLink to="feature" smooth={true} duration={500}>Features</ScrollLink></li>
                 <li><ScrollLink to="help" smooth={true} duration={500}>Help</ScrollLink></li>
             </ul>
-            <RouterLink to="/login" className="login-button">Login</RouterLink>
+            <button onClick={handleLoginClick} className="login-button">Login</button>
         </nav>
     );
 };

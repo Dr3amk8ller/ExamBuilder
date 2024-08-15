@@ -1,33 +1,11 @@
-
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import '../HomePage.css';
 import { useNavigate } from 'react-router-dom';
-// import Register from './UserAuth/Register';
 import Navbarr from '../Navbarr';
 import AboutUsPage from '../AboutUsPage';
 import FeaturesPage from '../FeaturesPage';
 import HelpPage from '../HelpPage';
 import Footer from '../Footer';
-import Header from '../Header';
-
-
-
-// import Footer from './Footer';
-
-
-// import image1 from './student1.jpg';
-// import image2 from './student2.jpg';
-// import image3 from './student5.jpg';
-// import image4 from './student4.jpg';
-// import image5 from './student8.jpg';
-// import image6 from './student9.jpg';
-// import think from './think.jpg';
-// import temp from './temp.jpeg';
-
-// const images = [
-//     image1, image2, image3, image4, image5, image6
-// ];
+import '../HomePage.css';
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -37,45 +15,34 @@ const HomePage = () => {
         setShowWhyChooseUs(!showWhyChooseUs);
     };
 
-    // const handleRegisterClick = () => {
-    //     navigate('/Home'); // Navigate to the desired route
-    // };
+    const handleRegisterClick = () => {
+        const hostname = window.location.hostname;
+
+        if (hostname === 'exambuilder.online') {
+            // Change hostname to admin.exambuilder.online and navigate to /login
+            window.location.href = 'https://admin.exambuilder.online/register';
+        } else {
+            navigate('/register');
+        }
+    };
 
     return (
-
-
         <div>
             <Navbarr />
             <section id="home">
                 <div className="home-container">
                     <div className="header-content">
-                        {/* <h1 className="heading">Welcome to the Student Exam Portal</h1> */}
                         <p className="para">Your gateway to manage and take exams efficiently</p>
                         <div className="login-options">
-                           <Link to="/register">
-                            <a className="registerbutton">Register Here</a>
-                            </Link>
-                            {/* <a
-                                href="/student-login" // Optional, for SEO and fallback
-                                className="btn"
-                                onClick={(e) => {
-                                    e.preventDefault(); // Prevent the default anchor behavior
-                                    handleRegisterClick(); // Call the custom click handler
-                                }}
-                            >
+                            <button className="registerbutton" onClick={handleRegisterClick}>
                                 Register Here
-                            </a> */}
-
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                {/* About Section */}
                 <section className="about-section">
                     <div className="about-content">
-                        <div className="about-image">
-                            {/* <img src={temp} alt="About Us" /> */}
-                        </div>
                         <div className="about-text">
                             <h2>About Us</h2>
                             <h3>Best Software For Your Evaluation</h3>
@@ -94,16 +61,13 @@ const HomePage = () => {
                             <p>
                                 This is the last online exam system you'll ever need!
                             </p>
-                            <a href="#why-choose-us" className="homebtn-about" onClick={handleWhyChooseUsClick}>Why Choose Us ?</a>
-                            {/* <div className="think">
-                        <img src={think} />
-                    </div> */}
-
+                            <a href="#why-choose-us" className="homebtn-about" onClick={handleWhyChooseUsClick}>
+                                Why Choose Us?
+                            </a>
                         </div>
                     </div>
                 </section>
 
-                {/* Why Choose Us Section */}
                 {showWhyChooseUs && (
                     <section id="why-choose-us" className="why-choose-us">
                         <div className="why-choose-us-content">
@@ -156,18 +120,6 @@ const HomePage = () => {
                 <AboutUsPage />
                 <FeaturesPage />
                 <HelpPage />
-
-                {/* <section className="gallery-section">
-                    <p className="gallery-heading">ExamBuilder Gallery</p>
-                    <div className="gallery-container">
-                        {images.map((image, index) => (
-                            <div key={index} className="gallery-item">
-                                <img src={image} alt={`Gallery Item ${index + 1}`} />
-                            </div>
-                        ))}
-                    </div>
-                </section> */}
-
             </section>
             <Footer />
         </div>
