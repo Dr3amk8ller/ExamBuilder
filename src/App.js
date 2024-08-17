@@ -18,7 +18,7 @@ const App = () => {
       <div className="App">
         <Routes>
   
-          {hostname === 'exambuilder.online' ? (                // if changes are done both on local host and hompage
+          {hostname === 'exambuilder.online' ? (                // if changes are done both on local host and hompageee
             <>
               <Route path="/" element={<HomePage />} />
               <Route path="*" element={<Navigate to="/" />} />
