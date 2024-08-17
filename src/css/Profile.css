@@ -3,16 +3,26 @@
   flex-direction: column;
   margin-top: 40px;
   align-items: center;
+  
 
 }
 
 .profile-image-card {
   width: 100%;
-  max-width: 400px;
+  height:100%;
+  max-width: 350px;
   margin-bottom: 20px;
   position: relative;
-
- 
+}
+/* .contact-details-card{
+  width:500px;
+  padding:10px 0px 10px 10px;
+  margin-left: 20px;
+  font-size: 25px;
+} */
+.contact-details-card {
+  width: 100%;
+  max-width: 500px;
 }
 
 .profile-header-card {
@@ -35,7 +45,7 @@
   /* background-image: url('/src/Assets/userimage.jpg'); */
 }
 
-.editt-button {
+/* .editt-button {
   background-color: #0a4570;
   color: white;
   border: none;
@@ -47,14 +57,11 @@
   display: center;
 }
 
-.edit-button:hover {
+.editt-button:hover {
   background-color: #0056b3;
-}
+} */
 
-.contact-details-card {
-  width: 100%;
-  max-width: 600px;
-}
+
 
 .profile-card {
   background-color: #fff;
@@ -104,8 +111,22 @@
   text-align: left;
   padding-left: 10px;
 }
-
+/* for tablet */
 @media (max-width: 768px) {
+  .profile-container{
+    margin-top: 30px;
+  }
+  .profile-image-card{
+    width:250px;
+    margin-left: 20px;
+    /* margin-bottom: 0px; */
+   }
+  .contact-details-card{
+    width:450px;
+    /* padding:0px 0px 10px 10px; */
+    margin-left: 20px;
+    font-size: 16px;
+  }
   .profile-image {
     width: 80px;
     height: 80px;
@@ -113,7 +134,7 @@
 
   .edit-button {
     padding: 8px 16px;
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .profile-card {
@@ -121,55 +142,20 @@
   }
 
   .profile-card-title {
-    font-size: 22px;
+    font-size: 23px;
+  }
+  span.profile-card-label{
+    margin-left: 50px;
+  }
+  span.profile-card-value{
+    margin-right: 50px;
+    
   }
 
   .profile-card-details {
-    align-items: flex-start;
-  }
-
-  .profile-card-row {
-    flex-direction: row;
-    align-items: flex-start;
-    margin-bottom: 15px;
-  }
-
-  .profile-card-label, .profile-card-value {
-    text-align: left;
-    padding: 0;
-  }
-
-  .profile-card-label {
-    padding-bottom: 5px;
-  }
-
-  .profile-card-value {
-    padding-top: 5px;
-  }
-}
-
-@media (max-width: 480px) {
-  .profile-image {
-    width: 60px;
-    height: 60px;
-  }
-
-  .edit-button {
-    padding: 6px 12px;
-    font-size: 12px;
-  }
-
-  .profile-card {
-    padding: 10px;
-  }
-
-  .profile-card-title {
-    font-size: 20px;
-  }
-
-  .profile-card-details {
-    align-items: flex-start;
-  }
+    align-items: center;
+    
+    }
 
   .profile-card-row {
     flex-direction: row;
@@ -190,3 +176,107 @@
     padding-top: 5px;
   }
 }
+
+@media (max-width: 480px) {
+  .profile-image-card{
+    width:150px;
+    margin-left: 20px;
+  }
+  .contact-details-card{
+    width:300px;
+    padding:10px 0px 10px 10px;
+    margin-left: 20px;
+    font-size: 14px;
+        
+  }
+  .profile-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .edit-button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .profile-card {
+    padding: 40px;
+  }
+
+  .profile-card-title {
+    font-size: 20px;
+    margin-right: 40px;
+    padding-left: 25px;
+    /* justify-content: space-between; */
+  }
+  span.profile-card-label{
+    margin-left: 0px;
+  }
+  span.profile-card-value{
+    margin-right: 0px;
+    display: flex;
+  flex-direction: row; 
+  /* justify-content: center; */
+    
+  }
+  div.profile-card-details{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profile-card-details {
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    /* display: flex; */
+    /* justify-content: space-between; */
+  }
+
+  .profile-card-row {
+    flex-direction: row;
+    
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .profile-card-label, .profile-card-value {
+    text-align: left;
+    padding: 5px;
+  }
+
+  .profile-card-label {
+    padding-bottom: 5px;
+  }
+
+  .profile-card-value {
+    padding-top: 5px;
+  }
+}
+
+/* Add this to your existing CSS file */
+
+.editt-button {
+  background-color: #ffff;
+  border: 3px solid #0A4570;
+  border-width:3.8px;
+  border-radius: 50%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s ease;
+  margin-top: 5px;
+}
+
+/* .editt-button:hover {
+  background-color: #0A4570;
+} */
+
+.editt-button::before {
+  content: '\270E'; /* Unicode for pencil icon */
+  font-size: 16px;
+  /* color: #333; */
+}
+

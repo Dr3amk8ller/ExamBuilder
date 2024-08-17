@@ -2,18 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaBars, FaEllipsisV } from 'react-icons/fa';
 import '../css/Navigation.css';
-// import React, { useContext } from 'react';
-// import { UserProfileProvider,UserProfileContext } from '../UserprofileContext';
+import SideBar from './SideBar';
+import { useUserProfile } from '../contexts/UserProfileContext';
+// import { useUserProfile } from '../contexts/UserProfileContext';
 
 
-const Navbar = ({ isSidebarOpen, toggleSidebar, resEmail}) => {
+const Navbar = ({ isSidebarOpen, toggleSidebar,userInitials, resEmail}) => {
+  // const { showLoader } = useLoader();
+  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
+  const { userProfileLink } = useUserProfile();
+  // const[profileloading,setProfileLoading]=useState(false);
   useEffect(()=>{
-    const storedProfilePic = localStorage.getItem('image');
-    if (storedProfilePic) {
-        // setImage(storedProfilePic);
-    }
+    // const storedProfilePic = localStorage.getItem('image');
+    // if (storedProfilePic) {
+    //     setImage(storedProfilePic);
+    // }
 
     const handleStorageChange = () => {
      
@@ -36,19 +41,23 @@ const Navbar = ({ isSidebarOpen, toggleSidebar, resEmail}) => {
   };
 
   const handleProfileClick = () => {
+    // showLoader();
+    
     navigate('/navigation/profile');
   };
+  console.log("profileLink",userProfileLink);
+
   const profile=localStorage.getItem('pimage');
   return (
-    <nav className={`custom-navbar ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+
+    <nav  className={`custom-navbar ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+      
       <div className="container-fluid">
-        {/* <h3>hi:{profile}</h3> */}
-        {/* <div>
-          <img src={profile} alt="" />
-        </div> */}
+       
         <div className="toggle-sidebar-btn" onClick={toggleSidebar}>
           <FaBars />
         </div>
+        {/* <h3>sJQDH;{userProfileLink}</h3> */}
         <div className="dropdown ms-auto">
           <button
             className="dropdown-toggle"
@@ -56,11 +65,10 @@ const Navbar = ({ isSidebarOpen, toggleSidebar, resEmail}) => {
             id="dropdownMenuButton"
             onClick={toggleDropdown}
           >
-           
             
             <div className="user-initials">
             <img
-              src={profile}
+              src={userProfileLink}
               alt="Profile"
               className="user-initials" // You can style this class as needed
             />

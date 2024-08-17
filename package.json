@@ -29,6 +29,7 @@
     "react-loader-spinner": "^6.1.6",
     "react-native-phone-number-input": "^2.1.0",
     "react-phone-number-input": "^3.3.12",
+    "react-refresh": "^0.14.2",
     "react-router-dom": "^6.25.1",
     "react-scripts": "5.0.1",
     "react-scroll": "^1.9.0",
