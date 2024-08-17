@@ -96,7 +96,7 @@ const Login = () => {
           localStorage.setItem('pimage',responseData.UserProfileLink);
           localStorage.setItem('token', token);
           localStorage.setItem('email', email);
-          navigate('/NavigationBar');
+          navigate('/navigationbar');
         } else {
           if(response.data.statusCode===401||response.data.statusCode===404 || response.data.statusCode===403 || response.data.statusCode===400){
             toast.error("Invalid UserName or Password");

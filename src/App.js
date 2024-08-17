@@ -17,17 +17,18 @@ const App = () => {
     <Router>
       <div className="App">
         <Routes>
-          {hostname === 'exambuilder.online' ? (
+  
+          {hostname === 'exambuilder.online' ? (                // if changes are done both on local host and hompage
             <>
               <Route path="/" element={<HomePage />} />
               <Route path="*" element={<Navigate to="/" />} />
             </>
-          ) : hostname === 'admin.exambuilder.online' ? (
+          ) : hostname === 'admin.exambuilder.online' ? (       // if changes are done both on local host and admin module 
             <>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/navigation/*" element={<Navigation />} />
-              <Route path="/NavigationBar" element={<NavigationBar />} />
+              <Route path="/navigationbar" element={<NavigationBar />} />
               <Route path="*" element={<Navigate to="/login" />} />
             </>
           ) : (
@@ -36,7 +37,7 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/navigation/*" element={<Navigation />} />
-              <Route path="/NavigationBar" element={<NavigationBar />} /> 
+              <Route path="/navigationbar" element={<NavigationBar />} /> 
               <Route path="/header" element={<Header />} /> 
               <Route path="/Aboutpage" element={<AboutUsPage />} /> 
               <Route path="/Features" element={<FeaturesPage />} /> 

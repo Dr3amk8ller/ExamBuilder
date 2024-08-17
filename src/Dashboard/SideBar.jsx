@@ -1,6 +1,6 @@
 import React from 'react';
 import '../css/Side.css';
-import { FaHome, FaListAlt, FaInfoCircle, FaBars, FaPinterest } from 'react-icons/fa';
+import { FaHome, FaListAlt, FaInfoCircle, FaBars, FaPen } from 'react-icons/fa';
 import companyLogo from '../Assets/logo.png';
 import { Link } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ const SideBar = ({ onToggleSidebar, isOpen }) => {
           {isOpen && <span>Dashboard</span>}
         </div>
         <div className="menu-item">
-          <Link to="/NavigationBar" style={{ color: 'white', textDecoration: 'none' }}>
+          <Link to="/navigationbar" style={{ color: 'white', textDecoration: 'none' }}>
             <FaListAlt />
             {isOpen && <span>All Quizzes</span>}
           </Link>
@@ -30,7 +30,7 @@ const SideBar = ({ onToggleSidebar, isOpen }) => {
         </div>
         <div className="menu-item">
           <Link to="/navigation/QuizSearch" style={{ color: 'white', textDecoration: 'none' }}>
-            <FaPinterest />
+            <FaPen />
             {isOpen && <span>Entrance Center</span>}
           </Link>
         </div>

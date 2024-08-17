@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../css/ExamForm.css";
 import "../css/Addmorequestion.css";
 
-const Addmorequestion = ({ title, onClose,onQuestionAdded }) => {
+const Addmorequestion = ({ title, onClose, onQuestionAdded }) => {
   const [questionType, setQuestionType] = useState("");
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState({
@@ -16,12 +16,11 @@ const Addmorequestion = ({ title, onClose,onQuestionAdded }) => {
     correctAnswerIndex: "",
     answerDescription: "",
     questionImage: null,
-    optionImages: ["", ""],
+    optionImages: [],
   });
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
@@ -80,8 +79,6 @@ const Addmorequestion = ({ title, onClose,onQuestionAdded }) => {
 
   const handleCorrectAnswerChange = (e) => {
     const selectedOptionIndex = parseInt(e.target.value, 10);
-    console.log("Selected Option Index:", selectedOptionIndex);
-
     setCurrentQuestion((prevState) => ({
       ...prevState,
       correctAnswerIndex: selectedOptionIndex,
@@ -90,10 +87,10 @@ const Addmorequestion = ({ title, onClose,onQuestionAdded }) => {
   };
 
   const handleAddOption = () => {
-    setCurrentQuestion({
-      ...currentQuestion,
-      options: [...currentQuestion.options, ""],
-    });
+    setCurrentQuestion((prevState) => ({
+      ...prevState,
+      options: [...prevState.options, ""],
+    }));
   };
 
   const handleRemoveOption = (index) => {
@@ -106,6 +103,16 @@ const Addmorequestion = ({ title, onClose,onQuestionAdded }) => {
     });
   };
 
+  const validateOptions = () => {
+    let validationErrors = {};
+    currentQuestion.options.forEach((option, index) => {
+      if (!option.trim()) {
+        validationErrors[`option${index + 1}`] = `Option ${index + 1} is required`;
+      }
+    });
+    return validationErrors;
+  };
+
   const handleAddQuestion = async () => {
     let validationErrors = {};
 
@@ -114,12 +121,8 @@ const Addmorequestion = ({ title, onClose,onQuestionAdded }) => {
       if (!currentQuestion.question.trim()) {
         validationErrors.question = "Question is required";
       }
-      if (!currentQuestion.options[0].trim()) {
-        validationErrors.option1 = "Option 1 is required";
-      }
-      if (!currentQuestion.options[1].trim()) {
-        validationErrors.option2 = "Option 2 is required";
-      }
+      const optionErrors = validateOptions();
+      validationErrors = { ...validationErrors, ...optionErrors };
       if (!currentQuestion.correctAnswerIndex) {
         validationErrors.correctAnswer = "Correct answer is required";
       }
@@ -169,7 +172,7 @@ const Addmorequestion = ({ title, onClose,onQuestionAdded }) => {
             mcqQuizz: [questionData],
           }),
         };
-        const addQuestionResponse = await axios.post(
+        await axios.post(
           "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/add/Question",
           payload
         );
@@ -192,7 +195,7 @@ const Addmorequestion = ({ title, onClose,onQuestionAdded }) => {
           }),
         };
 
-        const addQuestionResponse = await axios.post(
+        await axios.post(
           "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/questionstyle/descriptiveQuestion",
           payload
         );
@@ -221,7 +224,6 @@ const Addmorequestion = ({ title, onClose,onQuestionAdded }) => {
     }
   };
 
-
   return (
     <div className="addmorequestion-container">
       <div className="overlay" onClick={onClose}></div>
@@ -248,7 +250,7 @@ const Addmorequestion = ({ title, onClose,onQuestionAdded }) => {
               </select>
             </div>
           </form>
-          {/* yuvraj */}
+          {/* MCQ Section */}
           {questionType === "MCQ" && (
             <div className="mcq-section">
               <h3>Add MCQ Question</h3>
@@ -282,19 +284,15 @@ const Addmorequestion = ({ title, onClose,onQuestionAdded }) => {
                     value={option}
                     onChange={(e) => handleOptionChange(index, e)}
                   />
-                  {index === 0 && errors.option1 && (
-                    <p className="error-message">{errors.option1}</p>
-                    // {errors.option1 && <div className="error-message">{errors.option1}</div>}
-
-                  )}
-                  {index === 1 && errors.option2 && (
-                    <p className="error-message">{errors.option2}</p>
+                  {errors[`option${index + 1}`] && (
+                    <p className="error-message">{errors[`option${index + 1}`]}</p>
                   )}
                   {index >= 2 && (
                     <button
                       type="button"
                       className="remove-button"
                       onClick={() => handleRemoveOption(index)}
+                      // onClick={() => handleRemoveOption(index)}
                     >
                       Remove
                     </button>
@@ -308,7 +306,7 @@ const Addmorequestion = ({ title, onClose,onQuestionAdded }) => {
                   value={currentQuestion.correctAnswerIndex}
                   onChange={handleCorrectAnswerChange}
                 >
-                  <option value="" disabled={!currentQuestion.correctAnswer}>
+                  <option value="" disabled={!currentQuestion.options.length}>
                     Select correct answer
                   </option>
                   {currentQuestion.options.map((option, index) => (
@@ -317,7 +315,9 @@ const Addmorequestion = ({ title, onClose,onQuestionAdded }) => {
                     </option>
                   ))}
                 </select>
-                {errors.correctAnswer && <p className="error-message">{errors.correctAnswer}</p>}
+                {errors.correctAnswer && (
+                  <p className="error-message">{errors.correctAnswer}</p>
+                )}
               </div>
               <div className="form-group">
                 <textarea
@@ -355,6 +355,7 @@ const Addmorequestion = ({ title, onClose,onQuestionAdded }) => {
             </div>
           )}
 
+          {/* Subjective Section */}
           {questionType === "Subjective" && (
             <div className="subjective-section">
               <h3>Add Subjective Question</h3>

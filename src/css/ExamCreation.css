@@ -3,7 +3,7 @@
   padding: 20px;
   background-color: #fff;
   width: 90%;
-  margin: 0 auto;
+margin-left: 110px ;
   height: 80vh;
   transition: all 0.3s ease;
 }
@@ -236,7 +236,7 @@ display: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 2px;
 }
 
 .pagination-container button {

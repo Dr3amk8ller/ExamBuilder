@@ -131,7 +131,12 @@ const CreateExam = ({ onStartExam }) => {
             setLoading(false);
         }
     };
-
+    // Added the functionality to filter quizzes according to quiztitle or creator name
+    const filteredExamDetails = examDetails.filter(exam =>
+        exam.quizTitle.toLowerCase().includes(searchTerm.toLowerCase())
+        // exam.creatorName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    
 
     const handleView = (exam) => {
         navigate(`/navigation/quiz-detail/${exam.quizzId}`);
@@ -235,7 +240,9 @@ const CreateExam = ({ onStartExam }) => {
                     />
                 </div>
             </div>
-            <ExamDetailsTable examDetails={examDetails} onView={handleView} onEdit={handleEdit} onDelete={handleDelete}  onSetting={handleSetting}/>
+            {/* <ExamDetailsTable examDetails={examDetails} onView={handleView} onEdit={handleEdit} onDelete={handleDelete}  onSetting={handleSetting}/> */}
+            <ExamDetailsTable examDetails={filteredExamDetails} onView={handleView} onEdit={handleEdit} onDelete={handleDelete} onSetting={handleSetting} />
+
             {showTitleModal && (
                 <ExamTitleModal
                     handleTitleSubmit={handleTitleSubmit}

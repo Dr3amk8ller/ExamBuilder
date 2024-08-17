@@ -14,7 +14,7 @@ const HomePage = () => {
     const handleWhyChooseUsClick = () => {
         setShowWhyChooseUs(!showWhyChooseUs);
     };
-
+   // when we make any changes like any button that shift on admin module from homepage
     const handleRegisterClick = () => {
         const hostname = window.location.hostname;
 

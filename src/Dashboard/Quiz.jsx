@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faEdit, faTrash, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import '../css/Quiz.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -74,6 +74,7 @@ const Quiz = () => {
     };
 
     const handleDeleteQuestion = async (questionId) => {
+        setLoading(true);
         const token = localStorage.getItem('token');
         const apiUrl = 'https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/dashdel/dashquestiondel';
         const payload = {
@@ -106,6 +107,9 @@ const Quiz = () => {
         } catch (error) {
             console.error('Failed to delete question:', error);
             handleApiErrors(error.response.status);
+        }
+        finally{
+            setLoading(false);
         }
     };
 
@@ -166,7 +170,7 @@ const Quiz = () => {
                         <FontAwesomeIcon icon={faArrowLeft} />
                     </button>
                 </div>
-                  <button className='add-question' onClick={handleOpenAddMoreQuestion}>Add Question</button>
+                <button className='add-question' onClick={handleOpenAddMoreQuestion}>Add Question</button>
                 {isAddMoreQuestionOpen && (
                     <Addmorequestion title={quizDetails.quizTitle} onClose={handleCloseAddMoreQuestion} onQuestionAdded={handleQuestionAdded} />
                 )}
@@ -187,14 +191,30 @@ const Quiz = () => {
                                             <button
                                                 className="edit-btn"
                                                 onClick={() => handleEditMcqQuestion(question)}
+                                                disabled={loading}
                                             >
                                                 <FontAwesomeIcon icon={faEdit} />
                                             </button>
+                                            {/* <button
+                                                className="delete-btn"
+                                                onClick={() => handleDeleteQuestion(question.mcqQuestion_id)}
+                                                disabled={loading}
+
+                                            >
+                                                <FontAwesomeIcon icon={faTrash} />
+                                                {loading ? 'deleting' :'delete'}
+                                              
+                                            </button> */}
                                             <button
                                                 className="delete-btn"
                                                 onClick={() => handleDeleteQuestion(question.mcqQuestion_id)}
+                                                disabled={loading}
                                             >
-                                                <FontAwesomeIcon icon={faTrash} />
+                                                {loading ? (
+                                                    <FontAwesomeIcon icon={faSpinner} spin /> 
+                                                ) : (
+                                                    <FontAwesomeIcon icon={faTrash} /> 
+                                                )}
                                             </button>
                                         </div>
                                         <div className="card-boydy">
@@ -222,27 +242,27 @@ const Quiz = () => {
                                                     ))}
                                                 </ol>
                                             </div> */}
-<div className="options-container">
-    <h5>Options:</h5>
-    <ol style={{ paddingLeft: '20px', listStyleType: 'decimal', fontSize: '16px', marginBottom: '20px'}}>
-        {question.options.map((option, optionIndex) => (
-            <li 
-                key={option._id}
-                style={{
-                    marginBottom: '10px',
-                    marginLeft: '10px',
-                    padding: '3px',
-                    borderRadius: '4px',
-                    width: '90%',
-                
-                }}
-            >
-                <span>{option.answer}</span>
-                {/* Optionally include images or other content */}
-            </li>
-        ))}
-    </ol>
-</div>
+                                            <div className="options-container">
+                                                <h5>Options:</h5>
+                                                <ol style={{ paddingLeft: '20px', listStyleType: 'decimal', fontSize: '16px', marginBottom: '20px' }}>
+                                                    {question.options.map((option, optionIndex) => (
+                                                        <li
+                                                            key={option._id}
+                                                            style={{
+                                                                marginBottom: '10px',
+                                                                marginLeft: '10px',
+                                                                padding: '3px',
+                                                                borderRadius: '4px',
+                                                                width: '90%',
+
+                                                            }}
+                                                        >
+                                                            <span>{option.answer}</span>
+                                                            {/* Optionally include images or other content */}
+                                                        </li>
+                                                    ))}
+                                                </ol>
+                                            </div>
 
 
                                             <p><strong>Description:</strong> {question.description}</p>
