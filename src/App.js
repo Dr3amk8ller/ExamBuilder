@@ -7,16 +7,16 @@ import Navigation from './Navigation';
 import NavigationBar from './Dashboard/NavigationBar'; 
 import HomePage from './Dashboard/HomePage';
 import Header from './Header';
-import Homepage from './HomePrev';
+// import Homepage from './HomePrev';
 import AboutUsPage from './AboutUsPage';
 import FeaturesPage from './FeaturesPage';
 import HelpPage from './HelpPage';
-
+import { UserProfileProvider } from './contexts/UserProfileContext';
 
 
 const App = () => {
   return (
-
+    <UserProfileProvider>
     <Router>
       <div className="App">
    
@@ -37,6 +37,7 @@ const App = () => {
         </Routes>
       </div>
     </Router>
+    </UserProfileProvider>
   );
 };
 
