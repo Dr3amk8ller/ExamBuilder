@@ -1,14 +1,13 @@
-//added loader
-
-import React, { useState, useEffect ,} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AvatarEditor from 'react-avatar-editor';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import '../css/Profile.css';
 import Navbar from '../Dashboard/NavBar';
-
+import { useUserProfile } from '../contexts/UserProfileContext';
 
 const Profile = () => {
- 
   const [user, setUser] = useState({
     name: '',
     email: '',
@@ -23,8 +22,7 @@ const Profile = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [editor, setEditor] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [testimage,settestImage]=useState(false);
- 
+  const { setUserProfileLink } = useUserProfile();
 
   useEffect(() => {
     fetchUserProfile();
@@ -68,11 +66,8 @@ const Profile = () => {
           createdAt: new Date(createdAt).toLocaleString(),
           profileImage: UserProfileLink || '',
         });
-        // setUserProfileLink(UserProfileLink);
-        // console.log(testimage);
-        // if(testimage){
-        //   localStorage.setItem('pimage',UserProfileLink);
-        // }
+        setUserProfileLink(UserProfileLink);
+        window.dispatchEvent(new Event('profileImageUpdated'));
       } else {
         setError('Unexpected response structure');
       }
@@ -107,12 +102,10 @@ const Profile = () => {
 
   const handleSaveClick = async () => {
     if (editor) {
-      // localStorage.setItem('pimage',image/jpeg);
       const canvas = editor.getImageScaledToCanvas().toDataURL('image/jpeg');
-      console.log("what is this",canvas);
-      const base64String = canvas.split(',')[1]; // Extract the base64 string without the data URL prefix
+      const base64String = canvas.split(',')[1]; 
 
-      setUploading(true); // Show the loader
+      setUploading(true); 
 
       try {
         const token = localStorage.getItem('token');
@@ -127,22 +120,26 @@ const Profile = () => {
           },
         });
 
+        // Update the profile image in the local state and the context
         setUser({ ...user, profileImage: canvas });
-        localStorage.setItem('pimage', canvas);
-        // setUserProfileLink(canvas);
+        setUserProfileLink(canvas); // Update context, which triggers a rerender in Navbar
         setEditing(false);
-        // settestImage(true);
-        
-        console.log('Image uploaded successfully');
       } catch (error) {
         setError(`Error: ${error.message}`);
       } finally {
-        setUploading(false); // Hide the loader after upload completes
+        setUploading(false); 
       }
     }
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="loader-overlay">
+        <div className="loader"></div>
+      </div>
+    );
+  }
+
   if (error) return <div>{error}</div>;
 
   const nameParts = user.name.split(' ');
@@ -150,11 +147,12 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
-      <Navbar userInitials={initials} resEmail={user.email} />
-      {/* <h4>{user.email}</h4> */}
+      <div>
+        {/* <Navbar userInitials={initials} resEmail={user.email} /> */}
+      </div>
       <div className="profile-image-card">
         <div className="profile-header-card">
-          {uploading && <div className="loader-overlay"><div className="loader"></div></div>} {/* Show loader overlay if uploading */}
+          {uploading && <div className="loader-overlay"><div className="loader"></div></div>}
           {editing ? (
             <>
               <AvatarEditor
@@ -164,20 +162,28 @@ const Profile = () => {
                 height={250}
                 border={50}
                 borderRadius={125}
-                color={[47, 66, 67]} // RGBA
+                color={[47, 66, 67]} 
                 scale={1.2}
                 rotate={0}
               />
-              <button className="editt-button" onClick={handleSaveClick}>Upload</button>
+              <button className="edit-button" onClick={handleSaveClick}>Upload</button>
             </>
           ) : (
             <>
-              <img
-                src={user.profileImage}
-                className="profile-image"
-                alt="Profile"
-              />
-              <button className="editt-button" onClick={handleEditClick}>Edit</button>
+              {user.profileImage ? (
+                <img
+                  src={user.profileImage}
+                  className="profile-image"
+                  alt="Profile"
+                />
+              ) : (
+                <FontAwesomeIcon className="profile-image"
+                  icon={faUserCircle}
+                  size="10x"
+                  style={{ color: '#cccccc' }} // White or grey skeleton image
+                />
+              )}
+              <button className="editt-button" onClick={handleEditClick}></button>
               <input
                 id="fileInput"
                 type="file"

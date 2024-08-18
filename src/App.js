@@ -5,15 +5,18 @@ import Login from './Login';
 import Register from './UserAuth/Register';
 import Navigation from './Navigation'; 
 import NavigationBar from './Dashboard/NavigationBar'; 
+import Header from './Header';
+// import Homepage from './HomePrev';
 import AboutUsPage from './AboutUsPage';
 import FeaturesPage from './FeaturesPage';
 import HelpPage from './HelpPage';
-import Header from './Header';
+import { UserProfileProvider } from './contexts/UserProfileContext';
+
 
 const App = () => {
   const hostname = window.location.hostname;
-
   return (
+    <UserProfileProvider>
     <Router>
       <div className="App">
         <Routes>
@@ -48,6 +51,7 @@ const App = () => {
         </Routes>
       </div>
     </Router>
+    </UserProfileProvider>
   );
 };
 

@@ -9,6 +9,7 @@ import { FaEye, FaEyeSlash, FaEnvelope } from 'react-icons/fa';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useUserProfile } from './contexts/UserProfileContext';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
@@ -27,6 +28,7 @@ const Login = () => {
   const [emailTouched, setEmailTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
   const navigate = useNavigate();
+  const { setUserProfileLink } = useUserProfile();
 
   useEffect(() => {
     setEmail('');
@@ -93,7 +95,8 @@ const Login = () => {
 
         if (token) {
           setIsLoggedIn(true);
-          localStorage.setItem('pimage',responseData.UserProfileLink);
+          // localStorage.setItem('pimage',responseData.UserProfileLink);
+          setUserProfileLink(responseData.UserProfileLink);
           localStorage.setItem('token', token);
           localStorage.setItem('email', email);
           navigate('/navigationbar');

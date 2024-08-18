@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import SideBar from './SideBar';
 import CreateExam from './CreateExam';
 import ExamForm from './ExamForm';
-import '../css/Navigation.css';
+// import '../css/Navigation.css';
 import Navbar from './NavBar';
+
 
 const Navigation = () => {
   const [showExamForm, setShowExamForm] = useState(false);
@@ -24,7 +25,9 @@ const Navigation = () => {
         <SideBar isOpen={isSidebarOpen} onToggleSidebar={handleToggleSidebar} />
         <div className={`main-content ${isSidebarOpen ? 'sidebar-open' : ''}`}>
           {showExamForm ? <ExamForm /> : <CreateExam onStartExam={handleStartExam} />}
+         
         </div>
+       
       </div>
     </>
   );

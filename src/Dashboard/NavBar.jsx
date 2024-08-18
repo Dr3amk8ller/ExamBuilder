@@ -1,31 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaBars, FaEllipsisV } from 'react-icons/fa';
+import { FaBars, FaUserCircle } from 'react-icons/fa';
 import '../css/Navigation.css';
-// import React, { useContext } from 'react';
-// import { UserProfileProvider,UserProfileContext } from '../UserprofileContext';
+import { useUserProfile } from '../contexts/UserProfileContext';
 
-
-const Navbar = ({ isSidebarOpen, toggleSidebar, resEmail}) => {
+const Navbar = ({ isSidebarOpen, toggleSidebar }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
-  useEffect(()=>{
-    const storedProfilePic = localStorage.getItem('image');
-    if (storedProfilePic) {
-        // setImage(storedProfilePic);
-    }
+  const { userProfileLink } = useUserProfile();
 
+  useEffect(() => {
     const handleStorageChange = () => {
-     
+      // Handle changes to localStorage here
     };
 
     window.addEventListener('storage', handleStorageChange);
 
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
-  },[]);
+  }, []);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -38,14 +32,10 @@ const Navbar = ({ isSidebarOpen, toggleSidebar, resEmail}) => {
   const handleProfileClick = () => {
     navigate('/navigation/profile');
   };
-  const profile=localStorage.getItem('pimage');
+
   return (
     <nav className={`custom-navbar ${isSidebarOpen ? 'sidebar-open' : ''}`}>
       <div className="container-fluid">
-        {/* <h3>hi:{profile}</h3> */}
-        {/* <div>
-          <img src={profile} alt="" />
-        </div> */}
         <div className="toggle-sidebar-btn" onClick={toggleSidebar}>
           <FaBars />
         </div>
@@ -56,16 +46,17 @@ const Navbar = ({ isSidebarOpen, toggleSidebar, resEmail}) => {
             id="dropdownMenuButton"
             onClick={toggleDropdown}
           >
-           
-            
             <div className="user-initials">
-            <img
-              src={profile}
-              alt="Profile"
-              className="user-initials" // You can style this class as needed
-            />
-              </div>
-            {/* <FaEllipsisV /> */}
+              {userProfileLink ? (
+                <img
+                  src={userProfileLink}
+                  alt="Profile"
+                  className="user-initials"
+                />
+              ) : (
+                <FaUserCircle size="2x" style={{ color: '#cccccc' }} />
+              )}
+            </div>
           </button>
           <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`} aria-labelledby="dropdownMenuButton">
             <button className="dropdown-item" type="button" onClick={handleProfileClick}>Profile</button>

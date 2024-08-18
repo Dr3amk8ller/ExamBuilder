@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import './Footer.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import '@fortawesome/fontawesome-free/css/all.min.css';
+// import '@fortawesome/fontawesome-free/css/all.min.css';
 import { faPhone, faLocationDot, faHome, faInfoCircle, faBox, faTags, faEnvelope, faNewspaper, faShieldAlt, faGavel, faCookie, faBlog, faQuestionCircle, faPlayCircle } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
