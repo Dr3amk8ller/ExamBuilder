@@ -44,7 +44,7 @@
 
 // export default Navbar;
 import React, { useState, useEffect } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
 
 
@@ -52,6 +52,7 @@ const Navbar = () => {
     const [isHidden, setIsHidden] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     let lastScrollTop = 0;
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -76,7 +77,16 @@ const Navbar = () => {
     const handleToggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+    const handleLoginClick = () => {
+        const hostname = window.location.hostname;
 
+        if (hostname === 'exambuilder.online') {
+            // Change hostname to admin.exambuilder.online and navigate to /login
+            window.location.href = 'https://admin.exambuilder.online/login';
+        } else {
+            navigate('/login');
+        }
+    };
     return (
         <nav className={`navbar ${isHidden ? 'hidden' : ''}`}>
             <button className="toggle-button" onClick={handleToggleMenu}>
@@ -88,7 +98,7 @@ const Navbar = () => {
                 <li><ScrollLink to="feature" smooth={true} duration={500} onClick={() => setIsMenuOpen(false)}>Features</ScrollLink></li>
                 <li><ScrollLink to="help" smooth={true} duration={500} onClick={() => setIsMenuOpen(false)}>Help</ScrollLink></li>
             </ul>
-            <RouterLink to="/login" className="login-button">Login</RouterLink>
+            <button onClick={handleLoginClick} className="login-button">Login</button>
         </nav>
     );
 };
