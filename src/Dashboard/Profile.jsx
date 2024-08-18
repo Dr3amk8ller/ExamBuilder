@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AvatarEditor from 'react-avatar-editor';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import '../css/Profile.css';
 import Navbar from '../Dashboard/NavBar';
 import { useUserProfile } from '../contexts/UserProfileContext';
@@ -168,11 +170,19 @@ const Profile = () => {
             </>
           ) : (
             <>
-              <img
-                src={user.profileImage}
-                className="profile-image"
-                alt="Profile"
-              />
+              {user.profileImage ? (
+                <img
+                  src={user.profileImage}
+                  className="profile-image"
+                  alt="Profile"
+                />
+              ) : (
+                <FontAwesomeIcon className="profile-image"
+                  icon={faUserCircle}
+                  size="10x"
+                  style={{ color: '#cccccc' }} // White or grey skeleton image
+                />
+              )}
               <button className="editt-button" onClick={handleEditClick}></button>
               <input
                 id="fileInput"
