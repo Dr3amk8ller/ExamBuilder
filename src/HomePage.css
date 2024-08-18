@@ -8,7 +8,7 @@ body {
 
 .home-container {
     min-height: 100vh; /* Full viewport height */
-    background-image: url('Assets/study\ \(1\).webp');
+    background-image: url('Assets/ExamBuilder\ \(5\).webp');
     background-size: cover; /* Cover the entire container */
     background-position: top center; /* Start the image from the top and center it horizontally */
     background-repeat: no-repeat; /* Prevent tiling */
@@ -219,16 +219,19 @@ h3 {
     color:#0a4570; /* White text color */
     background: transparent; /* Transparent background */
     border: 2px solid #0a4570; /* White border */
+    color: #f3f3f3; /* Black text color on hover */
+    background-color: #0a4570;
     text-decoration: none;
     border-radius: 8px;
-   margin-top: 400px;
+   margin-top: 340px;
+   margin-left: 15px;
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* White glow effect */
 }
 
 .registerbutton:hover {
     color: #f3f3f3; /* Black text color on hover */
-     background-color: #0a4570;
+     background-color: #063658;
     /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); */
 
 }

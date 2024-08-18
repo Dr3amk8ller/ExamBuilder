@@ -32,7 +32,7 @@ const HomePage = () => {
             <section id="home">
                 <div className="home-container">
                     <div className="header-content">
-                        <p className="para">Your gateway to manage and take exams efficiently</p>
+                        {/* <p className="para">Your gateway to manage and take exams efficiently</p> */}
                         <div className="login-options">
                             <button className="registerbutton" onClick={handleRegisterClick}>
                                 Register Here

@@ -362,7 +362,7 @@ const ExamTitleModal = ({ handleTitleSubmit, setShowTitleModal }) => {
                                     required
                                 />
                             </div>
-                            <button className="submit-button" type="submit">
+                            <button className="submitcreate-button" type="submit">
                                 Get Started
                             </button>
                         </form>
