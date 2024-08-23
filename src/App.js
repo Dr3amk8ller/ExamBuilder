@@ -11,6 +11,7 @@ import AboutUsPage from './AboutUsPage';
 import FeaturesPage from './FeaturesPage';
 import HelpPage from './HelpPage';
 import { UserProfileProvider } from './contexts/UserProfileContext';
+import Plan from './plan';
 
 
 const App = () => {
@@ -45,6 +46,8 @@ const App = () => {
               <Route path="/Aboutpage" element={<AboutUsPage />} /> 
               <Route path="/Features" element={<FeaturesPage />} /> 
               <Route path="/Helppage" element={<HelpPage />} /> 
+              <Route path="/plan" element={<Plan />} /> 
+              
               <Route path="*" element={<Navigate to="/" />} />
             </>
           )}

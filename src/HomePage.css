@@ -8,7 +8,7 @@ body {
 
 .home-container {
     min-height: 100vh; /* Full viewport height */
-    background-image: url('Assets/ExamBuilder\ \(5\).webp');
+    background-image: url('Assets/Image\ 3.png');
     background-size: cover; /* Cover the entire container */
     background-position: top center; /* Start the image from the top and center it horizontally */
     background-repeat: no-repeat; /* Prevent tiling */

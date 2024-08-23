@@ -81,7 +81,7 @@ const SetExamTime = () => {
             </div>
             <div className="submit-button">
                 <button onClick={handleSubmit} disabled={loading}>
-                    {loading ? 'Submitting...' : 'Submit'}
+                    {loading ? 'Starting...' : 'Start'}
                 </button>
             </div>
 

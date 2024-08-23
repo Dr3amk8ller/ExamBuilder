@@ -4,6 +4,7 @@ import Navbarr from '../Navbarr';
 import AboutUsPage from '../AboutUsPage';
 import FeaturesPage from '../FeaturesPage';
 import HelpPage from '../HelpPage';
+import Plan from '../plan';
 import Footer from '../Footer';
 import '../HomePage.css';
 
@@ -120,6 +121,7 @@ const HomePage = () => {
                 <AboutUsPage />
                 <FeaturesPage />
                 <HelpPage />
+                <Plan/>
             </section>
             <Footer />
         </div>

@@ -220,16 +220,16 @@ margin-left: 110px ;
 }
 
 .submitcreate-button {
-margin-left: 20%;
+margin-left: 35%;
   background-color: #0a4570;
   color: white;
   border: none;
-padding: 5px 10px;
+padding: 15px 10px;
   cursor: pointer;
   border-radius: 5px;
-width: 60%;
+width: 30%;
 display: center;
-  font-size: 0.8rem; 
+  font-size: 1rem; 
 }
 
 .pagination-container {
@@ -316,7 +316,7 @@ display: center;
 
 
 /* Tablet Styles */
-@media (max-width: 1024px) {
+@media (max-width: 1180px) {
   .overview-container {
     width: 90%;
     height: 50vh;
@@ -340,7 +340,11 @@ display: center;
   .modall-dialog{
     width: 50%;
   }
+  .modall-title{
+    margin-left: 80px;
+  }
 }
+
 
 /* Mobile Styles */
 @media (max-width: 768px) {
@@ -369,7 +373,7 @@ display: center;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 670px) {
   .overview-container {
     width: 100%;
     height: 90vh;
@@ -381,6 +385,22 @@ display: center;
     width: 90%;
     margin-bottom: 10px;
   }
+  .modall-title{
+    margin-left: 7px;
+  }
+
+  .submitcreate-button {
+    margin-left: 25%;
+    background-color: #0a4570;
+    color: white;
+    border: none;
+    padding: 1px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 50%;
+    display: center;
+    font-size: 1rem;
+}
 
   .create-exam-button {
     width: 80%;
