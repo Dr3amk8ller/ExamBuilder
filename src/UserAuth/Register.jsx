@@ -51,10 +51,10 @@ function RegisterForm() {
     try {
       setLoading(true);
       const requestBody = {
-        body: JSON.stringify({ email: values.email, action: 'generate' })
+         email: values.email, action: 'generate' 
       };
       console.log('Requesting OTP:', requestBody);
-      const response = await axios.post('https://ejy88n4hr6.execute-api.us-east-1.amazonaws.com/email/verification', requestBody);
+      const response = await axios.post('https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/forgetpasswordN_M', requestBody);
       console.log('Email verification response:', response.data);
       logResponse(response);
 
@@ -78,10 +78,10 @@ function RegisterForm() {
       setLoading(true);
       setOtpVerifying(true);
       const requestBody = {
-        body: JSON.stringify({ email: email, action: 'validate', otp: otp })
-      };
+        email: email, action: 'validate', otp: otp }
+    
       console.log('Verifying OTP:', requestBody);
-      const response = await axios.post('https://ejy88n4hr6.execute-api.us-east-1.amazonaws.com/email/verification', requestBody);
+      const response = await axios.post('https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/forgetpasswordN_M', requestBody);
       console.log('OTP verification response:', response.data);
       logResponse(response);
 
@@ -118,12 +118,11 @@ function RegisterForm() {
           InstituteName: values.InstituteName,
         };
 
-        const requestBody = {
-          body: JSON.stringify(formData)
-        };
+        const requestBody = formData;
+       
 
         console.log('Registering user:', requestBody);
-        const response = await axios.post('https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/check/register', requestBody);
+        const response = await axios.post('https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/userRegisterN_M', requestBody);
         console.log('Registration response:', response.data);
         logResponse(response);
         setRegistrationSuccess(true);
