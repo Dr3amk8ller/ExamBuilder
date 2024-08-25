@@ -224,7 +224,7 @@ h3 {
     text-decoration: none;
     border-radius: 8px;
    margin-top: 340px;
-   margin-left: 15px;
+   margin-left: 2px;
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* White glow effect */
 }
