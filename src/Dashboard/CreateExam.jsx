@@ -349,7 +349,7 @@ const ExamTitleModal = ({ handleTitleSubmit, setShowTitleModal }) => {
                 <div className="modall-content">
                     <div className="modall-header">
                         <h5 className="modall-title">Enter Exam Title</h5>
-                        <button type="button" className="close-button" onClick={() => setShowTitleModal(false)}>×</button>
+                        <button type="button" className="closee-button" onClick={() => setShowTitleModal(false)}>×</button>
                     </div>
                     <div className="modall-body">
                         <form onSubmit={handleSubmit}>

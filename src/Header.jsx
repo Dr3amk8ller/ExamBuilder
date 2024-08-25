@@ -28,7 +28,7 @@ const Header = () => {
       <nav className="nav-bar">
         <ul className="nav-list">
           <li>
-          <Link to="/Homepage">
+          <Link to="/homepage">
   <button className="header-about">Home</button>
 </Link>
           </li>
@@ -48,7 +48,7 @@ const Header = () => {
             </Link>
           </li> */}
           <li>
-            <Link to="/HelpPage">
+            <Link to="/helpPage">
               <button className="nav-button" >Help</button>
             </Link>
           </li>
@@ -57,12 +57,12 @@ const Header = () => {
       <div className="auth">
         {location.pathname === '/login' ? (
           <Link to="/register">
-            <button className="login-button">Sign Up</button>
+            <button className="loginn-button">Sign Up</button>
           </Link>
           
         ) : (
           <Link to="/login">
-            <button className="login-button" disabled={location.pathname === '/login'}>
+            <button className="loginn-button" disabled={location.pathname === '/login'}>
               Log In
             </button>
           </Link>
@@ -79,28 +79,26 @@ const Header = () => {
               ✕
             </button>
             <ul className="sidebar-list">
+              
+            <li>
+                <Link to="/homepage" onClick={closeSidebar}>
+                  <button>Home</button>
+                </Link>
+              </li>
               <li>
-                <Link to="/about" onClick={closeSidebar}>
+                <Link to="/aboutpage" onClick={closeSidebar}>
                   <button>About Us</button>
                 </Link>
               </li>
+                
+             
               <li>
                 <Link to="/Components/features" onClick={closeSidebar}>
                   <button>Features</button>
                 </Link>
               </li>
               <li>
-                <Link to="/Components/Plans & Pricing" onClick={closeSidebar}>
-                  <button>Plans & Pricing</button>
-                </Link>
-              </li>
-              <li>
-                <Link to="/Components/Demo" onClick={closeSidebar}>
-                  <button>Demo</button>
-                </Link>
-              </li>
-              <li>
-                <Link to="/Components/Help" onClick={closeSidebar}>
+                <Link to="/helpPage" onClick={closeSidebar}>
                   <button>Help</button>
                 </Link>
               </li>
