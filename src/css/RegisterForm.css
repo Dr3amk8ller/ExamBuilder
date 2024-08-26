@@ -34,7 +34,7 @@ body {
   box-shadow: 0 4px 8px 0 rgb(18, 91, 133);
   position: fixed; 
   top: 55%; 
-  left: 47%;
+  left: 42%;
   transform: translate(-40%, -47%); /* Centering trick */
   
 }

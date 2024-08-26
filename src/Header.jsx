@@ -38,7 +38,7 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link to="/Features">
+            <Link to="/features">
               <button className="nav-button">Features</button>
             </Link>
           </li>
@@ -93,7 +93,7 @@ const Header = () => {
                 
              
               <li>
-                <Link to="/Components/features" onClick={closeSidebar}>
+                <Link to="/features" onClick={closeSidebar}>
                   <button>Features</button>
                 </Link>
               </li>

@@ -38,6 +38,7 @@ margin-left: 110px ;
 .overview {
   color: #0a4570;
   font-size: 30px;
+  margin-bottom: 10px;
   font-weight: bold;
 }
 
@@ -321,7 +322,7 @@ display: center;
   .overview-container {
     width: 90%;
 
-    margin-bottom: 10%;
+    margin-top: 5%;
     margin-left: 10%;
   }
 
