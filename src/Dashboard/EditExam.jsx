@@ -41,15 +41,14 @@ const EditExam = () => {
             return;
         }
 
-        const apiUrl = 'https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/dashedit/DashbordEdit';
+        const apiUrl = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/DashbordEdit_M';
         const payload = {
-            body: JSON.stringify({
                 _id: id,
                 quizTitle: quizDetails.quizTitle,
                 ...(quizDetails.isCompleted !== undefined && { isCompleted: quizDetails.isCompleted })
-            }),
+            ,
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: token,
                 'Content-Type': 'application/json',
             }
         };
@@ -59,7 +58,7 @@ const EditExam = () => {
         try {
             const response = await axios.post(apiUrl, payload, {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: token,
                     'Content-Type': 'application/json',
                 },
             });

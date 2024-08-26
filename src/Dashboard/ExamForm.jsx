@@ -54,20 +54,21 @@ const ExamForm = () => {
   const fetchTotalQuestions = async () => {
     const token = localStorage.getItem('token');
     const payload = {
-      body: JSON.stringify({ quizTitle: title }),
-      headers: {
-        "Authorization": token,
-        "Content-Type": "application/json"
-      }
+       quizTitle: title   
     };
 
     try {
       const response = await axios.post(
-        "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/all/questionCount",
-        payload
+        "https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/quizzCoutMCQ_M",
+        payload,{
+          headers: {
+            "Authorization": token,
+            "Content-Type": "application/json"
+          }
+        }
       );
       console.log("Question count API response:", response.data);
-      const totalQuizzCount = JSON.parse(response.data.body).totalQuizzCount;
+      const totalQuizzCount = (response.data).totalQuizzCount;
       setTotalQuestions(totalQuizzCount);
     } catch (error) {
       console.error("Error fetching question count:", error);
@@ -143,7 +144,7 @@ const ExamForm = () => {
       if (questionType === "MCQ") {
         try {
           response = await axios.post(
-            "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/Many/quizzQuestionServiceExcel_R",
+            "https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/quizzQuestionServiceExcel_M",
             payload, // Send payload as a JavaScript object, not JSON string
             {
               headers: {
@@ -162,11 +163,11 @@ const ExamForm = () => {
        else if (questionType === "Subjective") {
         try {
           response = await axios.post(
-            "https://j0mmgihtaj.execute-api.us-east-1.amazonaws.com/v1/quizzdescriptiveQuestionServiceExcel_R",
+            "https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/quizzdescriptiveQuestionServiceExcel_M",
             payload, // Send payload as a JavaScript object, not JSON string
             {
               headers: {
-                "Authorization": token,
+                Authorization: token,
                 "Content-Type": "application/json",
               }
             }
@@ -437,21 +438,19 @@ const ExamForm = () => {
           description: currentQuestion.answerDescription || "",
           // questionImageLink: questionImage ? questionImage.base64encodedurl : "",
         };
-
+        const apiUrl="https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/quizzQuestionService_M";
         payload = {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            quizTitle: title,
-            mcqQuizz: [questionData],
-          }),
+          quizTitle: title,
+          mcqQuizz: [questionData],  
         };
         // Post the payload to add question API after all images are processed
         const addQuestionResponse = await axios.post(
-          "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/add/Question",
-          payload
+          apiUrl,payload,{
+            headers: {
+              Authorization: token,
+              "Content-Type": "application/json",
+            },  
+          }
         );
 
         console.log("Question API response:", addQuestionResponse.data);
@@ -464,22 +463,20 @@ const ExamForm = () => {
           // answerImageLink: updatedImages.find(img => img.type === "answer")?.base64encodedurl || ""
 
         };
-
+        const apiUrl="https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/quizzDiscriptiveQuestionService_M";
         payload = {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
             quizTitle: title,
             descriptiveQuizz: [questionData],
-          }),
         };
 
         // Post the payload to add question API after all images are processed
         const addQuestionResponse = await axios.post(
-          "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/questionstyle/descriptiveQuestion",
-          payload
+          apiUrl,payload,{
+            headers: {
+              Authorization: token,
+              "Content-Type": "application/json",
+            },
+          }
 
         );
 
@@ -514,20 +511,19 @@ const ExamForm = () => {
     setLoading(true);
     const token = localStorage.getItem('token');
     const payload = {
-      headers: {
-        Authorization: token,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
         quizTitle: title,
-      }),
+      
     };
     console.log("Payload being sent to PaperSubmit API:", payload);
     try {
       const response = await axios.post(
-        "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/check/PaperSubmit",
-        payload,
-
+        "https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/paperSubmitCheck_M",
+        payload,{
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      }
       );
       console.log("PaperSubmit API response:", response.data);
       toast.success("Question paper submitted successfully!");

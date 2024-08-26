@@ -22,6 +22,7 @@ const CreateExam = ({ onStartExam }) => {
     const fetchExamDetails = async () => {
         setLoading(true);
         const token = localStorage.getItem('token');
+        
         const userEmail = localStorage.getItem('email');
 
         if (!token || !userEmail) {
@@ -30,7 +31,7 @@ const CreateExam = ({ onStartExam }) => {
             return;
         }
 
-        const apiUrl = 'https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/userdetails/userDashboard';
+        const apiUrl = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/userDashboard_M';
 
         try {
             const requestBody = {
@@ -41,28 +42,30 @@ const CreateExam = ({ onStartExam }) => {
                 status: filter === 'active' ? 'Active' : filter === 'inactive' ? 'Inactive' : undefined
             };
 
-            console.log('Sending data:', JSON.stringify(requestBody));
+            console.log('Sending data:', requestBody);
 
             const response = await axios.post(
                 apiUrl,
-                JSON.stringify({
+                requestBody,
+                {
                     headers: {
                         Authorization: token,
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(requestBody)
-                })
+                    
+                }
+
             );
 
             console.log('API Response:', response.data);
 
-            const responseBody = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
-            console.log('API Response Body:', responseBody.body);
+            const responseBody = typeof response.data === 'string' ? (response.data) : response.data;
+            console.log('API Response Body:', responseBody.data);
 
-            if (responseBody.body && responseBody.body.quizzes) {
-                setExamDetails(responseBody.body.quizzes);
-                const totalCount = responseBody.body.pagination.totalQuizzes;
-                const pages = responseBody.body.pagination.totalPages;
+            if (responseBody && responseBody.quizzes) {
+                setExamDetails(responseBody.quizzes);
+                const totalCount = responseBody.pagination.totalQuizzes;
+                const pages = responseBody.pagination.totalPages;
                 setTotalPages(pages);
 
             } else {
@@ -100,24 +103,20 @@ const CreateExam = ({ onStartExam }) => {
             return;
         }
 
-        const apiUrl = 'https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/info/quizzIdentity';
+        const apiUrl = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/quizzIdentity_M';
         const payload = {
-            headers: {
-                'Authorization': token
-            },
-            body: JSON.stringify({
-                quizTitle: title,
-                creatorEmail: email
-            })
-        };
-
+            quizTitle: title,
+                creatorEmail: email,    
+        }         
         try {
-            const response = await axios.post(apiUrl, payload, {
+            const response = await axios.post(
+                apiUrl, payload, {
                 headers: {
+                    Authorization: token,
                     'Content-Type': 'application/json'
                 }
             });
-            const responseData = JSON.parse(response.data.body);
+            const responseData = (response.data);
             const quizTitleFromResponse = responseData.quizTitle;
        
             console.log('API Response:', response);
@@ -168,23 +167,23 @@ const CreateExam = ({ onStartExam }) => {
             return;
         }
 
-        const apiUrl = 'https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/dashbord/dashDEL';
+        const apiUrl = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/DashbordDel_M';
         const payload = {
             _id: exam.quizzId
         };
 
         try {
-            const response = await axios.post(apiUrl, {
+            const response = await axios.post(apiUrl, payload,{
                 headers: {
                     Authorization: token,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(payload)
+                
             });
 
-            const responseBody =  response.data === 'string' ? JSON.parse(response.data) : response.data;
+            const responseBody =  response.data === 'string' ? (response.data) : response.data;
                  console.log("Myresponse", response);
-            if (response.data.statusCode === 200 ) {
+            if (response.statusCode === 200 ) {
                 fetchExamDetails();
                 toast.success('Quiz deleted successfully');
             } else {
