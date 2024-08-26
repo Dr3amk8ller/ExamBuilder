@@ -50,15 +50,19 @@ function RegisterForm() {
   const handleEmailVerification = async (values) => {
     try {
       setLoading(true);
+<<<<<<< Updated upstream
       const requestBody = {
          email: values.email, action: 'generate' 
+=======
+      const requestBody = {email: values.email, action: 'generate' 
+>>>>>>> Stashed changes
       };
       console.log('Requesting OTP:', requestBody);
       const response = await axios.post('https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/forgetpasswordN_M', requestBody);
       console.log('Email verification response:', response.data);
       logResponse(response);
 
-      const responseData = JSON.parse(response.data.body);
+      const responseData = (response.data);
       if (responseData.success === undefined || responseData.success !== true) {
         setOtpSent(false);
       } else {
@@ -77,16 +81,21 @@ function RegisterForm() {
     try {
       setLoading(true);
       setOtpVerifying(true);
+<<<<<<< Updated upstream
       const requestBody = {
         email: email, action: 'validate', otp: otp }
     
+=======
+      const requestBody = {email: email, action: 'validate', otp: otp 
+      };
+>>>>>>> Stashed changes
       console.log('Verifying OTP:', requestBody);
       const response = await axios.post('https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/forgetpasswordN_M', requestBody);
       console.log('OTP verification response:', response.data);
       logResponse(response);
 
       if (response.status === 200) {
-        const responseData = JSON.parse(response.data.body);
+        const responseData = (response.data);
         if (responseData.success !== undefined && responseData.success === true) {
           setOtpVerified(true);
         } else {
@@ -119,10 +128,17 @@ function RegisterForm() {
         };
 
         const requestBody = formData;
+<<<<<<< Updated upstream
        
 
         console.log('Registering user:', requestBody);
         const response = await axios.post('https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/userRegisterN_M', requestBody);
+=======
+        
+
+        console.log('Registering user:', requestBody);
+        const response = await axios.post('https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/userLoginN_M', requestBody);
+>>>>>>> Stashed changes
         console.log('Registration response:', response.data);
         logResponse(response);
         setRegistrationSuccess(true);
@@ -144,7 +160,7 @@ function RegisterForm() {
 
   const logResponse = (response) => {
     console.log('API response:', response.data);
-    const responseData = JSON.parse(response.data.body);
+    const responseData = (response.data);
     setNotifications([...notifications, { message: responseData.message, type: 'info' }]);
   };
 

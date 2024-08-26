@@ -38,16 +38,14 @@ const Profile = () => {
       return;
     }
 
-    const apiUrl = 'https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/profile/P_details';
+    const apiUrl = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/userProfile_M';
 
     try {
       const payload = {
         headers: {
           Authorization: token,
         },
-        body: JSON.stringify({
           email: email,
-        }),
       };
 
       const response = await axios.post(apiUrl, payload, {
@@ -57,8 +55,8 @@ const Profile = () => {
         },
       });
 
-      if (response.data && response.data.body) {
-        const { fullname, email: responseEmail, InstituteName, createdAt, UserProfileLink } = JSON.parse(response.data.body);
+      if (response.data && response.data) {
+        const { fullname, email: responseEmail, InstituteName, createdAt, UserProfileLink } = (response.data);
         setUser({
           name: fullname,
           email: responseEmail,
@@ -109,7 +107,7 @@ const Profile = () => {
 
       try {
         const token = localStorage.getItem('token');
-        const apiUrl = 'https://j0mmgihtaj.execute-api.us-east-1.amazonaws.com/v1/userProfileImage_S3';
+        const apiUrl = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/userProfileImage_S3_M';
 
         await axios.post(apiUrl, {
           image: base64String,

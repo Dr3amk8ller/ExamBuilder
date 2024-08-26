@@ -21,7 +21,7 @@ const SetExamTime = () => {
         const timeInMinutes = parseInt(examTime, 10);
         if (!isNaN(timeInMinutes) && timeInMinutes > 0 && quizId) {
             // API call to update the quiz duration
-            const apiUrl = 'https://r9qkgroo29.execute-api.us-east-1.amazonaws.com/v1/duration';
+            const apiUrl = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/quizDuration_M';
 
             const requestOptions = {
                 method: 'POST',

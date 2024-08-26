@@ -27,22 +27,23 @@ const Quiz = () => {
             return;
         }
 
-        const apiUrl = 'https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/singleview/dashbordQuizzinfo';
+        const apiUrl = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/dashbordQuizzinfo_M';
         const payload = {
-            headers: {
-                Authorization: token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
                 _id: id
-            })
+          
         };
 
         try {
-            const response = await axios.post(apiUrl, payload);
-
-            if (response.data && response.data.body) {
-                const quizData = response.data.body;
+            const response = await axios.post(
+                apiUrl, payload,{
+                    headers: {
+                        Authorization: token,
+                        'Content-Type': 'application/json'
+                    },
+                });
+                console.log(response);
+            if (response.data && response.data) {
+                const quizData = response.data;
                 quizData.descriptiveQuizz = quizData.descriptiveQuizz || [];
                 setQuizDetails(quizData);
                 toast.success('Quiz details fetched successfully');
@@ -75,13 +76,10 @@ const Quiz = () => {
 
     const handleDeleteQuestion = async (questionId) => {
         const token = localStorage.getItem('token');
-        const apiUrl = 'https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/dashdel/dashquestiondel';
+        const apiUrl = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/dashquestiondel_M';
         const payload = {
-            headers: {
-                Authorization: token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ questionId })
+          
+            questionId 
         };
 
         try {

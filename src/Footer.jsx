@@ -26,7 +26,7 @@ const Footer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://j0mmgihtaj.execute-api.us-east-1.amazonaws.com/v1/getInTouch', formData, {
+      const response = await axios.post('https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/getInTouch_M', formData, {
         // headers: {
         //   'Content-Type': 'application/json',
         //   'Authorization': `Bearer ${localStorage.getItem('jwtToken')}` // Adjust according to how you store the JWT token
