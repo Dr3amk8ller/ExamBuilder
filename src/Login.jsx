@@ -74,13 +74,13 @@ const Login = () => {
       const LOGIN_API_URL = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/userLoginN_M';
       const loginData = {
         email: email,
-        password: password,
+        password: (password),
       };
       console.log(loginData);
 
-      const requestBody =  loginData;
+      // const requestBody =  loginData;
 
-      const response = await axios.post(LOGIN_API_URL, requestBody, {
+      const response = await axios.post(LOGIN_API_URL, loginData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -179,7 +179,7 @@ const Login = () => {
   const handleForgotPasswordSubmit = async (email) => {
     try {
       const FORGOT_PASSWORD_API_URL = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/forgetpasswordLN_M';
-      const requestBody =  { email, action: 'generate' };
+      const requestBody = { email, action: 'generate' } ;
 
       const response = await axios.post(FORGOT_PASSWORD_API_URL, requestBody, {
         headers: {

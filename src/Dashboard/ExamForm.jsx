@@ -377,19 +377,6 @@ const ExamForm = () => {
         console.log("Current Question:", currentQuestion);
         console.log("Selected Answer:", currentQuestion.correctAnswer);
         console.log("Options:", currentQuestion.options);
-
-
-
-        // if (!currentQuestion.correctAnswer || !currentQuestion.options.some(option => option === currentQuestion.correctAnswer)) {
-        //   console.log("Invalid Correct Answer:", currentQuestion.correctAnswer);
-        //   console.log("Options:", currentQuestion.options);
-        //   toast.warn("Please choose a valid option as correct answer.");
-        //   setLoading(false);
-        //   return;
-        // }
-
-
-
         const questionData = {
           question: currentQuestion.question,
           options: mapOptions(currentQuestion.options),
