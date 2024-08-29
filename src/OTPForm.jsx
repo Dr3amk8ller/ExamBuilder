@@ -21,7 +21,7 @@ const OTPForm = ({ userEmail }) => {
     try {
       const OTP_API_URL = 'https://ejy88n4hr6.execute-api.us-east-1.amazonaws.com/users/userforgetpassword';
       const requestBody = {
-        body: JSON.stringify({ email: userEmail, action: 'validate', otp })
+        email: userEmail, action: 'validate', otp 
       };
 
       console.log('Sending request to OTP validation API with data:', requestBody);
@@ -34,7 +34,7 @@ const OTPForm = ({ userEmail }) => {
 
       console.log('OTP validation response:', response.data);
 
-      const responseData = JSON.parse(response.data.body);
+      const responseData = (response.data);
 
       if (responseData.statusCode === 200) {
         setShowNewPasswordForm(true);

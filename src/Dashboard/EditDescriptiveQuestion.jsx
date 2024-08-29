@@ -137,21 +137,22 @@ const EditDescriptiveQuestion = () => {
                 const img = existingImages[i];
                 if (!img.base64encodedurl) continue;
                 const apiPayload = {
-                    body: JSON.stringify({
+                    
                         imageType: img.type,
                         image: img.base64encodedurl,
-                    }),
-                    headers: {
-                        Authorization: token,
-                        "Content-Type": "application/json",
-                    },
+                    
                 };
                 try {
                     const response = await axios.post(
-                        "https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/upload/imageS3Bucket",
-                        apiPayload
+                        "https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/imagesS3Bucket_M",
+                        apiPayload,{
+                            headers: {
+                                Authorization: token,
+                                "Content-Type": "application/json",
+                            }
+                        }
                     );
-                    const { imageUrl } = JSON.parse(response.data.body);
+                    const { imageUrl } = (response.data);
                     updatedImages.push({
                         ...img,
                         base64encodedurl: imageUrl,
@@ -184,20 +185,22 @@ const EditDescriptiveQuestion = () => {
             };
     
             const payload = {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
+               
                     questionId: questionId,
                     updatedQuestion: questionData,
-                }),
+               
             };
         
     
             const response = await axios.post(
-                "https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/userdashbordedit/dashbordquestionEdit",
-                payload
+                "https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/dashquestionEdit_M",
+                payload,{
+                    headers: {
+                        Authorization: token,
+                        "Content-Type": "application/json",
+                    }
+                    
+                }
             );
             console.log("MCQ payload", payload);
     
