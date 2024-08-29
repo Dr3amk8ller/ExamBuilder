@@ -233,7 +233,7 @@ body {
   font-size: 1rem;
   color: #0a4570;
 }
-@media (max-width: 400px) {
+@media (max-width: 415px) {
   .register-form-container {
     margin-top:  4rem;
     padding: 1.5rem;
@@ -350,12 +350,15 @@ body {
 .form-field-inline .form-field {
   flex: 1;
 }
+
+
+
 @media (max-width: 480px) {
   .register-form-container {
     padding: 20px;
     max-width: 80%;
     margin: -5%;
-    height: 80vh;
+    height: 65vh;
     margin-top: -16%;
   
   }
@@ -388,6 +391,6 @@ body {
   }
 
   .login-link {
-    margin-top: -2%;
+    margin-top: -7%;
   }
 }
