@@ -188,7 +188,6 @@ const Login = () => {
   return (
     <div>
       <div className='wrapper-login'>
-
         {showForgotPassword ? (
           <ForgotPasswordForm
             handlePrevious={handlePrevious}

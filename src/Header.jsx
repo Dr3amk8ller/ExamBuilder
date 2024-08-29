@@ -42,11 +42,6 @@ const Header = () => {
               <button className="nav-button">Features</button>
             </Link>
           </li>
-          {/* <li>
-            <Link to="/Components/Demo">
-              <button className="nav-button"></button>
-            </Link>
-          </li> */}
           <li>
             <Link to="/helpPage">
               <button className="nav-button" >Help</button>
