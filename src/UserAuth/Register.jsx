@@ -117,10 +117,10 @@ function RegisterForm() {
         };
 
         const requestBody = formData;
-        
+       
 
         console.log('Registering user:', requestBody);
-        const response = await axios.post('https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/userLoginN_M', requestBody);
+        const response = await axios.post('https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/userRegisterN_M', requestBody);
         console.log('Registration response:', response.data);
         logResponse(response);
         setRegistrationSuccess(true);

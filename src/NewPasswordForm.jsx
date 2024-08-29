@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './NewPasswordForm.css';
+import md5 from 'md5';
 
 const NewPasswordForm = ({ userEmail }) => {
   const [newPassword, setNewPassword] = useState('');
@@ -45,10 +46,10 @@ const NewPasswordForm = ({ userEmail }) => {
 
     try {
       const requestBody = {
-        body: JSON.stringify({
+       
           email: userEmail,
-          newPassword: newPassword
-        })
+          newPassword: md5(newPassword)
+      
       };
 
       const response = await axios.post(

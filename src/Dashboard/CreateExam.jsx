@@ -39,13 +39,19 @@ const CreateExam = ({ onStartExam }) => {
                 page: currentPage,
                 limit: itemsPerPage,
                 isCompleted: filter === 'complete' ? 'Completed' : filter === 'incomplete' ? 'Incompleted' : undefined,
+                // isCompleted: filter === 'complete' ? true : filter === 'incomplete' ? false : undefined,
                 status: filter === 'active' ? 'Active' : filter === 'inactive' ? 'Inactive' : undefined
             };
 
             console.log('Sending data:', requestBody);
 
+<<<<<<< HEAD
             const response = await axios.post(
                 apiUrl,
+=======
+            const response = await axios.post (
+                    apiUrl,
+>>>>>>> yuvraj
                 requestBody,
                 {
                     headers: {
@@ -183,7 +189,11 @@ const CreateExam = ({ onStartExam }) => {
 
             const responseBody =  response.data === 'string' ? (response.data) : response.data;
                  console.log("Myresponse", response);
+<<<<<<< HEAD
             if (response.statusCode === 200 ) {
+=======
+            if (response.status === 200 ) {
+>>>>>>> yuvraj
                 fetchExamDetails();
                 toast.success('Quiz deleted successfully');
             } else {
