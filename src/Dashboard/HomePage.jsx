@@ -4,6 +4,7 @@ import Navbarr from '../Navbarr';
 import AboutUsPage from '../AboutUsPage';
 import FeaturesPage from '../FeaturesPage';
 import HelpPage from '../HelpPage';
+import Plan from '../plan';
 import Footer from '../Footer';
 import '../HomePage.css';
 
@@ -14,7 +15,7 @@ const HomePage = () => {
     const handleWhyChooseUsClick = () => {
         setShowWhyChooseUs(!showWhyChooseUs);
     };
-
+   // when we make any changes like any button that shift on admin module from homepage
     const handleRegisterClick = () => {
         const hostname = window.location.hostname;
 
@@ -32,7 +33,7 @@ const HomePage = () => {
             <section id="home">
                 <div className="home-container">
                     <div className="header-content">
-                        <p className="para">Your gateway to manage and take exams efficiently</p>
+                        {/* <p className="para">Your gateway to manage and take exams efficiently</p> */}
                         <div className="login-options">
                             <button className="registerbutton" onClick={handleRegisterClick}>
                                 Register Here
@@ -120,6 +121,7 @@ const HomePage = () => {
                 <AboutUsPage />
                 <FeaturesPage />
                 <HelpPage />
+                <Plan/>
             </section>
             <Footer />
         </div>

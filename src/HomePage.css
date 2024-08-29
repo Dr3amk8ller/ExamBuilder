@@ -8,7 +8,7 @@ body {
 
 .home-container {
     min-height: 100vh; /* Full viewport height */
-    background-image: url('Assets/study\ \(1\).webp');
+    background-image: url('Assets/Image\ 3.png');
     background-size: cover; /* Cover the entire container */
     background-position: top center; /* Start the image from the top and center it horizontally */
     background-repeat: no-repeat; /* Prevent tiling */
@@ -20,7 +20,6 @@ body {
     text-align: center;
   /* Ensure the navbar is positioned relative to this container */
 }
-
 /* General Navbar Styles */
 .navbar {
     position: fixed; 
@@ -34,7 +33,7 @@ body {
     box-sizing: border-box; 
     display: flex; 
     align-items: center; 
-    border-bottom: 1px solid #ddd; /* add a border for separation */
+    border-bottom: 1px solid #ddd; /* Add a border for separation */
     background: linear-gradient(
         rgba(255, 255, 255, 0.9) 0%, /* High opacity at the top */
         rgba(255, 255, 255, 0.6) 50%, /* Medium opacity in the middle */
@@ -50,9 +49,8 @@ body {
     transform: translateY(-100%); /* Move navbar up out of view */
 }
 
-/* Navbar menu styles */
+/* Navbar menu styles for desktop */
 .navbar-menu {
-    position: fixed;
     display: flex;
     justify-content: center; 
     align-items: center; 
@@ -62,7 +60,7 @@ body {
     width: 100%; /* Make it span the entire width of the navbar */
 }
 
-/* Navbar menu links */
+/* Navbar menu links for desktop */
 .navbar-menu a {
     text-decoration: none;
     color: #0a4570; /* Text color */
@@ -77,6 +75,79 @@ body {
 .navbar-menu a:hover {
     color: #000000; /* Color change on hover */
 }
+
+/* Toggle button styles */
+.toggle-button {
+    display: none; /* Hide the toggle button by default */
+    background: none;
+    border: none;
+    color: #0a4570; /* Toggle button color */
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Smooth transition for shifting */
+}
+
+/* Media query for small screens */
+@media (max-width: 768px) {
+    .navbar-menu {
+        
+        display: flex; /* Show the menu by default on small screens */
+        flex-direction: column;
+        position: fixed; 
+        top: 150px; /* Align the menu with the bottom of the navbar */
+        left: 0; /* Align to the left side of the screen */
+        width: 30%; /* Width of the navbar on mobile screens */
+        height: calc(100% - 50px); /* Full height minus the navbar height */
+       margin-top: 10px;
+    
+        transform: translateX(-100%); /* Start with the menu off-screen */
+        transition: transform 0.3s ease-in-out; /* Smooth transition for sliding in/out */
+        padding-top: 10px; /* Space above the first item */
+        z-index: 999; /* Ensure it sits above other content */
+    }
+
+    .navbar-menu.show {
+        transform: translateX(0); /* Slide the menu in from the left */
+        border-bottom: #0a4570;
+
+    }
+
+    .navbar-menu li {
+        margin-top: 25px; /* Reduced space between menu items */
+        padding: 2px 10px; /* Space inside each item */
+        display: flex;
+        align-items: center; /* Center items vertically */
+        border-bottom: none; /* Remove bottom border from each item */
+    }
+
+    .toggle-button {
+        display: block; /* Show the toggle button on small screens */
+        z-index: 1001; /* Ensure it's above the menu */
+    }
+
+    .navbar-menu a {
+        text-decoration: none;
+        color: #0a4570; /* Text color */
+        font-size: 1.2em; /* Slightly smaller font size */
+        cursor: pointer;
+        margin-top: 10px;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-weight: bold;
+        transition: color 0.3s; /* Smooth color transition */
+        flex-grow: 1; /* Allow the link to take up available space */
+        display: flex;
+        align-items: center; /* Center text and icon vertically */
+    }
+
+    .navbar-menu a:hover {
+        color: #000000; /* Color change on hover */
+    }
+
+    .navbar-menu .icon {
+        margin-right: 10px; /* Space between icon and text */
+    }
+}
+
 
 /* Login Button Styles */
 .login-button {
@@ -148,16 +219,19 @@ h3 {
     color:#0a4570; /* White text color */
     background: transparent; /* Transparent background */
     border: 2px solid #0a4570; /* White border */
+    color: #f3f3f3; /* Black text color on hover */
+    background-color: #0a4570;
     text-decoration: none;
     border-radius: 8px;
-   margin-top: 400px;
+   margin-top: 340px;
+   margin-left: 2px;
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* White glow effect */
 }
 
 .registerbutton:hover {
     color: #f3f3f3; /* Black text color on hover */
-     background-color: #0a4570;
+     background-color: #063658;
     /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); */
 
 }
@@ -373,14 +447,6 @@ h3 {
  
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
-    .navbar-menu {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .navbar-menu a {
-        margin: 10px 0; /* Adjust margin for vertical layout */
-    }
 
     .gallery-item {
         flex: 1 1 calc(50% - 20px); /* 2 items per row on smaller screens */

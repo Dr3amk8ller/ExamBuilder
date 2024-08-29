@@ -17,6 +17,7 @@ const ExamForm = () => {
   const [title, setTitle] = useState(location.state ? location.state.quizTitle : "");
   const [questionType, setQuestionType] = useState("");
   const [questions, setQuestions] = useState([]);
+  const [errors, setErrors] = useState({});
   const [currentQuestion, setCurrentQuestion] = useState({
     question: "",
     options: ["", ""],
@@ -29,6 +30,7 @@ const ExamForm = () => {
   });
   const [showDropdown, setShowDropdown] = useState(false); // Define showDropdown state
   const [totalQuestions, setTotalQuestions] = useState(0);
+  const [isloading, setIsLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isDropdownFocused, setIsDropdownFocused] = useState(false);
   const [imagePreviewModal, setImagePreviewModal] = useState(false); // State for image preview modal
@@ -114,6 +116,7 @@ const ExamForm = () => {
       options: [...currentQuestion.options, ""],
     });
   };
+
 
   const handleRemoveOption = (index) => {
     const updatedOptions = currentQuestion.options.filter(
@@ -290,8 +293,45 @@ const ExamForm = () => {
   //   });
   // };
 
+  const validateOptions = () => {
+    let validationErrors = {};
+    currentQuestion.options.forEach((option, index) => {
+      if (!option.trim()) {
+        validationErrors[`option${index + 1}`] = `Option ${index + 1} is required`;
+      }
+    });
+    return validationErrors;
+  };
+
   const handleAddQuestion = async () => {
-    setLoading(true);
+    let validationErrors = {};
+
+    // Validation for MCQ
+    if (questionType === "MCQ") {
+      if (!currentQuestion.question.trim()) {
+        validationErrors.question = "Question is required";
+      }
+      const optionErrors = validateOptions();
+      validationErrors = { ...validationErrors, ...optionErrors };
+      if (!currentQuestion.correctAnswerIndex) {
+        validationErrors.correctAnswer = "Correct answer is required";
+      }
+    }
+
+    // Validation for Subjective
+    if (questionType === "Subjective") {
+      if (!currentQuestion.question.trim()) {
+        validationErrors.question = "Question is required";
+      }
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors({});
+  
     const token = localStorage.getItem('token');
 
     try {
@@ -372,6 +412,7 @@ const ExamForm = () => {
       // const optionImages = updatedImages.filter(img => img.type.startsWith('option'));
 
       let payload;
+      setIsLoading(true);
       if (questionType === "MCQ") {
         // Validate if a valid correct answer is selected
         console.log("Current Question:", currentQuestion);
@@ -447,7 +488,7 @@ const ExamForm = () => {
     } finally {
       // Clear images from local storage
       localStorage.removeItem('images');
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -528,6 +569,7 @@ const ExamForm = () => {
                       })
                     }
                   />
+                                {errors.question && <p className="error-message">{errors.question}</p>}
                   {/* <button
                     type="button"
                     className="upload-button"
@@ -565,6 +607,9 @@ const ExamForm = () => {
                      accept="image/*"
                      onChange={(e) => handleImageUpload(e.target.files[0], "option", index)}
                    /> */}
+                       {errors[`option${index + 1}`] && (
+                    <p className="error-message">{errors[`option${index + 1}`]}</p>
+                  )}
                     {index >= 2 && (
                       <button
                         type="button"
@@ -594,6 +639,7 @@ const ExamForm = () => {
                         </option>
                       ))}
                     </select>
+                    {errors.correctAnswer && <p className="error-message">{errors.correctAnswer}</p>}
 
 
                     {/* <select
@@ -666,8 +712,9 @@ const ExamForm = () => {
                     type="button"
                     className="add-question-button"
                     onClick={handleAddQuestion}
+                    disabled={isloading}
                   >
-                    Add Question
+                   {isloading? 'Adding': 'Add Question'}
                   </button>
                 </div>
               </div>
@@ -802,8 +849,9 @@ const ExamForm = () => {
             type="button"
             className="submit-questions-button"
             onClick={handleSubmitAllQuestions}
+            disabled={loading}
           >
-            Submit Questions Paper
+           {loading ? 'Submitting' : ' Submit Questions Paper'}
           </button>
         </div>
       </div>

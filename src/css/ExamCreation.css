@@ -3,7 +3,7 @@
   padding: 20px;
   background-color: #fff;
   width: 90%;
-  margin: 0 auto;
+margin-left: 110px ;
   height: 80vh;
   transition: all 0.3s ease;
 }
@@ -64,6 +64,7 @@
 .filter-dropdown .dropdown-content {
   display: none;
   position: absolute;
+  width: 100px;
   background-color: white;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -89,6 +90,7 @@
   border: none;
   padding: 10px 20px;
   cursor: pointer;
+  margin-left: 10px;
   border-radius: 5px;
 }
 
@@ -192,19 +194,20 @@
 }
 
 .modall-title {
-  font-size: 1.25rem;
+  font-size: 1.20rem;
   color: #0a4570;
+  margin-left: 200px;
 }
 
-.close-button {
+.closee-button {
   color: #0a4570;
   background: none;
   border: none;
-  font-size: 1.25rem;
+  font-weight: 300;
+  font-size: 1.35rem;
   cursor: pointer;
 
-  top: 2px; 
-  right: 10px; 
+margin-bottom: 15px;
 }
 
 .form-group {
@@ -219,15 +222,15 @@
   font-size: 1rem;
 }
 
-.submit-button {
-margin-left: 40%;
+.submitcreate-button {
+margin-left: 35%;
   background-color: #0a4570;
   color: white;
   border: none;
-padding: 10px 10px;
+padding: 15px 10px;
   cursor: pointer;
-  border-radius: 5px;
-width: 50%;
+  border-radius: 3px;
+width: 30%;
 display: center;
   font-size: 1rem; 
 }
@@ -236,7 +239,7 @@ display: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 2px;
 }
 
 .pagination-container button {
@@ -314,14 +317,12 @@ display: center;
   outline: none; 
 }
 
-
-/* Tablet Styles */
-@media (max-width: 1024px) {
+@media (max-width: 1180px) {
   .overview-container {
     width: 90%;
-    height: 50vh;
+
     margin-bottom: 10%;
-    margin-left: 5%;
+    margin-left: 10%;
   }
 
   .controls {
@@ -340,7 +341,16 @@ display: center;
   .modall-dialog{
     width: 50%;
   }
+  .modall-title{
+    margin-left: 80px;
+  }
+  
+
+
 }
+
+
+
 
 /* Mobile Styles */
 @media (max-width: 768px) {
@@ -369,7 +379,7 @@ display: center;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 670px) {
   .overview-container {
     width: 100%;
     height: 90vh;
@@ -381,10 +391,29 @@ display: center;
     width: 90%;
     margin-bottom: 10px;
   }
+  .modall-title{
+    margin-left: 15px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+  }
+  
+
+  .submitcreate-button {
+    margin-left: 25%;
+    background-color: #0a4570;
+    color: white;
+    border: none;
+    padding: 4px 3px;
+    cursor: pointer;
+    border-radius: 2px;
+    width: 50%;
+    display: center;
+    font-size: 0.9rem;
+}
 
   .create-exam-button {
     width: 80%;
-  }
+    margin-left: ; }
 
   .exam-table th,
   .exam-table td {

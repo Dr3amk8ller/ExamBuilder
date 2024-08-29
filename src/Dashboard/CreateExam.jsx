@@ -131,7 +131,12 @@ const CreateExam = ({ onStartExam }) => {
             setLoading(false);
         }
     };
-
+    // Added the functionality to filter quizzes according to quiztitle or creator name
+    const filteredExamDetails = examDetails.filter(exam =>
+        exam.quizTitle.toLowerCase().includes(searchTerm.toLowerCase())
+        // exam.creatorName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    
 
     const handleView = (exam) => {
         navigate(`/navigation/quiz-detail/${exam.quizzId}`);
@@ -235,7 +240,9 @@ const CreateExam = ({ onStartExam }) => {
                     />
                 </div>
             </div>
-            <ExamDetailsTable examDetails={examDetails} onView={handleView} onEdit={handleEdit} onDelete={handleDelete}  onSetting={handleSetting}/>
+            {/* <ExamDetailsTable examDetails={examDetails} onView={handleView} onEdit={handleEdit} onDelete={handleDelete}  onSetting={handleSetting}/> */}
+            <ExamDetailsTable examDetails={filteredExamDetails} onView={handleView} onEdit={handleEdit} onDelete={handleDelete} onSetting={handleSetting} />
+
             {showTitleModal && (
                 <ExamTitleModal
                     handleTitleSubmit={handleTitleSubmit}
@@ -342,7 +349,7 @@ const ExamTitleModal = ({ handleTitleSubmit, setShowTitleModal }) => {
                 <div className="modall-content">
                     <div className="modall-header">
                         <h5 className="modall-title">Enter Exam Title</h5>
-                        <button type="button" className="close-button" onClick={() => setShowTitleModal(false)}>×</button>
+                        <button type="button" className="closee-button" onClick={() => setShowTitleModal(false)}>×</button>
                     </div>
                     <div className="modall-body">
                         <form onSubmit={handleSubmit}>
@@ -355,7 +362,7 @@ const ExamTitleModal = ({ handleTitleSubmit, setShowTitleModal }) => {
                                     required
                                 />
                             </div>
-                            <button className="submit-button" type="submit">
+                            <button className="submitcreate-button" type="submit">
                                 Get Started
                             </button>
                         </form>

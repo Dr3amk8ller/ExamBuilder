@@ -1,6 +1,6 @@
 import React from 'react';
 import './FeaturesPage.css';
-import student3 from './Assets/student3.jpg';
+import image3 from './Assets/Image 3.png';
 import student5 from './Assets/student5.jpg';
 
 
@@ -44,7 +44,7 @@ const FeaturesPage = () => {
             </li>
           </ul>
         </div>
-        <img src={student3} alt="Engaging Exams" className="feature-image right" />
+        <img src={image3} alt="Engaging Exams" className="feature-image right" />
       </div>
 
       <div className="feature-section">
@@ -101,7 +101,7 @@ const FeaturesPage = () => {
             </li>
           </ul>
         </div>
-        <img src={student3} alt="Engaging Exams" className="feature-image right" />
+        <img src={image3} alt="Engaging Exams" className="feature-image right" />
       </div>
     </div>
   </section>

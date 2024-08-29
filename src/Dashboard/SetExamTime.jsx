@@ -5,6 +5,7 @@ import '../css/SetExamTime.css';
 const SetExamTime = () => {
     const [examTime, setExamTime] = useState('');
     const [showAlert, setShowAlert] = useState(false); // State to manage alert visibility
+    const [loading, setLoading] = useState(false); // State to manage loading visibility
     const location = useLocation();
     const { quizId } = location.state || {}; // Destructure quizId from location.state
     console.log('Quiz ID:', quizId);
@@ -20,6 +21,9 @@ const SetExamTime = () => {
     const handleSubmit = async () => {
         const timeInMinutes = parseInt(examTime, 10);
         if (!isNaN(timeInMinutes) && timeInMinutes > 0 && quizId) {
+            // Start loading
+            setLoading(true);
+
             // API call to update the quiz duration
             const apiUrl = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/quizDuration_M';
 
@@ -49,9 +53,12 @@ const SetExamTime = () => {
             } catch (error) {
                 console.error('Error updating quiz duration:', error);
                 alert('An error occurred while updating the quiz duration.');
+            } finally {
+                // Stop loading
+                setLoading(false);
             }
         } else {
-            alert('Please enter a valid exam time and ensure you navigated from the correct page.');
+            alert('Please enter a valid exam time .');
         }
     };
 
@@ -69,17 +76,23 @@ const SetExamTime = () => {
                     value={examTime}
                     onChange={handleInputChange}
                     placeholder="Enter time in minutes"
+                    disabled={loading} // Disable input during loading
                 />
             </div>
             <div className="submit-button">
-                <button onClick={handleSubmit}>Submit</button>
+                <button onClick={handleSubmit} disabled={loading}>
+                    {loading ? 'Starting...' : 'Start'}
+                </button>
             </div>
+
+            {/* Loader shown conditionally */}
+            {/* {loading && <div className="loader"></div>} */}
 
             {/* Alert shown conditionally */}
             {showAlert && (
                 <div className="alert">
                     <p>{`Quiz duration updated successfully: ${examTime} minutes`}</p>
-                    <button    onClick={handleAlertClose}>OK</button>
+                    <button onClick={handleAlertClose}>OK</button>
                 </div>
             )}
         </div>

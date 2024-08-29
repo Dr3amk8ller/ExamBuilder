@@ -4,8 +4,10 @@
   top: 0;
   left: 0;
   height: 100vh;
-  width: 60px;
+  width: 80px;
   background-color: #286197;
+  /* background-color: transparent; */
+  
   transition: width 0.3s ease;
   overflow-x: hidden;
   white-space: nowrap;
@@ -29,6 +31,7 @@
   width: 50px;
   transition: width 0.3s ease, height 0.3s ease;
   margin-top: 10px;
+ 
 }
 
 .logoc-expanded {
@@ -39,6 +42,12 @@
 /* Menu Items */
 .menu-items {
   margin-top: 20px;
+  margin-left: 15px;
+  color: #0a4570;
+  
+}
+.menu-item{
+color: #0a4570;
 }
 
 .menu-item, .menu-item-about {
@@ -73,11 +82,11 @@
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .siDebar {
-    width: 45px;
+    width: 60px;
   }
 
   .siDebar.open {
-    width: 150px;
+    width: 145px;
   }
 
   .logoc {
@@ -88,6 +97,9 @@
   .logoc-expanded {
     width: 70px;
     height: 40px;
+  }
+  .menu-items{
+    margin-left: 5px;
   }
 
   .menu-item, .menu-item-about {
@@ -103,18 +115,28 @@
   }
 }
 
+@media (max-width: 1380px) {
+  .siDebar.open {
+    width: 160px;
+
+  }
+}
+
 @media (max-width: 576px) {
   .siDebar {
-    width: 40px;
+    width: 50px;
+
   }
 
   .siDebar.open {
-    width: 120px;
+    width: 140px;
+
   }
 
   .logoc {
-    width: 40px;
-    height: 25px;
+    width: 30px;
+    height: 20px;
+    margin-left: 2px;
   }
 
   .logoc-expanded {

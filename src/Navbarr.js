@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+
+// export default Navbar;
+import React, { useState, useEffect } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
+
 
 const Navbar = () => {
     const [isHidden, setIsHidden] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     let lastScrollTop = 0;
     const navigate = useNavigate();
 
@@ -12,10 +16,8 @@ const Navbar = () => {
             const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
             if (currentScrollTop > lastScrollTop) {
-                // Scrolling down
                 setIsHidden(true);
             } else {
-                // Scrolling up
                 setIsHidden(false);
             }
 
@@ -29,6 +31,9 @@ const Navbar = () => {
         };
     }, [lastScrollTop]);
 
+    const handleToggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
     const handleLoginClick = () => {
         const hostname = window.location.hostname;
 
@@ -39,14 +44,17 @@ const Navbar = () => {
             navigate('/login');
         }
     };
-
     return (
         <nav className={`navbar ${isHidden ? 'hidden' : ''}`}>
-            <ul className="navbar-menu">
-                <li><ScrollLink to="home" smooth={true} duration={500}>Home</ScrollLink></li>
-                <li><ScrollLink to="about" smooth={true} duration={500}>About</ScrollLink></li>
-                <li><ScrollLink to="feature" smooth={true} duration={500}>Features</ScrollLink></li>
-                <li><ScrollLink to="help" smooth={true} duration={500}>Help</ScrollLink></li>
+            <button className="toggle-button" onClick={handleToggleMenu}>
+                ☰
+            </button>
+            <ul className={`navbar-menu ${isMenuOpen ? 'show' : ''}`}>
+                <li><ScrollLink to="home" smooth={true} duration={500} onClick={() => setIsMenuOpen(false)}>Home</ScrollLink></li>
+                <li><ScrollLink to="about" smooth={true} duration={500} onClick={() => setIsMenuOpen(false)}>About</ScrollLink></li>
+                <li><ScrollLink to="feature" smooth={true} duration={500} onClick={() => setIsMenuOpen(false)}>Features</ScrollLink></li>
+                <li><ScrollLink to="help" smooth={true} duration={500} onClick={() => setIsMenuOpen(false)}>Help</ScrollLink></li>
+                <li><ScrollLink to="plan" smooth={true} duration={500} onClick={() => setIsMenuOpen(false)}>Plans</ScrollLink></li>
             </ul>
             <button onClick={handleLoginClick} className="login-button">Login</button>
         </nav>
