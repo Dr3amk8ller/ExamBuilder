@@ -568,7 +568,7 @@ const EditMcqQuestion = () => {
                 };
                 try {
                     const response = await axios.post(
-                        "https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/upload/imageS3Bucket",
+                        "https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/imagesS3Bucket_M",
                         apiPayload
                     );
                     const { imageUrl } = JSON.parse(response.data.body);
@@ -604,21 +604,19 @@ const EditMcqQuestion = () => {
                 description: currentQuestion.answerDescription || "",
                 questionImageLink: questionImage ? questionImage.base64encodedurl : "",
             };
-
+            console.log("yuvraj",questionData);
             const payload = {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
                     questionId: questionId,
                     updatedQuestion: questionData,
-                }),
             };
-
+            const apiUrl="https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/dashquestionEdit_M";
             const response = await axios.post(
-                "https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/userdashbordedit/dashbordquestionEdit",
-                payload
+                apiUrl,payload,{
+                    headers: {
+                        Authorization: token,
+                        "Content-Type": "application/json",
+                    }
+                }
             );
             console.log("Question API response:", response.data);
             toast.success("Question updated successfully!");

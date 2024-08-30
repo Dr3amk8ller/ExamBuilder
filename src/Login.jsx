@@ -44,21 +44,21 @@ const Login = () => {
     setShowForgotPassword(!showForgotPassword);
   };
 
-  const validateEmail = async (email) => {
-    const VALIDATE_EMAIL_API_URL = 'https://ejy88n4hr6.execute-api.us-east-1.amazonaws.com/users/validate-email';
-    try {
-      const response = await axios.post(VALIDATE_EMAIL_API_URL, { email });
-      setIsRegisteredEmail(response.data.isRegistered);
-    } catch (error) {
-      if (error.response) {
-        console.error('Email validation failed:', error.response.data);
-      } else if (error.request) {
-        console.error('Email validation request made but no response received:', error.request);
-      } else {
-        console.error('Error setting up the email validation request:', error.message);
-      }
-    }
-  };
+  // const validateEmail = async (email) => {
+  //   const VALIDATE_EMAIL_API_URL = 'https://ejy88n4hr6.execute-api.us-east-1.amazonaws.com/users/validate-email';
+  //   try {
+  //     const response = await axios.post(VALIDATE_EMAIL_API_URL, { email });
+  //     setIsRegisteredEmail(response.data.isRegistered);
+  //   } catch (error) {
+  //     if (error.response) {
+  //       console.error('Email validation failed:', error.response.data);
+  //     } else if (error.request) {
+  //       console.error('Email validation request made but no response received:', error.request);
+  //     } else {
+  //       console.error('Error setting up the email validation request:', error.message);
+  //     }
+  //   }
+  // };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -72,16 +72,20 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const LOGIN_API_URL = 'https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/authcheck/login';
+      const LOGIN_API_URL = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/userLoginN_M';
       const loginData = {
         email: email,
-        password: md5(password),
+        password: password,
       };
       console.log(loginData);
 
-      const requestBody = JSON.stringify({ body: JSON.stringify(loginData) });
+<<<<<<< HEAD
+      const requestBody =  loginData;
+=======
+      // const requestBody =  loginData;
+>>>>>>> yuvraj
 
-      const response = await axios.post(LOGIN_API_URL, requestBody, {
+      const response = await axios.post(LOGIN_API_URL, loginData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -89,9 +93,9 @@ const Login = () => {
 
       console.log('Login response:', response);
 
-      if (response.status === 200 && response.data && response.data.body) {
+      if (response.status === 200 && response.data && response.data) {
         console.log('response', response);
-        const responseData = JSON.parse(response.data.body);
+        const responseData = (response.data);
         const token = responseData.token;
 
         if (token) {
@@ -142,17 +146,6 @@ const Login = () => {
     }
   };
 
-  // const handlePasswordChange = (e) => {
-  //   const inputPassword = e.target.value;
-  //   setPassword(inputPassword);
-  //   setPasswordTouched(true);
-
-  //   if (PASSWORD_REGEX.test(inputPassword)) {
-  //     setPasswordError(""); // Clear the error if the password is valid
-  //   } else {
-  //     setPasswordError("Must be 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character: @$!%*?&");
-  //   }
-  // };
 
   const handlePasswordChange = (e) => {
     const inputPassword = e.target.value;
@@ -190,8 +183,12 @@ const Login = () => {
 
   const handleForgotPasswordSubmit = async (email) => {
     try {
-      const FORGOT_PASSWORD_API_URL = 'https://ejy88n4hr6.execute-api.us-east-1.amazonaws.com/users/userforgetpassword';
-      const requestBody = JSON.stringify({ body: JSON.stringify({ email, action: 'generate' }) });
+      const FORGOT_PASSWORD_API_URL = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/forgetpasswordLN_M';
+<<<<<<< HEAD
+      const requestBody =  { email, action: 'generate' };
+=======
+      const requestBody = { email, action: 'generate' } ;
+>>>>>>> yuvraj
 
       const response = await axios.post(FORGOT_PASSWORD_API_URL, requestBody, {
         headers: {

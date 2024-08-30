@@ -92,7 +92,7 @@ const HelpPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://j0mmgihtaj.execute-api.us-east-1.amazonaws.com/v1/feedBackExamBuilder', formData);
+      const response = await axios.post('https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/feedBackExamBuilder_M', formData);
 
       if (response.status === 201) {
         setSuccessMessage('Feedback submitted successfully.');

@@ -34,21 +34,29 @@ const Addmorequestion = ({ title, onClose, onQuestionAdded }) => {
 
   const fetchTotalQuestions = async () => {
     const token = localStorage.getItem("token");
+    // const payload = {
+    //   body: JSON.stringify({ quizTitle: title }),
+    //   headers: {
+    //     Authorization: token,
+    //     "Content-Type": "application/json",
+    //   },
+    // };
     const payload = {
-      body: JSON.stringify({ quizTitle: title }),
-      headers: {
-        Authorization: token,
-        "Content-Type": "application/json",
-      },
-    };
+      quizTitle: title   
+   };
 
     try {
       const response = await axios.post(
-        "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/all/questionCount",
-        payload
+        "https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/quizzCoutMCQ_M",
+        payload,{
+          headers: {
+            "Authorization": token,
+            "Content-Type": "application/json"
+          }
+        }
       );
       console.log("Question count API response:", response.data);
-      const totalQuizzCount = JSON.parse(response.data.body).totalQuizzCount;
+      const totalQuizzCount = (response.data).totalQuizzCount;
       setTotalQuestions(totalQuizzCount);
     } catch (error) {
       console.error("Error fetching question count:", error);
@@ -161,22 +169,20 @@ const Addmorequestion = ({ title, onClose, onQuestionAdded }) => {
             currentQuestion.options.indexOf(currentQuestion.correctAnswer) + 1,
           description: currentQuestion.answerDescription || "",
         };
-
+        const apiUrl="https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/quizzQuestionService_M";
         payload = {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            quizTitle: title,
-            mcqQuizz: [questionData],
-          }),
+          quizTitle: title,
+          mcqQuizz: [questionData],  
         };
-        await axios.post(
-          "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/add/Question",
-          payload
+        const addQuestionResponse = await axios.post(
+          apiUrl,payload,{
+            headers: {
+              Authorization: token,
+              "Content-Type": "application/json",
+            },  
+          }
         );
-
+        console.log("Question API response:", addQuestionResponse.data);
         toast.success("Question saved successfully!");
       } else if (questionType === "Subjective") {
         const questionData = {
@@ -184,22 +190,22 @@ const Addmorequestion = ({ title, onClose, onQuestionAdded }) => {
           answer: currentQuestion.answerDescription || "",
         };
 
+        const apiUrl="https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/quizzDiscriptiveQuestionService_M";
         payload = {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
             quizTitle: title,
             descriptiveQuizz: [questionData],
-          }),
         };
+       
+        const addQuestionResponse = await axios.post(
+          apiUrl,payload,{
+            headers: {
+              Authorization: token,
+              "Content-Type": "application/json",
+            },
+          }
 
-        await axios.post(
-          "https://ee4pmf8ys1.execute-api.us-east-1.amazonaws.com/questionstyle/descriptiveQuestion",
-          payload
         );
-
+        console.log("Descriptive question API response:", addQuestionResponse.data);
         toast.success("Descriptive question saved successfully!");
       }
 

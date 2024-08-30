@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation,useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { format } from 'date-fns';
 import '../css/EditExamForm.css';
@@ -11,8 +11,21 @@ const EditExam = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { quiz } = location.state || {};
-    const [quizDetails, setQuizDetails] = useState(quiz || {});
+    
+    // Initialize quizDetails state with a default boolean for isCompleted
+    const [quizDetails, setQuizDetails] = useState({
+        ...quiz,
+        isCompleted: quiz?.isCompleted === "Completed" || quiz?.isCompleted === true || false
+    });
     const [loading, setLoading] = useState(false);
+
+    // Ensure isCompleted is always a boolean when the component mounts or quiz changes
+    useEffect(() => {
+        setQuizDetails((prevDetails) => ({
+            ...prevDetails,
+            isCompleted: prevDetails.isCompleted === "Completed" || prevDetails.isCompleted === true
+        }));
+    }, [quiz]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -41,25 +54,30 @@ const EditExam = () => {
             return;
         }
 
-        const apiUrl = 'https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/dashedit/DashbordEdit';
+        const apiUrl = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/DashbordEdit_M';
         const payload = {
-            body: JSON.stringify({
+<<<<<<< HEAD
                 _id: id,
                 quizTitle: quizDetails.quizTitle,
                 ...(quizDetails.isCompleted !== undefined && { isCompleted: quizDetails.isCompleted })
-            }),
+            ,
+=======
+            _id: id,
+            quizTitle: quizDetails.quizTitle,
+            isCompleted: !!quizDetails.isCompleted,  // Ensure it's always a boolean
+>>>>>>> yuvraj
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: token,
                 'Content-Type': 'application/json',
             }
         };
-        console.log(id);
+
         console.log('API Request Payload:', payload);
 
         try {
             const response = await axios.post(apiUrl, payload, {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: token,
                     'Content-Type': 'application/json',
                 },
             });
@@ -113,19 +131,19 @@ const EditExam = () => {
                     </label>
                 </div>
                 <div className="form-group">
-    <label htmlFor="status">Status</label>
-    <select
-        id="status"
-        name="status"
-        value={quizDetails.status || 'Active'}
-        onChange={handleChange}
-        required
-        disabled={quizDetails.isCompleted} 
-    >
-        <option value="Active">Active</option>
-        <option value="Inactive">Inactive</option>
-    </select>
-</div>
+                    <label htmlFor="status">Status</label>
+                    <select
+                        id="status"
+                        name="status"
+                        value={quizDetails.status || 'Active'}
+                        onChange={handleChange}
+                        required
+                        disabled={quizDetails.isCompleted} 
+                    >
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>
+                </div>
                 <div className="form-group">
                     <label htmlFor="createdAt">Created At</label>
                     <input
@@ -136,7 +154,7 @@ const EditExam = () => {
                         disabled
                     />
                 </div>
-                <button className="submitt-button" type="submit">Save Changes</button>
+                <button className="submit-button" type="submit">Save Changes</button>
             </form>
         </div>
     );
