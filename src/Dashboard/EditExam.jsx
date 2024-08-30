@@ -56,16 +56,9 @@ const EditExam = () => {
 
         const apiUrl = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/DashbordEdit_M';
         const payload = {
-<<<<<<< HEAD
-                _id: id,
-                quizTitle: quizDetails.quizTitle,
-                ...(quizDetails.isCompleted !== undefined && { isCompleted: quizDetails.isCompleted })
-            ,
-=======
             _id: id,
             quizTitle: quizDetails.quizTitle,
             isCompleted: !!quizDetails.isCompleted,  // Ensure it's always a boolean
->>>>>>> yuvraj
             headers: {
                 Authorization: token,
                 'Content-Type': 'application/json',

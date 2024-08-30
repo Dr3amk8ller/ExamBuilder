@@ -10,6 +10,7 @@ const NewPasswordForm = ({ userEmail }) => {
   const [passwordError, setPasswordError] = useState('');
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const usermail=localStorage.getItem('email');
 
   const handleNewPasswordChange = (e) => {
     setNewPassword(e.target.value);
@@ -46,14 +47,13 @@ const NewPasswordForm = ({ userEmail }) => {
 
     try {
       const requestBody = {
-       
-          email: userEmail,
+          email: usermail,
           newPassword: md5(newPassword)
-      
+
       };
 
       const response = await axios.post(
-        'https://ejy88n4hr6.execute-api.us-east-1.amazonaws.com/password/reset',
+        'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/resetpasswordN_M',
         requestBody
       );
 
