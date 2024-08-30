@@ -568,7 +568,7 @@ const EditMcqQuestion = () => {
                 };
                 try {
                     const response = await axios.post(
-                        "https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/upload/imageS3Bucket",
+                        "https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/imagesS3Bucket_M",
                         apiPayload
                     );
                     const { imageUrl } = JSON.parse(response.data.body);

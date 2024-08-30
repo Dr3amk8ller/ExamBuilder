@@ -43,21 +43,21 @@ const Login = () => {
     setShowForgotPassword(!showForgotPassword);
   };
 
-  const validateEmail = async (email) => {
-    const VALIDATE_EMAIL_API_URL = 'https://ejy88n4hr6.execute-api.us-east-1.amazonaws.com/users/validate-email';
-    try {
-      const response = await axios.post(VALIDATE_EMAIL_API_URL, { email });
-      setIsRegisteredEmail(response.data.isRegistered);
-    } catch (error) {
-      if (error.response) {
-        console.error('Email validation failed:', error.response.data);
-      } else if (error.request) {
-        console.error('Email validation request made but no response received:', error.request);
-      } else {
-        console.error('Error setting up the email validation request:', error.message);
-      }
-    }
-  };
+  // const validateEmail = async (email) => {
+  //   const VALIDATE_EMAIL_API_URL = 'https://ejy88n4hr6.execute-api.us-east-1.amazonaws.com/users/validate-email';
+  //   try {
+  //     const response = await axios.post(VALIDATE_EMAIL_API_URL, { email });
+  //     setIsRegisteredEmail(response.data.isRegistered);
+  //   } catch (error) {
+  //     if (error.response) {
+  //       console.error('Email validation failed:', error.response.data);
+  //     } else if (error.request) {
+  //       console.error('Email validation request made but no response received:', error.request);
+  //     } else {
+  //       console.error('Error setting up the email validation request:', error.message);
+  //     }
+  //   }
+  // };
 
   const handleLogin = async (e) => {
     e.preventDefault();
