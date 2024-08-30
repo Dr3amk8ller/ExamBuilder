@@ -1,4 +1,19 @@
 /* General Header Styles */
+*
+{
+  box-sizing: border-box;
+  font-family: "Georgia Serif";
+}
+body {
+  background-image:url('../src/Assets/pencil.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  height: 100vh; 
+  margin: 0;
+  /* overflow: hidden; */
+} 
 .header {
   background-color: #0a4570;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -78,6 +93,7 @@
 /* Sidebar Toggle */
 .sidebar-toggle {
 
+  display: none;
   align-items: center;
   cursor: pointer;
   margin-left: auto; /* Position it at the end of the header */
