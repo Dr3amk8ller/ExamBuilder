@@ -10,7 +10,8 @@ const NewPasswordForm = ({ userEmail }) => {
   const [passwordError, setPasswordError] = useState('');
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-  const usermail=localStorage.getItem('email');
+
+
 
   const handleNewPasswordChange = (e) => {
     setNewPassword(e.target.value);
@@ -47,7 +48,7 @@ const NewPasswordForm = ({ userEmail }) => {
 
     try {
       const requestBody = {
-          email: usermail,
+          email: userEmail,
           newPassword: md5(newPassword)
 
       };

@@ -4,7 +4,6 @@ import AvatarEditor from 'react-avatar-editor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import '../css/Profile.css';
-import Navbar from '../Dashboard/NavBar';
 import { useUserProfile } from '../contexts/UserProfileContext';
 
 const Profile = () => {

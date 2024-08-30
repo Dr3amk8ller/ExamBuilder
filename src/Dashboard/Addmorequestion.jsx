@@ -219,6 +219,7 @@ const Addmorequestion = ({ title, onClose, onQuestionAdded }) => {
         optionImages: [],
       });
 
+      
       fetchTotalQuestions();
       onQuestionAdded();
       toast.success("Question saved successfully!");

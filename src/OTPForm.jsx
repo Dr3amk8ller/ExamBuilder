@@ -87,7 +87,6 @@ import './OTPForm.css';
 
 
 const OTPForm = ({ userEmail }) => {
-  const usermail=localStorage.getItem('email');
 
   const [otp, setOTP] = useState('');
   const [showNewPasswordForm, setShowNewPasswordForm] = useState(false);
@@ -107,7 +106,7 @@ const OTPForm = ({ userEmail }) => {
       const OTP_API_URL = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/forgetpasswordLN_M';
       const requestBody = {
 
-       email: usermail, action: 'validate', otp 
+       email: userEmail, action: 'validate', otp 
        
       };
 

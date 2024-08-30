@@ -9,14 +9,13 @@ import { FaEye, FaEyeSlash, FaEnvelope } from 'react-icons/fa';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useUserProfile } from './contexts/UserProfileContext';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+
 
 const Login = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
@@ -25,11 +24,11 @@ const Login = () => {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [isRegisteredEmail, setIsRegisteredEmail] = useState(false);
+
   const [emailTouched, setEmailTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
   const navigate = useNavigate();
-  const { setUserProfileLink } = useUserProfile();
+
 
   useEffect(() => {
     setEmail('');
@@ -79,8 +78,6 @@ const Login = () => {
       };
       console.log(loginData);
 
-      // const requestBody =  loginData;
-
       const response = await axios.post(LOGIN_API_URL, loginData, {
         headers: {
           'Content-Type': 'application/json',
@@ -89,47 +86,46 @@ const Login = () => {
 
       console.log('Login response:', response);
 
-      if (response.status === 200 && response.data && response.data) {
-        console.log('response', response);
-        const responseData = (response.data);
-        const token = responseData.token;
+      if (response.status === 200 && response.data && response.data.token) {
+        const token = response.data.token;
 
-        if (token) {
-          setIsLoggedIn(true);
-          // localStorage.setItem('pimage',responseData.UserProfileLink);
-          setUserProfileLink(responseData.UserProfileLink);
-          localStorage.setItem('token', token);
-          localStorage.setItem('email', email);
-          navigate('/NavigationBar');
-        } else {
-          if(response.data.statusCode===401||response.data.statusCode===404 || response.data.statusCode===403 || response.data.statusCode===400){
-            toast.error("Invalid UserName or Password");
-          }
-          console.error('Token not found in response:', response);
-        }
-      } else {
-        console.error('Unexpected response:', response);
-       
-        if (response.status === 404) {
-          setEmailError("Email not found. Please register first.");
-        }
-         else if (response.status === 400) {
-          setPasswordError("Bad Request. Please check your input.");
-        } else if (response.data.status === 401) {
-          setPasswordError("Unauthorized. Please check your credentials.");
-        } else if (response.status === 500) {
-          setPasswordError("Internal Server Error. Please try again later.");
-        } else {
-          console.error('Unexpected response:', response);
-        }
+        localStorage.setItem('token', token);
+        localStorage.setItem('email', email);
+        navigate('/NavigationBar');
       }
-
     } catch (error) {
-      console.error('Login failed:', error);
-    }
-    setIsLoading(false);
-  };
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        const status = error.response.status;
 
+        if (status === 401) {
+          toast.error("Invalid Username or Password"); // Error toast
+        } else if (status === 404) {
+          setEmailError("Email not found. Please register first.");
+          toast.error("Email not found. Please register first."); // Error toast
+        } else if (status === 400) {
+          setPasswordError("Bad Request. Please check your input.");
+          toast.error("Bad Request. Please check your input."); // Error toast
+        } else if (status === 500) {
+          setPasswordError("Internal Server Error. Please try again later.");
+          toast.error("Internal Server Error. Please try again later."); // Error toast
+        } else {
+          toast.error("An unexpected error occurred."); // Error toast
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+        toast.error("No response from server. Please try again."); // Error toast
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error setting up request:', error.message);
+        toast.error("An error occurred. Please try again."); // Error toast
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }
   const handleEmailChange = (e) => {
     const inputEmail = e.target.value;
     setEmail(inputEmail);
@@ -281,9 +277,7 @@ const ForgotPasswordForm = ({ handleForgotPasswordSubmit, userEmail, handlePrevi
     setIsLoading(false);
   };
 
-  const handleBackToForgotPassword = () => {
-    setShowOTPForm(false);
-  };
+
 
   return (
     <div className='forgot-password-form'>
