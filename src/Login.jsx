@@ -10,6 +10,7 @@ import { RiLockPasswordLine } from 'react-icons/ri';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { useUserProfile } from './contexts/UserProfileContext';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -24,7 +25,7 @@ const Login = () => {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-
+  const { setUserProfileLink } = useUserProfile();
   const [emailTouched, setEmailTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
   const navigate = useNavigate();
@@ -88,10 +89,10 @@ const Login = () => {
 
       if (response.status === 200 && response.data && response.data.token) {
         const token = response.data.token;
-
+        setUserProfileLink(response.UserProfileLink);
         localStorage.setItem('token', token);
         localStorage.setItem('email', email);
-        navigate('/NavigationBar');
+        navigate('/all-quizzes');
       }
     } catch (error) {
       if (error.response) {

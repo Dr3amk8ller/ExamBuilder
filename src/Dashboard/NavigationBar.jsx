@@ -6,7 +6,7 @@ import ExamForm from './ExamForm';
 import Navbar from './NavBar';
 
 
-const Navigation = () => {
+const Navigationbar = () => {
   const [showExamForm, setShowExamForm] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -33,4 +33,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default Navigationbar;

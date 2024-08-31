@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,6 +14,8 @@ const CreateExam = ({ onStartExam }) => {
     const [loading, setLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [filter, setFilter] = useState('');
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const itemsPerPage = 10;
@@ -92,6 +94,30 @@ const CreateExam = ({ onStartExam }) => {
         onStartExam();
         setShowTitleModal(false);
     };
+
+ 
+    
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        };
+    
+        useEffect(() => {
+            document.addEventListener('mousedown', handleClickOutside);
+            return () => {
+                document.removeEventListener('mousedown', handleClickOutside);
+            };
+        }, []);
+    
+        const toggleDropdown = () => {
+            setIsDropdownOpen(!isDropdownOpen);
+        };
+    
+        const handleFilterSelection = (selectedFilter) => {
+            setFilter(selectedFilter);
+            setIsDropdownOpen(false);
+        };
 
     const handleTitleSubmit = async (title) => {
         setLoading(true);
@@ -212,7 +238,7 @@ const CreateExam = ({ onStartExam }) => {
             <h2 className="overview">All Quizzes</h2>
 
             <div className="controls">
-                <div className="filter-dropdown">
+                {/* <div className="filter-dropdown">
                     <button onClick={() => setFilter(filter === '' ? 'complete' : '')}>
                         <FontAwesomeIcon icon={faFilter} style={{ marginRight: '5px' }} />
                         Filters
@@ -224,7 +250,35 @@ const CreateExam = ({ onStartExam }) => {
                         <div onClick={() => setFilter('inactive')}>Inactive</div>
                         <div onClick={() => setFilter('')}>Clear Filters</div>
                     </div>
+                </div> */}
+                 <div className="filter-dropdown" ref={dropdownRef}>
+            <button onClick={toggleDropdown}>
+                <FontAwesomeIcon icon={faFilter} style={{ marginRight: '5px' }} />
+                Filters
+            </button>
+            <div className={`dropdown-content ${isDropdownOpen ? 'show' : ''}`}>
+                <div onClick={() => handleFilterSelection('complete')}
+                     className={filter === 'complete' ? 'selected' : ''}>
+                    Complete
                 </div>
+                <div onClick={() => handleFilterSelection('incomplete')}
+                     className={filter === 'incomplete' ? 'selected' : ''}>
+                    Incomplete
+                </div>
+                <div onClick={() => handleFilterSelection('active')}
+                     className={filter === 'active' ? 'selected' : ''}>
+                    Active
+                </div>
+                <div onClick={() => handleFilterSelection('inactive')}
+                     className={filter === 'inactive' ? 'selected' : ''}>
+                    Inactive
+                </div>
+                <div onClick={() => handleFilterSelection('')}
+                     className={filter === '' ? 'selected' : ''}>
+                    Clear Filters
+                </div>
+            </div>
+        </div>
                 <button className="create-exam-button" onClick={() => setShowTitleModal(true)}>
                     Create new exam
                 </button>

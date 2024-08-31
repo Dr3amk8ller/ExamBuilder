@@ -116,7 +116,7 @@ const Navbar = () => {
                 <ul className="navbar-menu">
                     <li><ScrollLink to="home" smooth={true} duration={500}>Home</ScrollLink></li>
                     <li><ScrollLink to="about" smooth={true} duration={500}>About</ScrollLink></li>
-                    <li><ScrollLink to="feature" smooth={true} duration={500}>Features</ScrollLink></li>
+                    <li><ScrollLink to="features" smooth={true} duration={500}>Features</ScrollLink></li>
                     <li><ScrollLink to="help" smooth={true} duration={500}>Help</ScrollLink></li>
                     <li><ScrollLink to="plan" smooth={true} duration={500}>Plans</ScrollLink></li>
                 </ul>

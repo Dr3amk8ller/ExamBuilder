@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import NavigationBar from './Dashboard/NavigationBar';
+
 import CreateExam from './Dashboard/CreateExam';
 import ExamForm from './Dashboard/ExamForm';
 import Navbar from './Dashboard/NavBar';
@@ -36,7 +36,7 @@ const Navigation = () => {
         <div className={`main-content ${isSidebarOpen ? 'sidebar-open' : ''}`}>
           <div className="routes-container">
             <Routes>
-              <Route path="/" element={<NavigationBar />} />
+         
               <Route path="/create-exam" element={<CreateExam />} />
               <Route path="/exam-form" element={<ExamForm />} />
               <Route path="/edit-exam/:id" element={<EditExam />} />

@@ -8,7 +8,7 @@ import student5 from './Assets/student5.jpg';
 
 const FeaturesPage = () => {
   return (
-    <section id="feature" className="features-page">
+    <section id="features" className="features-page">
     <div className="features-container">
         <h1>Features Page</h1>
       <div className="feature-section">

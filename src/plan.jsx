@@ -1,5 +1,5 @@
 import React from 'react';
-import './plan.css';
+import './Plan.css';
 
 const Plan = () => {
     return (

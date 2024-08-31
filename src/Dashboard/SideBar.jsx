@@ -28,12 +28,12 @@ const SideBar = ({ onToggleSidebar, isOpen }) => {
             {isOpen && <span>About Us</span>}
           </Link>
         </div>
-        <div className="menu-item">
+        {/* <div className="menu-item">
           <Link to="/navigation/QuizSearch" style={{ color: 'white', textDecoration: 'none' }}>
             <FaPen />
             {isOpen && <span>Entrance Center</span>}
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );

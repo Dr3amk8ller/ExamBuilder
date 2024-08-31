@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from './Assets/logo.png';
 import './Header.css';
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [showSidebar, setShowSidebar] = useState(false);
 
   const toggleSidebar = () => {
@@ -15,37 +16,57 @@ const Header = () => {
     setShowSidebar(false);
   };
 
+  const handleNavigation = (path) => {
+    if (path === '/' || path === '/about' || path === '/features' || path === '/help' || path === '/plan') {
+      // Navigate to the homepage
+      navigate('/');
+      
+      // Scroll to the target section
+      setTimeout(() => {
+        const section = document.getElementById(path.substring(1));
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth'});
+        }
+      }, 100); // Adjust timeout to allow navigation to complete
+    } else {
+      navigate(path);
+    }
+    closeSidebar();
+  };
+
   return (
     <header className="header">
       <div className="logo-header">
         <Link to="/">
           <img src={logo} alt="Online Exam Builder" className="logo-img" />
         </Link>
-        {/* <button className="menu-button" onClick={toggleSidebar}>
-          ☰
-        </button> */}
       </div>
       <nav className="nav-bar">
         <ul className="nav-list">
           <li>
-          <Link to="/homepage">
-  <button className="header-about">Home</button>
-</Link>
+            <button className="header-about" onClick={() => handleNavigation('/')}>
+              Home
+            </button>
           </li>
           <li>
-            <Link to="/Aboutpage">
-              <button className="nav-button">About Us</button>
-            </Link>
+            <button className="nav-button" onClick={() => handleNavigation('/about')}>
+              About Us
+            </button>
           </li>
           <li>
-            <Link to="/features">
-              <button className="nav-button">Features</button>
-            </Link>
+            <button className="nav-button" onClick={() => handleNavigation('/features')}>
+              Features
+            </button>
           </li>
           <li>
-            <Link to="/helpPage">
-              <button className="nav-button" >Help</button>
-            </Link>
+            <button className="nav-button" onClick={() => handleNavigation('/help')}>
+              Help
+            </button>
+          </li>
+          <li>
+            <button className="nav-button" onClick={() => handleNavigation('/plan')}>
+              Plans
+            </button>
           </li>
         </ul>
       </nav>
@@ -54,7 +75,6 @@ const Header = () => {
           <Link to="/register">
             <button className="loginn-button">Sign Up</button>
           </Link>
-          
         ) : (
           <Link to="/login">
             <button className="loginn-button" disabled={location.pathname === '/login'}>
@@ -66,36 +86,28 @@ const Header = () => {
 
       {location.pathname !== '/' && (
         <div className={`sidebar-toggle ${showSidebar ? 'open' : ''}`}>
-        <button className="menu-button" onClick={toggleSidebar}>
-          ☰
-        </button>
+          <button className="menu-button" onClick={toggleSidebar}>
+            ☰
+          </button>
           <nav className={`sidebar ${showSidebar ? 'show' : ''}`}>
             <button className="close-button" onClick={closeSidebar}>
               ✕
             </button>
             <ul className="sidebar-list">
-              
-            <li>
-                <Link to="/homepage" onClick={closeSidebar}>
-                  <button>Home</button>
-                </Link>
+              <li>
+                <button onClick={() => handleNavigation('/')}>Home</button>
               </li>
               <li>
-                <Link to="/aboutpage" onClick={closeSidebar}>
-                  <button>About Us</button>
-                </Link>
-              </li>
-                
-             
-              <li>
-                <Link to="/features" onClick={closeSidebar}>
-                  <button>Features</button>
-                </Link>
+                <button onClick={() => handleNavigation('/about')}>About Us</button>
               </li>
               <li>
-                <Link to="/helpPage" onClick={closeSidebar}>
-                  <button>Help</button>
-                </Link>
+                <button onClick={() => handleNavigation('/features')}>Features</button>
+              </li>
+              <li>
+                <button onClick={() => handleNavigation('/help')}>Help</button>
+              </li>
+              <li>
+                <button onClick={() => handleNavigation('/plans')}>Plans</button>
               </li>
               <li>
                 <Link to="/register" onClick={closeSidebar}>

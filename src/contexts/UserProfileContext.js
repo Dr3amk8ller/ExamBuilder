@@ -21,16 +21,16 @@ export const UserProfileProvider = ({ children }) => {
         return;
       }
 
-      const apiUrl = 'https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/profile/P_details';
+      const apiUrl = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/userProfile_M';
 
       try {
         const payload = {
           headers: {
             Authorization: token,
           },
-          body: JSON.stringify({
+       
             email: email,
-          }),
+        
         };
 
         const response = await axios.post(apiUrl, payload, {
@@ -40,8 +40,8 @@ export const UserProfileProvider = ({ children }) => {
           },
         });
 
-        if (response.data && response.data.body) {
-          const { UserProfileLink } = JSON.parse(response.data.body);
+        if (response.data && response.data) {
+          const { UserProfileLink } = response.data;
           setUserProfileLink(UserProfileLink || '');
         } else {
           setError('Unexpected response structure');

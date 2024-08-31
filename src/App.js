@@ -1,59 +1,66 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'; 
 import HomePage from './Dashboard/HomePage';
 import Login from './Login';
 import Register from './UserAuth/Register';
 import Navigation from './Navigation'; 
-import NavigationBar from './Dashboard/NavigationBar'; 
+import Navigationbar from './Dashboard/Navigationbar';
 import Header from './Header';
-// import Homepage from './HomePrev';
 import AboutUsPage from './AboutUsPage';
 import FeaturesPage from './FeaturesPage';
 import HelpPage from './HelpPage';
 import { UserProfileProvider } from './contexts/UserProfileContext';
-import Plan from './plan';
-
+import Plan from './Plan';
 
 const App = () => {
   const hostname = window.location.hostname;
+
   return (
     <UserProfileProvider>
-    <Router>
-      <div className="App">
-        <Routes>
-  
-          {hostname === 'exambuilder.online' ? (                // if changes are done both on local host and hompageee
-            <>
-              <Route path="/" element={<HomePage />} />
-              <Route path="*" element={<Navigate to="/" />} />
-            </>
-          ) : hostname === 'admin.exambuilder.online' ? (       // if changes are done both on local host and admin module 
-            <>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/navigation/*" element={<Navigation />} />
-              <Route path="/navigationbar" element={<NavigationBar />} />
-              <Route path="*" element={<Navigate to="/login" />} />
-            </>
-          ) : (
-            <>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/navigation/*" element={<Navigation />} />
-              <Route path="/navigationbar" element={<NavigationBar />} /> 
-              <Route path="/header" element={<Header />} /> 
-              <Route path="/Aboutpage" element={<AboutUsPage />} /> 
-              <Route path="/Features" element={<FeaturesPage />} /> 
-              <Route path="/Helppage" element={<HelpPage />} /> 
-              <Route path="/plan" element={<Plan />} /> 
-              
-              <Route path="*" element={<Navigate to="/" />} />
-            </>
-          )}
-        </Routes>
-      </div>
-    </Router>
+      <Router>
+        <div className="App">
+          <Routes>
+            {/* For exambuilder.online */}
+            {hostname === 'exambuilder.online' ? (
+              <>
+                <Route path="/" element={<HomePage />}>
+                  {/* Nested routes within HomePage */}
+                  <Route path="about" element={<AboutUsPage />} />
+                  <Route path="features" element={<FeaturesPage />} />
+                  <Route path="help" element={<HelpPage />} />
+                  <Route path="plan" element={<Plan />} />
+                </Route>
+                <Route path="*" element={<Navigate to="/" />} />
+              </>
+            ) : hostname === 'admin.exambuilder.online' ? (
+              <>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/navigation/*" element={<Navigation />} />
+                <Route path="/all-quizzes" element={<Navigationbar />} />
+                <Route path="*" element={<Navigate to="/login" />} />
+              </>
+            ) : (
+              <>
+                <Route path="/" element={<HomePage />}>
+                  {/* Nested routes within HomePage */}
+                  <Route path="about" element={<AboutUsPage />} />
+                  <Route path="features" element={<FeaturesPage />} />
+                  <Route path="help" element={<HelpPage />} />
+                  <Route path="plan" element={<Plan />} />
+                </Route>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/navigation/*" element={<Navigation />} />
+                <Route path="/all-quizzes" element={<Navigationbar />} /> 
+                <Route path="/header" element={<Header />} /> 
+                <Route path="*" element={<Navigate to="/" />} />
+              </>
+            )}
+          </Routes>
+        </div>
+      </Router>
     </UserProfileProvider>
   );
 };

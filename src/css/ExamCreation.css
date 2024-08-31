@@ -76,7 +76,8 @@ margin-left: 110px ;
   cursor: pointer;
 }
 
-.filter-dropdown .dropdown-content div:hover {
+.filter-dropdown .dropdown-content div:hover, 
+.filter-dropdown .dropdown-content .selected {
   background-color: #0a4570;
   color: white;
 }
@@ -84,6 +85,7 @@ margin-left: 110px ;
 .filter-dropdown .show {
   display: block;
 }
+
 
 .create-exam-button {
   background-color: #0a4570;
@@ -414,7 +416,7 @@ display: center;
 
   .create-exam-button {
     width: 80%;
-    margin-left: ; }
+ }
 
   .exam-table th,
   .exam-table td {

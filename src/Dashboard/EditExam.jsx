@@ -123,7 +123,7 @@ const EditExam = () => {
                         <span className="slider round"></span>
                     </label>
                 </div>
-                <div className="form-group">
+                {/* <div className="form-group">
                     <label htmlFor="status">Status</label>
                     <select
                         id="status"
@@ -136,7 +136,7 @@ const EditExam = () => {
                         <option value="Active">Active</option>
                         <option value="Inactive">Inactive</option>
                     </select>
-                </div>
+                </div> */}
                 <div className="form-group">
                     <label htmlFor="createdAt">Created At</label>
                     <input
@@ -147,7 +147,7 @@ const EditExam = () => {
                         disabled
                     />
                 </div>
-                <button className="submit-button" type="submit">Save Changes</button>
+                <button className="submitt-button" type="submit">Save Changes</button>
             </form>
         </div>
     );
