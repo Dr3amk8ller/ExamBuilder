@@ -62,8 +62,8 @@ const Footer = () => {
         <div className="footer-section footer-info">
           <h2 className="footer-heading">Get In Touch</h2>
           <p><FontAwesomeIcon icon={faLocationDot} /><strong>Address:</strong> xyz</p>
-          <p><FontAwesomeIcon icon={faEnvelope} /><strong>Email:</strong> <a className="emailfooter" href="mailto:prince.meghani@alfabetoglobal.com">prince.meghani@alfabetoglobal.com</a></p>
-          <p><FontAwesomeIcon icon={faPhone} /><strong>Contact:</strong> 934-073-9809</p>
+          <p><FontAwesomeIcon icon={faEnvelope} /><strong>Email:</strong> <a className="emailfooter" href="Alfabetoglobal@gmail.com">Alfabetoglobal@gmail.com</a></p>
+          <p><FontAwesomeIcon icon={faPhone} /><strong>Contact:</strong> +91 72176 67056</p>
         </div>
         <div className="footer-section footer-links">
           <h3 className="footer-heading">Quick Links</h3>

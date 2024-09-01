@@ -19,6 +19,22 @@
     margin-bottom: 40px;
 }
 
+.addphone {
+    color: #0a4570;
+    margin-left: 10px;
+    margin-bottom: 5px;
+
+
+}
+.addphone strong{
+text-decoration: underline;
+}
+
+.addphone .fa-phone {
+    margin-right: 1px; /* Space between icon and text */
+    font-size: 1.2em; /* Adjust the icon size */
+}
+
 .pricing-box {
     background-color: #ffffff;
     border: 1px solid #ccc;

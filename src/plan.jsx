@@ -1,5 +1,7 @@
 import React from 'react';
 import './Plan.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPhone} from '@fortawesome/free-solid-svg-icons';
 
 const Plan = () => {
     return (
@@ -63,6 +65,7 @@ const Plan = () => {
                 </div>
 
                 <a href="tel:+911234567890" className="contact-button">Buy Plans</a>
+                <p className="addphone"> <FontAwesomeIcon className="fa-phone" icon={faPhone} /> Contact: <strong>+91 72176 67056</strong> </p>
             </div>
         </div>
        </section>
