@@ -11,7 +11,7 @@ import AboutUsPage from './AboutUsPage';
 import FeaturesPage from './FeaturesPage';
 import HelpPage from './HelpPage';
 import { UserProfileProvider } from './contexts/UserProfileContext';
-import Plan from './Plan';
+import Plan from './plan';
 
 const App = () => {
   const hostname = window.location.hostname;
