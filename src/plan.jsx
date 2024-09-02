@@ -1,5 +1,5 @@
 import React from 'react';
-import './Plan.css';
+import './plan.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone} from '@fortawesome/free-solid-svg-icons';
 
