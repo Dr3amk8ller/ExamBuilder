@@ -5,7 +5,7 @@ import HomePage from './Dashboard/HomePage';
 import Login from './Login';
 import Register from './UserAuth/Register';
 import Navigation from './Navigation'; 
-import Navigationbar from './Dashboard/Navigationbar';
+import Navigationbar from './Dashboard/NavigationBar';
 import Header from './Header';
 import AboutUsPage from './AboutUsPage';
 import FeaturesPage from './FeaturesPage';
