@@ -139,7 +139,7 @@ import '../HomePage.css';
 import AboutUsPage from '../AboutUsPage';
 import HelpPage from '../HelpPage';
 import FeaturesPage from '../FeaturesPage';
-import Plan from '../Plan';
+import Plan from '../plan';
 
 const HomePage = () => {
     const navigate = useNavigate();
