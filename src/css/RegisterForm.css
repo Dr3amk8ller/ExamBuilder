@@ -11,8 +11,10 @@ body {
 
   height: 100vh; 
   margin: 0;
-  /* overflow: hidden; */
+  
 } 
+
+
 .form-field input[type='text'],
 .form-field input[type='email'],
 .form-field input[type='password'] {
@@ -28,13 +30,13 @@ body {
   width: 450px;
   /* max-margin: ; */
 
-  padding: 2rem;
+  padding: 1rem;
   background-color:#fff;
   border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgb(18, 91, 133);
   position: fixed; 
-  top: 55%; 
-  left: 42%;
+  top: 52%; 
+  left: 46%;
   transform: translate(-40%, -47%); /* Centering trick */
   
 }
@@ -359,7 +361,7 @@ body {
     max-width: 80%;
     margin: -5%;
     height: 65vh;
-    margin-top: -16%;
+    margin-top: -30%;
   
   }
 

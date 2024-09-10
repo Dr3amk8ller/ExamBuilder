@@ -62,6 +62,7 @@
 
 .dropdown-menu.show {
   display: block;
+  margin-left: -40px;
 }
 
 .dropdown-item {
@@ -210,7 +211,7 @@
 
 @media (max-width: 1200px) {
   .dropdown-menu {
-    width: 150px;
+    width: 100px;
     padding-right: 20px;
   }
   .menu-items{

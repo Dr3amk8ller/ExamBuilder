@@ -4,6 +4,7 @@
   box-sizing: border-box;
   font-family: "Georgia Serif";
 }
+
 body {
   background-image:url('../src/Assets/pencil.png');
   background-size: cover;
@@ -96,7 +97,6 @@ body {
   display: none;
   align-items: center;
   cursor: pointer;
-  margin-left: auto; /* Position it at the end of the header */
 }
 
 .sidebar-toggle .menu-button {
@@ -180,6 +180,7 @@ body {
 
   .sidebar-toggle {
     display: flex; /* Show the sidebar toggle button */
+    margin-left: 10px;
   }
   .loginn-button{
     margin-left: 590px; /* Fine-tune positioning */
@@ -266,7 +267,7 @@ body {
 }
 @media (max-height: 1024px) {
   .loginn-button{
-    margin-left: 600px;
+    margin-left: 580px;
   }
   .sidebar.show{
     width: 190px;
@@ -284,7 +285,7 @@ body {
   .loginn-button {
     font-size: 12px;
     padding: 4px 8px;
-    margin-left: 180px; /* Fine-tune positioning */
+    margin-left: 178px; /* Fine-tune positioning */
   }
   .sidebar.show{
     width:150px;

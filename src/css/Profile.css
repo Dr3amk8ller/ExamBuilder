@@ -1,7 +1,8 @@
 .profile-container {
   display: flex;
   flex-direction: column;
-  margin-top: 40px;
+  margin-top: 70px;
+  margin-left: 25px;
   align-items: center;
   
 
@@ -114,7 +115,7 @@
 /* for tablet */
 @media (max-width: 768px) {
   .profile-container{
-    margin-top: 30px;
+    margin-top: 45px;
   }
   .profile-image-card{
     width:250px;
@@ -200,7 +201,7 @@
   }
 
   .profile-card {
-    padding: 40px;
+    padding: 10px;
   }
 
   .profile-card-title {
