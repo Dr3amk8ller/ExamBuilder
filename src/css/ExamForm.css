@@ -31,8 +31,9 @@
   
   padding: 20px;
   max-width: 90%;
+  margin-top: 65px;
   margin-left: 15%;
-  margin-right: 15%;
+  margin-right: 7%;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -181,6 +182,7 @@
 
 .file-links {
   font-weight: bold;
+  font-size: 13px;
   margin-top: 20px;
 }
 
@@ -196,9 +198,10 @@
 @media (max-width: 768px) {
 
   .exam-form {
-    margin-top: 5px;
+    margin-top: 50px;
     padding: 10px;
-    margin-left: 15%;
+    margin-left: 60px;
+        margin-right: 10px;
     margin-bottom: 15%;
   }
   .mcq-section{
@@ -218,6 +221,6 @@
   }
   .button-group{
     padding-top: 5px;
-    flex-direction: row;
+    flex-direction: column;
   }
 }

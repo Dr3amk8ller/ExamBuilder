@@ -36,7 +36,7 @@ body {
   box-shadow: 0 4px 8px 0 rgb(18, 91, 133);
   position: fixed; 
   top: 52%; 
-  left: 46%;
+  left: 47%;
   transform: translate(-40%, -47%); /* Centering trick */
   
 }
@@ -361,7 +361,7 @@ body {
     max-width: 80%;
     margin: -5%;
     height: 65vh;
-    margin-top: -30%;
+    margin-top: -20%;
   
   }
 

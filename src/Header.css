@@ -267,10 +267,13 @@ body {
 }
 @media (max-height: 1024px) {
   .loginn-button{
-    margin-left: 580px;
+    margin-left: 355px;
   }
   .sidebar.show{
     width: 190px;
+  }
+  .register-form-container{
+    margin-left: -30px;
   }
 }
 @media (max-width: 480px) {
