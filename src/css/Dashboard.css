@@ -1,0 +1,178 @@
+/* Dashboard.css */
+
+/* Container for the dashboard */
+.dashboard-container {
+  padding: 20px;
+  margin-top: 40px;
+}
+
+.dashboard-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+/* Wrapper for the table */
+.table-wrapper {
+  overflow-x: auto;
+  background-color: #fff;
+  padding: 10px;
+  margin: 0 auto;
+  max-width: 700px;
+}
+
+/* Styling for the table */
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+/* Styling for table headers */
+.dashboard-table th {
+  color: #0a4570;
+  padding: 10px;
+  font-weight: bold;
+}
+
+/* Styling for table rows */
+.dashboard-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Alternate row colors */
+.dashboard-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Hover effect for table rows */
+.dashboard-table tr:hover {
+  background-color: #e0f7fa;
+}
+
+/* Media Queries */
+
+/* Extra small devices (phones, max-width: 480px) */
+@media only screen and (max-width: 480px) {
+  .dashboard-title {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  
+  .dashboard-container {
+    padding: 10px;
+    margin-top: 20px;
+  }
+
+  .dashboard-table th, .dashboard-table td {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .table-wrapper {
+    padding: 5px;
+    margin-left: 20px;
+  }
+}
+
+/* Small devices (phones in landscape mode, max-width: 600px) */
+@media only screen and (max-width: 600px) {
+  .dashboard-title {
+    font-size: 20px;
+  }
+
+  .dashboard-container {
+    padding: 15px;
+  }
+
+  .dashboard-table th, .dashboard-table td {
+    font-size: 14px;
+    padding: 8px;
+  }
+  
+  .table-wrapper {
+    padding: 8px;
+    margin-left: 25px;
+    
+  }
+}
+
+/* Medium devices (tablets, max-width: 768px) */
+@media only screen and (max-width: 768px) {
+  .dashboard-title {
+    font-size: 22px;
+  }
+
+  .dashboard-container {
+    padding: 20px;
+  }
+
+  .dashboard-table th, .dashboard-table td {
+    font-size: 16px;
+    padding: 10px;
+  }
+}
+
+/* Large devices (small laptops, max-width: 1024px) */
+@media only screen and (max-width: 1024px) {
+  .dashboard-title {
+    font-size: 24px;
+  }
+
+  .dashboard-container {
+    padding: 20px;
+    margin-left: 18px;
+  }
+
+  .dashboard-table th, .dashboard-table td {
+    font-size: 16px;
+    padding: 12px;
+  }
+  
+  .table-wrapper {
+    max-width: 520px;
+  }
+}
+
+/* Extra large devices (desktops, min-width: 1200px) */
+@media only screen and (min-width: 1200px) {
+  .dashboard-title {
+    font-size: 26px;
+  }
+
+  .dashboard-container {
+    padding: 30px;
+  }
+
+  .dashboard-table th, .dashboard-table td {
+    font-size: 18px;
+    padding: 15px;
+  }
+  
+  .table-wrapper {
+    max-width: 1000px;
+  }
+}
+
+/* Ultra large devices (very large desktops, min-width: 1600px) */
+@media only screen and (min-width: 1600px) {
+  .dashboard-title {
+    font-size: 28px;
+  }
+
+  .dashboard-container {
+    padding: 40px;
+  }
+
+  .dashboard-table th, .dashboard-table td {
+    font-size: 20px;
+    padding: 18px;
+  }
+  
+  .table-wrapper {
+    max-width: 1200px;
+  }
+}

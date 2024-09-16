@@ -15,8 +15,8 @@
 }
 
 .custom-navbar.sidebar-open {
-  left: 180px; /* Adjust according to sidebar open width */
-  width: calc(100% - 180px);
+  left: 150px; /* Adjust according to sidebar open width */
+  width: calc(100% - 150px);
 }
 
 .container-fluid {

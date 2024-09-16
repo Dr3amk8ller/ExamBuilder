@@ -192,106 +192,7 @@ const ExamForm = () => {
   };
 
 
-  // const handleImageUpload = (file, type, index) => {
 
-  //   const reader = new FileReader();
-  //   reader.onloadend = () => {
-  //     const base64Data = reader.result.split(',')[1];
-
-
-  //     // Check file size
-  //     // const fileSizeInKB = (file.size / 1024);
-  //     // if (fileSizeInKB < 200) {
-  //     //   alert("Image size is smaller than the required minimum (200 KB). Please select a larger image.");
-  //     //   return;
-  //     // }
-  //     setSelectedImage(base64Data); // Set selected image for preview in modal
-  //     setImagePreviewModal(true); // Open image preview modal
-  //     setImageUploadType(type);
-  //     setOptionIndex(index); // Set the index for the option being uploaded
-  //   };
-  //   reader.onerror = (error) => {
-  //     console.error('Error reading file:', error);
-  //     // Handle error if needed
-  //   };
-
-  //   // Check file size before reading
-
-  //   reader.readAsDataURL(file);
-  // };
-
-  // const handleConfirmImage = () => {
-  //   if (selectedImage) {
-  //     try {
-  //       let imageType = imageUploadType; // "question" or "option"
-
-  //       // Get existing images from local storage
-  //       const existingImages = JSON.parse(localStorage.getItem('images')) || [];
-
-  //       // Determine image type for options
-  //       if (imageType === "option" && optionIndex !== null) {
-  //         imageType = `option${optionIndex + 1}`;
-  //       }
-
-  //       // Create new image object
-  //       const newImage = {
-  //         type: imageType,
-  //         base64encodedurl: selectedImage
-  //       };
-
-  //       // Check if an image for the same option already exists
-  //       const updatedImages = existingImages.filter(img => img.type !== imageType);
-  //       updatedImages.push(newImage);
-
-  //       // Save the updated array back to local storage
-  //       localStorage.setItem('images', JSON.stringify(updatedImages));
-
-  //       // Update state or perform other actions with imageUrl
-  //       if (imageType === "question") {
-  //         setCurrentQuestion((prevQuestion) => ({
-  //           ...prevQuestion,
-  //           questionImage: selectedImage
-  //         }));
-  //       } else if (imageType.startsWith("option")) {
-  //         setCurrentQuestion((prevQuestion) => {
-  //           const updatedOptionImages = [...prevQuestion.optionImages];
-  //           updatedOptionImages[optionIndex] = selectedImage;
-  //           return {
-  //             ...prevQuestion,
-  //             optionImages: updatedOptionImages
-  //           };
-  //         });
-  //       }
-
-  //       // Log image type to console
-  //       console.log('Image stored successfully:', imageType);
-
-  //     } catch (error) {
-  //       console.error('Error storing image:', error.message);
-  //       // Handle error state or display error message
-  //     } finally {
-  //       setSelectedImage(null);
-  //       setImagePreviewModal(false);
-  //     }
-  //   }
-  // };
-
-
-  // const handleCancelImage = () => {
-  //   // Clear selected image state and close modal
-  //   setSelectedImage(null);
-  //   setImagePreviewModal(false);
-  //   // Further processing logic if needed
-  //   // ...
-  // };
-  // const getDropdownOptions = () => {
-  //   const existingImages = JSON.parse(localStorage.getItem('images')) || [];
-  //   return currentQuestion.options.map((option, index) => {
-  //     const imageType = `option${index + 1}image`;
-  //     const image = existingImages.find(img => img.type === imageType);
-  //     return image ? imageType : option;
-  //   });
-  // };
 
   const validateOptions = () => {
     let validationErrors = {};
@@ -335,65 +236,8 @@ const ExamForm = () => {
     const token = localStorage.getItem('token');
 
     try {
-      // Iterate through all images in local storage
-      // const existingImages = JSON.parse(localStorage.getItem('images')) || [];
-      // const updatedImages = [];
-
-      // // Upload images to S3 and replace base64encodedurl with imageUrl
-      // for (let i = 0; i < existingImages.length; i++) {
-      //   const img = existingImages[i];
-      //   if (!img.base64encodedurl) continue; // Skip if no base64encodedurl
-
-      //   // Construct the API payload
-      //   const apiPayload = {
-      //     body: JSON.stringify({
-      //       imageType: img.type, // Use existing type from local storage
-      //       image: img.base64encodedurl, // Use base64encodedurl from local storage
-      //     }),
-      //     headers: {
-      //       Authorization: token,
-      //       "Content-Type": "application/json",
-      //     },
-      //   };
-
-      // Make the API call to upload image to S3
-      //   try {
-      //     const response = await axios.post(
-      //       "https://7efwp1v3ed.execute-api.us-east-1.amazonaws.com/upload/imageS3Bucket",
-      //       apiPayload
-      //     );
-
-      //     // Handle the API response
-      //     const { imageUrl } = JSON.parse(response.data.body); // Parse the JSON body to extract imageUrl
-      //     console.log(`Image uploaded successfully: ${imageUrl}`);
-
-      //     // Update local storage with imageUrl replacing base64encodedurl
-      //     updatedImages.push({
-      //       ...img,
-      //       base64encodedurl: imageUrl, // Update base64encodedurl with imageUrl
-      //     });
-      //   } catch (error) {
-      //     console.error('Error uploading image to S3:', error.message);
-      //     // Handle error if needed
-      //   }
-      // }
-
-      // Save updated images array back to local storage
-      // localStorage.setItem('images', JSON.stringify(updatedImages));
-
-      // Function to map updated images to their respective fields
-      // const mapImagesToFields = (field, updatedImages) => {
-      //   const image = updatedImages.find(img => img.type === field);
-      //   return image ? image.base64encodedurl : "";
-      // };
-
-      // Function to map updated images to their respective options
-      // const mapImagesToOptions = (options, updatedImages) => {
-      //   return options.map((option, index) => {
-      //     const imageUrl = mapImagesToFields(`option${index + 1}`, updatedImages);
-      //     return {
-      //       answer: option,
-      //       answerImageLink: imageUrl, // Use imageUrl for answerImageLink
+      // Iterate through all images in local storag
+      // Use imageUrl for answerImageLink
       //     };
       //   });
       // };
@@ -514,7 +358,7 @@ const ExamForm = () => {
       );
       console.log("PaperSubmit API response:", response.data);
       toast.success("Question paper submitted successfully!");
-      navigate("/NavigationBar");
+      navigate("/all-quizzes");
     } catch (error) {
       console.error("Error submitting question paper:", error);
       toast.error("Failed to submit question paper. Please try again.");

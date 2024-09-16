@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import SideBar from './SideBar';
 import CreateExam from './CreateExam';
 import ExamForm from './ExamForm';
-// import '../css/Navigation.css';
+ import '../css/Navigation.css';
 import Navbar from './NavBar';
 
 

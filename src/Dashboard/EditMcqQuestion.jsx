@@ -397,6 +397,17 @@
 
 // };
 // export default EditMcqQuestion;
+
+
+
+
+
+
+
+
+
+
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -561,17 +572,23 @@ const EditMcqQuestion = () => {
                         imageType: img.type,
                         image: img.base64encodedurl,
                     }),
-                    headers: {
-                        Authorization: token,
-                        "Content-Type": "application/json",
-                    },
+                    // headers: {
+                    //     Authorization: token,
+                    //     "Content-Type": "application/json",
+                    // },
                 };
                 try {
                     const response = await axios.post(
                         "https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/imagesS3Bucket_M",
-                        apiPayload
+                        apiPayload,
+                        {
+                            headers: {
+                                Authorization: token,
+                                "Content-Type": "application/json",
+                            }
+                        }
                     );
-                    const { imageUrl } = JSON.parse(response.data.body);
+                    const { imageUrl } = response.data;
                     updatedImages.push({
                         ...img,
                         base64encodedurl: imageUrl,
@@ -582,7 +599,7 @@ const EditMcqQuestion = () => {
             }
 
             localStorage.setItem('images', JSON.stringify(updatedImages));
-            console.log('Updated images in localStorage:', JSON.parse(localStorage.getItem('images')));
+           // console.log('Updated images in localStorage:', JSON.parse(localStorage.getItem('images')));
 
             const mapOptions = (options, images) => {
                 return options.map((option, index) => {
@@ -598,13 +615,16 @@ const EditMcqQuestion = () => {
             const optionImages = updatedImages.filter(img => img.type.startsWith('option'));
 
             const questionData = {
-                question: currentQuestion.question,
-                options: mapOptions(currentQuestion.options, optionImages),
-                correctAnswer: currentQuestion.options.indexOf(currentQuestion.correctAnswer) + 1,
-                description: currentQuestion.answerDescription || "",
-                questionImageLink: questionImage ? questionImage.base64encodedurl : "",
+              question: currentQuestion.question,
+              options: mapOptions(currentQuestion.options, optionImages),
+              //correctAnswer: currentQuestion.options.indexOf(currentQuestion.correctAnswer) + 1,
+              correctAnswer: currentQuestion.correctAnswerIndex,
+              description: currentQuestion.answerDescription || "",
+              questionImageLink: questionImage
+                ? questionImage.base64encodedurl
+                : "",
             };
-            console.log("yuvraj",questionData);
+           // console.log("yuvraj",questionData);
             const payload = {
                     questionId: questionId,
                     updatedQuestion: questionData,
@@ -630,10 +650,13 @@ const EditMcqQuestion = () => {
                 optionImages: [],
             });
 
-            navigate("/NavigationBar");
+            navigate("/all-quizzes");
 
         } catch (error) {
-            console.error("Error updating question:", error);
+            console.error(
+              "Error updating question:",
+              error.response ? error.response.data : error.message
+            );
             toast.error("Failed to update question. Please try again.");
         } finally {
             localStorage.removeItem('images');

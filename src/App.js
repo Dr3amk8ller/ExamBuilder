@@ -1,17 +1,22 @@
-
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'; 
-import HomePage from './Dashboard/HomePage';
-import Login from './Login';
-import Register from './UserAuth/Register';
-import Navigation from './Navigation'; 
-import Navigationbar from './Dashboard/NavigationBar';
-import Header from './Header';
-import AboutUsPage from './AboutUsPage';
-import FeaturesPage from './FeaturesPage';
-import HelpPage from './HelpPage';
-import { UserProfileProvider } from './contexts/UserProfileContext';
-import Plan from './plan';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import HomePage from "./Dashboard/HomePage";
+import Login from "./Login";
+import Register from "./UserAuth/Register";
+import Navigation from "./Navigation";
+import Navigationbar from "./Dashboard/NavigationBar";
+import Header from "./Header";
+import AboutUsPage from "./AboutUsPage";
+import FeaturesPage from "./FeaturesPage";
+import HelpPage from "./HelpPage";
+import { UserProfileProvider } from "./contexts/UserProfileContext";
+import Plan from "./plan";
+import Dashboard from "./Dashboard/Dashboard";
 
 const App = () => {
   const hostname = window.location.hostname;
@@ -22,7 +27,7 @@ const App = () => {
         <div className="App">
           <Routes>
             {/* For exambuilder.online */}
-            {hostname === 'exambuilder.online' ? (
+            {hostname === "exambuilder.online" ? (
               <>
                 <Route path="/" element={<HomePage />}>
                   {/* Nested routes within HomePage */}
@@ -31,14 +36,16 @@ const App = () => {
                   <Route path="help" element={<HelpPage />} />
                   <Route path="plan" element={<Plan />} />
                 </Route>
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </>
-            ) : hostname === 'admin.exambuilder.online' ? (
+            ) : hostname === "admin.exambuilder.online" ? (
               <>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/navigation/*" element={<Navigation />} />
                 <Route path="/all-quizzes" element={<Navigationbar />} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="*" element={<Navigate to="/login" />} />
               </>
             ) : (
@@ -53,8 +60,9 @@ const App = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/navigation/*" element={<Navigation />} />
-                <Route path="/all-quizzes" element={<Navigationbar />} /> 
-                <Route path="/header" element={<Header />} /> 
+                <Route path="/all-quizzes" element={<Navigationbar />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/header" element={<Header />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </>
             )}

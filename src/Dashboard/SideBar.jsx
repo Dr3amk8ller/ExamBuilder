@@ -6,24 +6,39 @@ import { Link } from 'react-router-dom';
 
 const SideBar = ({ onToggleSidebar, isOpen }) => {
   return (
-    <div className={`siDebar ${isOpen ? 'open' : ''}`}>
+    <div className={`siDebar ${isOpen ? "open" : ""}`}>
       <div className="logo-container">
-        <img src={companyLogo} alt="Company Logo" className={`logoc ${isOpen ? 'logoc-expanded' : ''}`} />
+        <img
+          src={companyLogo}
+          alt="Company Logo"
+          className={`logoc ${isOpen ? "logoc-expanded" : ""}`}
+        />
         {/* <FaBars className="toggle-sidebar-btn" onClick={onToggleSidebar} /> */}
       </div>
       <div className="menu-items">
         <div className="menu-item">
-          <FaHome />
-          {isOpen && <span>Dashboard</span>}
+          <Link
+            to="/Dashboard"
+            style={{ color: "white", textDecoration: "none" }}
+          >
+            <FaHome />
+            {isOpen && <span>Dashboard</span>}
+          </Link>
         </div>
         <div className="menu-item">
-          <Link to="/navigationbar" style={{ color: 'white', textDecoration: 'none' }}>
+          <Link
+            to="/all-quizzes"
+            style={{ color: "white", textDecoration: "none" }}
+          >
             <FaListAlt />
             {isOpen && <span>All Quizzes</span>}
           </Link>
         </div>
         <div className="menu-item-about">
-          <Link to="/navigation/about" style={{ color: 'white', textDecoration: 'none' }}>
+          <Link
+            to="/navigation/about"
+            style={{ color: "white", textDecoration: "none" }}
+          >
             <FaInfoCircle />
             {isOpen && <span>About Us</span>}
           </Link>

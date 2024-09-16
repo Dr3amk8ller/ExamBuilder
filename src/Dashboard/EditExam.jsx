@@ -43,56 +43,6 @@ const EditExam = () => {
         }));
     };
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     setLoading(true);
-
-    //     const token = localStorage.getItem('token');
-    //     if (!token) {
-    //         console.error('Token not found in local storage');
-    //         setLoading(false);
-    //         return;
-    //     }
-
-    //     const apiUrl = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/DashbordEdit_M';
-    //     const payload = {
-    //         _id: id,
-    //         quizTitle: quizDetails.quizTitle,
-    //         isCompleted: !!quizDetails.isCompleted,  // Ensure it's always a boolean
-        
-    //         headers: {
-    //             Authorization: token,
-    //             'Content-Type': 'application/json',
-    //         }
-    //     };
-
-    //     console.log('API Request Payload:', payload);
-
-    //     try {
-    //         const response = await axios.post(apiUrl, payload, {
-    //             headers: {
-    //                 Authorization: token,
-    //                 'Content-Type': 'application/json',
-    //             },
-    //         });
-
-    //         console.log('API Response:', response);
-
-    //         if (response.status === 200) {
-    //             console.log('Quiz updated successfully');
-    //             toast.success('Quiz updated successfully');
-    //             navigate('/navigation/create-exam');
-    //         } else {
-    //             console.error('Failed to update quiz:', response.data);
-    //             toast.error('Failed to update quiz');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error updating quiz:', error);
-    //         toast.error('Error updating quiz');
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);

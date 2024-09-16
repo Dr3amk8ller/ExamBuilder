@@ -1,13 +1,14 @@
 .dialog-box {
   border: 1px solid #ccc;
   padding: 20px;
-  width: 500px;
+  max-width: 400px;
   margin: 0 auto;
   background-color: #f9f9f9;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   text-align: center;
   margin-top: 150px;
+  margin-left: 50px;
 }
 
 .dialog-box h2 {
@@ -71,4 +72,71 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+
+/* Mobile phones (up to 480px) */
+@media (max-width: 480px) {
+  .dialog-box {
+    max-width: 90%;
+    padding: 15px;
+    margin-top: 100px;
+  }
+  .submit-button {
+    max-width: 50%;
+  }
+  .loader {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Tablets (481px to 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .dialog-box {
+    max-width: 100%;
+    padding: 18px;
+    margin-top: 120px;
+    margin-left: 50px;
+  }
+  .submit-button {
+    max-width: 40%;
+  }
+  .loader {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+/* Small laptops (769px to 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .dialog-box {
+    max-width: 100%;
+    padding: 20px;
+    margin-top: 130px;
+    margin-left: 82px;
+  }
+  .submit-button {
+    max-width: 30%;
+  }
+  .loader {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Desktops (1025px and above) */
+@media (min-width: 1025px) {
+  .dialog-box {
+    max-width: 80%; /* original size */
+    margin-top: 150px;
+    margin-left: 158px;
+  }
+  .submit-button {
+    max-width: 20%;
+  }
+  .loader {
+    width: 30px;
+    height: 30px;
+  }
 }
