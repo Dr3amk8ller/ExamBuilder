@@ -1,17 +1,16 @@
 /* Dashboard.css */
 
-/* Container for the dashboard */
 .dashboard-container {
   padding: 20px;
   margin-top: 40px;
 }
 
 .dashboard-title {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
   margin-bottom: 20px;
-  color: #333;
-  text-align: center;
+  color: #0a4570;
+  text-align: left;
 }
 
 /* Wrapper for the table */
@@ -21,6 +20,17 @@
   padding: 10px;
   margin: 0 auto;
   max-width: 700px;
+}
+
+/* Styling for table rows */
+.dashboard-table td {
+  padding: 10px;
+  border-bottom: 2px solid #ddd; /* Adjust thickness and color as needed */
+}
+/* Styling for table rows */
+.dashboard-table td {
+  padding: 2px;
+  border-bottom: 2px solid #ddd; /* Add or adjust the border line */
 }
 
 /* Styling for the table */
@@ -33,24 +43,19 @@
 /* Styling for table headers */
 .dashboard-table th {
   color: #0a4570;
-  padding: 10px;
+  padding: 1px;
   font-weight: bold;
 }
 
 /* Styling for table rows */
 .dashboard-table td {
-  padding: 10px;
+  padding: 1px;
   border-bottom: 1px solid #ddd;
 }
 
 /* Alternate row colors */
 .dashboard-table tr:nth-child(even) {
   background-color: #f2f2f2;
-}
-
-/* Hover effect for table rows */
-.dashboard-table tr:hover {
-  background-color: #e0f7fa;
 }
 
 /* Media Queries */
@@ -96,7 +101,7 @@
   .table-wrapper {
     padding: 8px;
     margin-left: 25px;
-    
+    margin-top: 18px;
   }
 }
 
@@ -112,14 +117,14 @@
 
   .dashboard-table th, .dashboard-table td {
     font-size: 16px;
-    padding: 10px;
+    padding: 7px;
   }
 }
 
 /* Large devices (small laptops, max-width: 1024px) */
 @media only screen and (max-width: 1024px) {
   .dashboard-title {
-    font-size: 24px;
+    font-size: 28px;
   }
 
   .dashboard-container {
@@ -129,11 +134,13 @@
 
   .dashboard-table th, .dashboard-table td {
     font-size: 16px;
-    padding: 12px;
+    padding: 7px;
   }
   
   .table-wrapper {
-    max-width: 520px;
+    max-width: 890px;
+    margin-top: 25px;
+    margin-left: 50px;
   }
 }
 
@@ -148,12 +155,13 @@
   }
 
   .dashboard-table th, .dashboard-table td {
-    font-size: 18px;
-    padding: 15px;
+    font-size: 15px;
+    padding: 7px;
   }
   
   .table-wrapper {
     max-width: 1000px;
+    margin-top: 40px;
   }
 }
 
@@ -168,8 +176,8 @@
   }
 
   .dashboard-table th, .dashboard-table td {
-    font-size: 20px;
-    padding: 18px;
+    font-size: 16px;
+    padding: 7px;
   }
   
   .table-wrapper {

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPencilAlt, faTrashAlt, faSearch, faFilter, faAngleLeft, faAngleRight, faGear } from '@fortawesome/free-solid-svg-icons';
 import '../css/ExamCreation.css';
 import { toast, ToastContainer } from "react-toastify";
+//import ExamDetails from './ExamDetails';
 import "react-toastify/dist/ReactToastify.css";
 import { format } from 'date-fns';
 
@@ -18,8 +19,44 @@ const CreateExam = ({ onStartExam }) => {
     const dropdownRef = useRef(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    //const [studentDetails, setStudentDetails] = useState([]); // New state for student details
+   // const [studentLoading, setStudentLoading] = useState(false); // Loading state for student details
+    //const itemsPerPage = 10;
     const itemsPerPage = 10;
     const navigate = useNavigate();
+
+
+    // const fetchStudentDetails = async (email, quizTitle) => {
+    //   setStudentLoading(true);
+    //   const apiUrl =
+    //     "https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/studentsearch_details";
+    //   const requestBody = {
+    //     email: email,
+    //     quizTitle: quizTitle,
+    //   };
+
+    //   try {
+    //     const response = await axios.post(apiUrl, requestBody, {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     });
+
+    //     if (response.status === 200) {
+    //       setStudentDetails(response.data.students);
+    //     } else {
+    //       toast.warn("No student details found");
+    //     }
+    //   } catch (error) {
+    //     console.error("Failed to fetch student details:", error);
+    //     toast.error("Failed to fetch student details");
+    //   } finally {
+    //     setStudentLoading(false);
+    //   }
+    // };
+
+    
+
 
     const fetchExamDetails = async () => {
         setLoading(true);
@@ -120,42 +157,46 @@ const CreateExam = ({ onStartExam }) => {
         };
 
     const handleTitleSubmit = async (title) => {
-        setLoading(true);
-        const token = localStorage.getItem('token');
-        const email = localStorage.getItem('email');
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      const email = localStorage.getItem("email");
 
-        if (!token || !email) {
-            console.error('Token or email not found in local storage');
-            setLoading(false);
-            return;
-        }
+     // await fetchStudentDetails(email, title); // Call the API after creating the exam
 
-        const apiUrl = 'https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/quizzIdentity_M';
-        const payload = {
-            quizTitle: title,
-                creatorEmail: email,    
-        }         
-        try {
-            const response = await axios.post(
-                apiUrl, payload, {
-                headers: {
-                    Authorization: token,
-                    'Content-Type': 'application/json'
-                }
-            });
-            const responseData = (response.data);
-            const quizTitleFromResponse = responseData.quizTitle;
-       
-            console.log('API Response:', response);
-            handleStart();
-            navigate('/navigation/exam-form', { state: { quizTitle: quizTitleFromResponse } });
-            toast.success('Exam created successfully');
-        } catch (error) {
-            console.error('Failed to create exam:', error);
-            toast.error('Failed to create exam');
-        } finally {
-            setLoading(false);
-        }
+      if (!token || !email) {
+        console.error("Token or email not found in local storage");
+        setLoading(false);
+        return;
+      }
+
+      const apiUrl =
+        "https://598sj81enf.execute-api.ap-south-1.amazonaws.com/v1/quizzIdentity_M";
+      const payload = {
+        quizTitle: title,
+        creatorEmail: email,
+      };
+      try {
+        const response = await axios.post(apiUrl, payload, {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        });
+        const responseData = response.data;
+        const quizTitleFromResponse = responseData.quizTitle;
+
+        console.log("API Response:", response);
+        handleStart();
+        navigate("/navigation/exam-form", {
+          state: { quizTitle: quizTitleFromResponse },
+        });
+        toast.success("Exam created successfully");
+      } catch (error) {
+        console.error("Failed to create exam:", error);
+        toast.error("Failed to create exam");
+      } finally {
+        setLoading(false);
+      }
     };
     // Added the functionality to filter quizzes according to quiztitle or creator name
     const filteredExamDetails = examDetails.filter(exam =>
@@ -238,18 +279,7 @@ const CreateExam = ({ onStartExam }) => {
             <h2 className="overview">All Quizzes</h2>
 
             <div className="controls">
-                {/* <div className="filter-dropdown">
-                    <button onClick={() => setFilter(filter === '' ? 'complete' : '')}>
-                        <FontAwesomeIcon icon={faFilter} style={{ marginRight: '5px' }} />
-                        Filters
-                    </button>
-                    <div className={`dropdown-content ${filter !== '' ? 'show' : ''}`}>
-                        <div onClick={() => setFilter('complete')}>Complete</div>
-                        <div onClick={() => setFilter('incomplete')}>Incomplete</div>
-                        <div onClick={() => setFilter('active')}>Active</div>
-                        <div onClick={() => setFilter('inactive')}>Inactive</div>
-                        <div onClick={() => setFilter('')}>Clear Filters</div>
-                    </div>
+                {/*
                 </div> */}
                  <div className="filter-dropdown" ref={dropdownRef}>
             <button onClick={toggleDropdown}>
@@ -316,71 +346,185 @@ const CreateExam = ({ onStartExam }) => {
     );
 };
 
-const ExamDetailsTable = ({ examDetails, onView, onEdit, onDelete , onSetting, onDuration}) => {
-    return (
-        <div className="table-container">
-            <table className="exam-table">
-                <thead>
-                    <tr>
-                        <th>Quiz Title</th>
-                        <th>Creator Name</th>
-                        <th>Status</th>
-                        <th>Total Questions</th>
-                        <th>Is Completed</th>
-                        <th>Created At</th>
-                        <th>Actions</th>
-                        <th>Settings</th>
-                        {/* <th>Duration</th> */}
-                    </tr>
-                </thead>
-                <tbody>
-                    {examDetails.length > 0 ? (
-                        examDetails.map((exam, index) => (
-                            <tr key={index}>
-                                <td>{exam.quizTitle}</td>
-                                <td>{exam.creatorName}</td>
-                                <td>
-                                    <span className={`status-badge ${exam.status.toLowerCase()}`}>{exam.status}</span>
-                                </td>
-                                <td>{exam.totalQuestions}</td>
-                                <td>{exam.isCompleted}</td>
-                                <td>{exam.createdAt ? format(new Date(exam.createdAt), 'PPp') : 'N/A'}</td>
-                                <td>
-                                    <button className="action-button" onClick={() => onView(exam)}>
-                                        <FontAwesomeIcon icon={faEye} />
-                                    </button>
-                                    <button className="action-button" onClick={() => onEdit(exam)}>
-                                                <FontAwesomeIcon icon={faPencilAlt} />
-                                            </button>
-                                    {exam.status !== 'Inactive' && (
-                                        <>
+// const ExamDetailsTable = ({ examDetails, onView, onEdit, onDelete , onSetting, onDuration}) => {
+//     return (
+//         <div className="table-container">
+//             <table className="exam-table">
+//                 <thead>
+//                     <tr>
+//                         <th>Quiz Title</th>
+//                         <th>Creator Name</th>
+//                         <th>Status</th>
+//                         <th>Total Questions</th>
+//                         <th>Is Completed</th>
+//                         <th>Created At</th>
+//                         <th>Actions</th>
+//                         <th>Settings</th>
+//                         {/* <th>Duration</th> */}
+//                     </tr>
+//                 </thead>
+//                 <tbody>
+//                     {examDetails.length > 0 ? (
+//                         examDetails.map((exam, index) => (
+//                             <tr key={index}>
+//                                 <td>{exam.quizTitle}</td>
+//                                 <td>{exam.creatorName}</td>
+//                                 <td>
+//                                     <span className={`status-badge ${exam.status.toLowerCase()}`}>{exam.status}</span>
+//                                 </td>
+//                                 <td>{exam.totalQuestions}</td>
+//                                 <td>{exam.isCompleted}</td>
+//                                 <td>{exam.createdAt ? format(new Date(exam.createdAt), 'PPp') : 'N/A'}</td>
+//                                 <td>
+//                                     <button className="action-button" onClick={() => onView(exam)}>
+//                                         <FontAwesomeIcon icon={faEye} />
+//                                     </button>
+//                                     <button className="action-button" onClick={() => onEdit(exam)}>
+//                                                 <FontAwesomeIcon icon={faPencilAlt} />
+//                                             </button>
+//                                     {exam.status !== 'Inactive' && (
+//                                         <>
                                            
-                                            <button className="action-button" onClick={() => onDelete(exam)}>
-                                                <FontAwesomeIcon icon={faTrashAlt} />
-                                            </button>
-                                        </>
-                                    )}
-                                </td>
-                                <td>
+//                                             <button className="action-button" onClick={() => onDelete(exam)}>
+//                                                 <FontAwesomeIcon icon={faTrashAlt} />
+//                                             </button>
+//                                         </>
+//                                     )}
+//                                 </td>
+//                                 <td>
                         
-                                <button  className="setting-button" onClick={() => onSetting(exam)}>
-                                        <FontAwesomeIcon icon={faGear} />
-                                    </button>
+//                                 <button  className="setting-button" onClick={() => onSetting(exam)}>
+//                                         <FontAwesomeIcon icon={faGear} />
+//                                     </button>
                                   
                              
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan="7" className="text-center">No exams available</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
-        </div>
-    );
+//                                 </td>
+//                             </tr>
+//                         ))
+//                     ) : (
+//                         <tr>
+//                             <td colSpan="7" className="text-center">No exams available</td>
+//                         </tr>
+//                     )}
+//                 </tbody>
+//             </table>
+//         </div>
+//     );
+// };
+
+const ExamDetailsTable = ({
+  examDetails,
+  onView,
+  onEdit,
+  onDelete,
+  onSetting,
+}) => {
+  const navigate = useNavigate(); // Add navigate hook here
+
+  const onRowClick = (exam) => {
+      // Navigate to the new page with exam details
+      
+    console.log("Navigating to exam details page for:", exam.quizzId);
+    navigate(`/navigation/exam-details/${exam.quizzId}` , {
+      state: { quiz: exam },
+    });
+  };
+
+  return (
+    <div className="table-container">
+      <table className="exam-table">
+        <thead>
+          <tr>
+            <th>Quiz Title</th>
+            <th>Creator Name</th>
+            <th>Status</th>
+            <th>Total Questions</th>
+            <th>Is Completed</th>
+            <th>Created At</th>
+            <th>Actions</th>
+            <th>Settings</th>
+          </tr>
+        </thead>
+        <tbody>
+          {examDetails.length > 0 ? (
+            examDetails.map((exam, index) => (
+              <tr
+                key={index}
+                onClick={() => onRowClick(exam)} // Handle row click here
+                className="clickable-row" // Add a class for styling if needed
+              >
+                <td>{exam.quizTitle}</td>
+                <td>{exam.creatorName}</td>
+                <td>
+                  <span className={`status-badge ${exam.status.toLowerCase()}`}>
+                    {exam.status}
+                  </span>
+                </td>
+                <td>{exam.totalQuestions}</td>
+                <td>{exam.isCompleted}</td>
+                <td>
+                  {exam.createdAt
+                    ? format(new Date(exam.createdAt), "PPp")
+                    : "N/A"}
+                </td>
+                <td>
+                  <button
+                    className="action-button"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent row click when button is clicked
+                      onView(exam);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faEye} />
+                  </button>
+                  <button
+                    className="action-button"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent row click when button is clicked
+                      onEdit(exam);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faPencilAlt} />
+                  </button>
+                  {exam.status !== "Inactive" && (
+                    <button
+                      className="action-button"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent row click when button is clicked
+                        onDelete(exam);
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faTrashAlt} />
+                    </button>
+                  )}
+                </td>
+                <td>
+                  <button
+                    className="setting-button"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent row click when button is clicked
+                      onSetting(exam);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faGear} />
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="7" className="text-center">
+                No exams available
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
 };
+
+
 
 const ExamTitleModal = ({ handleTitleSubmit, setShowTitleModal }) => {
     const [title, setTitle] = useState('');
